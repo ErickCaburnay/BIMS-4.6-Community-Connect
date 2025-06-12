@@ -1,0 +1,73 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="/styles/BDRRMC.css" />
+    <script type="module" src="/downloads/admin_bbi/js/BDRRMC.js"></script>
+  </head>
+  <body>
+    <!--------------- BDRRMC ------------------->
+    <section id="tab-2" class="tab-body">
+      <h1>Barangay Disaster Risk Reduction Management Council</h1>
+      <button id="bdrrmc-btn" class="post-activity-btn">
+        Activity Scheduling
+      </button>
+
+      <div id="bdrrmcPopup" class="schedule-popup">
+        <div class="popup-content">
+          <span class="close-btn">&times;</span>
+          <h2>Schedule BDRRMC Activity</h2>
+          <form id="bdrrmcScheduleForm">
+            <div class="form-group">
+              <label for="bdrrmcActivityType">Activity Type:</label>
+              <select id="bdrrmcActivityType" required>
+                <option value="">Select an activity...</option>
+                <option value="drill">Disaster Drill</option>
+                <option value="training">Training Session</option>
+                <option value="response">Emergency Response</option>
+                <option value="custom">Custom Activity</option>
+              </select>
+            </div>
+
+            <div
+              id="bdrrmcCustomTitleContainer"
+              class="form-group"
+              style="display: none"
+            >
+              <label for="bdrrmcCustomTitle">Custom Title:</label>
+              <input type="text" id="bdrrmcCustomTitle" />
+            </div>
+
+            <div class="form-group">
+              <label for="bdrrmcDescription">Description:</label>
+              <textarea id="bdrrmcDescription" required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="bdrrmcDate">Date:</label>
+              <input type="date" id="bdrrmcDate" required />
+            </div>
+
+            <div class="form-group">
+              <label for="bdrrmcStartTime">Start Time:</label>
+              <input type="time" id="bdrrmcStartTime" required />
+            </div>
+
+            <div class="form-group">
+              <label for="bdrrmcEndTime">End Time:</label>
+              <input type="time" id="bdrrmcEndTime" required />
+            </div>
+
+            <button type="submit">Schedule Activity</button>
+          </form>
+
+          <!-- Activities Scheduled Section -->
+          <div class="activities-scheduled">
+            <h3>Activities Scheduled</h3>
+            <div id="bdrrmcActivitiesListContainer">
+              <!-- Activities will be displayed here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>

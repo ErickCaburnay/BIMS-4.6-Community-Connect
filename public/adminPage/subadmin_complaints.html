@@ -1,0 +1,489 @@
+<!-- ############################### SUBADMIN_COMPLAINTS.HTML ############################ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barangay Information Management System</title>
+    <link rel="stylesheet" href="../styles/mainstyle.css"> <!--"/"-->
+    <link rel="stylesheet" href="../styles/loader.css">
+    <link rel="stylesheet" href="../styles/admin_notification.css">
+    <link rel="stylesheet" href="../styles/admin_complaint.css">
+    <link rel="stylesheet" href="../styles/admin_logs.css">
+
+
+</head>
+
+<style>
+.sortable {
+        cursor: pointer;
+        user-select: none;
+        position: relative;
+    }
+
+    .sortable:hover {
+        background-color: #094d7f;
+    }
+
+    .sort-indicator {
+        margin-left: 5px;
+        font-size: 0.8em;
+    }
+
+    .sortable:hover::after {
+        content: '▲▼';
+        position: absolute;
+        right: 5px;
+        opacity: 0.3;
+    }
+
+    .popup {
+    display: none; /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Dim background */
+    z-index: 1000; /* Ensure it appears above other elements */
+}
+
+.popup-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+#closeRestrictedPopup {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#closeRestrictedPopup:hover {
+    background-color: #0056b3;
+}
+
+
+
+
+</style>
+
+<body>
+    <div class="emergency-container">
+        <div class="toggle-menu-container">
+            <h1>Community-Connect</h1>
+        </div>
+        <div class="emergency-right">
+            <div class="current-date">
+                <p id="current-date"></p>
+            </div>
+        </div>
+        <div class="header-icons">
+            <h1></h1>
+            <div class="icons">
+                <div class="notification-wrapper">
+                    <div class="notification-icon" id="notificationIcon">
+                      <img src="../resources/icons/bell (2).png" alt="Bell" /> <!--"/"-->
+                      <span class="notification-count" id="notificationCount"></span>
+                    </div>
+                    <div class="notification-dropdown" id="notificationDropdown">
+                      <ul id="notificationList"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="icons">
+                <img src="../resources/icons/question.png" alt="Help Circle" />
+            </div>
+            <div class="icons">
+                <button class="toggle-menu" onclick="toggleDropdown()">
+                    <img src="../resources/icons/account.png" alt="User" />
+                </button>
+            </div>
+
+            <div class="icons">
+                <p><span id="current-user"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="dropdown-menu" id="dropdownMenu">
+        <div class="dropdown-item" onclick="editProfile()">Edit Admin Profile</div>
+        <div class="dropdown-item" onclick="changePassword()">Change Password</div>
+        <div class="dropdown-item" onclick="logout()">Logout</div>
+    </div>
+
+    <div class="sidebar">
+        <div class="logo-above-sidebar">
+            <img src="../resources/logo.png" alt="Logo" class="logo" width="150" height="150"> <!--"/"-->
+            <h1>San Antonio De Padua I</h1>
+        </div>
+        <div class="tab" id="dashboard-tab">
+            <a href="admin_dashboard.html" class="restrictedLink">
+                <img src="../resources/icons/dashboard_icon2.png" alt="Dashboard">Dashboard</a>
+        </div>
+        <div class="tab" id="officials-tab">
+            <a href="admin_officials.html" class="restrictedLink">
+                <img src="../resources/icons/gov.png" alt="officials">Brgy Officials</a>
+        </div>
+        <div class="tab" id="residents-tab">
+            <a href="admin_resident_records.html" class="restrictedLink">
+                <img src="../resources/icons/users.png" alt="Records">Residents
+                Records</a>
+        </div>
+        <div class="tab" id="household-tab">
+            <a href="admin_household_records.html" class="restrictedLink">
+                <img src="../resources/icons/household.png" alt="Records">Household</a>
+        </div> 
+        <div class="tab" id="bbi-tab">
+            <a href="subadmin_bbi.html">
+                <img src="../resources/icons/bldg.png" alt="bbi">BBI</a>
+        </div>
+        <div class="tab" id="reports-tab">
+            <a href="admin_reports.html" class="restrictedLink">
+                <img src="../resources/icons/reports.png" alt="reports">Reports</a>
+        </div>
+        <div class="tab" id="requests-tab">
+            <a href="admin_requests.html" class="restrictedLink">
+                <img src="../resources/icons/document.png" alt="Requests">Requests
+            </a>
+        </div>
+        <div class="tab" id="complaints-tab">
+            <a href="subadmin_complaints.html">
+                <img src="../resources/icons/complaint.png" alt="complaints">Complaints                
+            </a>
+        </div>
+        <div class="tab" id="logs-tab">
+            <a href="admin_logs.html" class="restrictedLink">
+                <img src="../resources/icons/logs_icon.png" alt="logs">Logs</a>
+          </div>
+        <div class="tab" id="settings-tab">
+            <a href="admin_settings.html" class="restrictedLink">
+                <img src="../resources/icons/settings.png" alt="settings">Settings</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="title-header">
+            <h2>Barangay Complaint Records</h2>
+            <!-- <h6>Let's see who's been in the naughty list heeheehee...</h6> -->
+        </div>
+        
+        <div class="search-container">
+            <button class="file-complaint-btn" id="fileComplaintBtn">Fila a Complaint</button>            
+            <input type="text" class="search-input" id="adminSearchComplaint" placeholder="Search...">
+            <button class="admin-search-complaint-button">Search</button>                
+            <button class="admin-clear-complaint-button">Clear</button>
+            <!-- <div class="sort-controls">
+                <select id="sortOrder" class="sort-select">
+                    <option value="desc">Newest First</option>
+                    <option value="asc">Oldest First</option>
+                </select>
+            </div> -->
+        </div>
+            <div id="complaintsTable">
+                <table>
+                    <thead>
+                        <tr>                        
+                            <th>Complaint ID</th>
+                            <th>Type of Complaint</th>
+                            <th>Respondent</th>
+                            <th>Complainant</th>
+                            <th>Date Filed</th>
+                            <th>Assigned Officer</th> 
+                            <th>Status</th>
+                            <th>Resolution Date</th> 
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                    <!-- <div class="admin-button-container">                        
+                    </div> -->
+            </div>
+            <div id="showingEntriesComplaints"></div>
+            <div id="paginationControls" class="pagination"></div>
+    </div>
+
+
+
+    <div id="overlay" class="overlay"></div>
+        <div class="admin-complaint-popup" id="adminComplaintPopup">
+            <div class="blurred-background"></div>
+            <!-- <div class="admin-complaint-container"> -->           
+                <button class="admin-complaint-close-button" id="adminComplaintCloseBtn">&times;</button>
+                <h3 class="form-title">File a Complaint</h3>
+                <h6 class="form-subtitle">Please fill out this form</h6>
+            <form id="complaintForm">
+
+
+                <div class="label-group">
+                    <label for="complaint-type">Type of Complaint:</label>
+                </div>
+                <div class="input-group">                    
+                    <select name="complaint-type" id="complaintType" required>
+                        <option value="" disabled selected>Select a type of complaint</option>
+                        <option value="Public-Safety">Public Safety</option>
+                        <option value="Health-and-Sanitation">Health and Sanitation</option>
+                        <option value="Noise-Disturbance">Noise Disturbance</option>
+                        <option value="Community-and-Social-Issues">Community and Social Issues</option>
+                    </select>
+                </div>
+                <div class="label-group">
+                    <label for="respondent">Respondent:</label>
+                    <label for="respondent-address">Address:</label>
+                </div>
+
+                <div class="input-group">                        
+                    <input type="text" id="respondent" placeholder="Name" required>                    
+                    <input type="text" id="respondent-address" placeholder="Respondent's Address">                    
+                </div>
+
+                <div class="label-group">
+                    <label for="complainant">Complainant:</label>
+                    <label for="complainant-address">Address:</label>
+                </div>
+
+                <div class="input-group">                        
+                        <input type="text" id="complainant" placeholder="Name" required>                        
+                        <input type="text" id="complainant-address" placeholder="Complainant's Address">                    
+                </div>
+
+                <div class="label-group3">
+                    <label for="assignedOfficer">Assigned Officer:</label>
+                    <label for="status">Status:</label>
+                    <label for="resolutionDate">Date Resolution:</label>
+                </div>
+
+                <div class="input-group3">
+                    <input type="text" id="assignedOfficer" placeholder="Name" required>
+                    
+                    <select name="status" id="status" required>
+                        <option value="" disabled selected>Select a status</option>
+                        <option value="PENDING">Pending</option>
+                        <option value="CANCELLED">Cancel</option>
+                        <option value="CLOSED">Closed</option>                        
+                    </select>
+
+                    <input type="date" id="resolutionDate" placeholder="DD/MM/YYYY">
+                </div>
+    
+                <div class="label-group">
+                    <label for="issue">Nature of the Problem:</label>
+                </div>
+
+                                    
+                    <textarea id="issue" name="issue" rows="5" cols="50" required></textarea>   
+                
+    
+                <div class="complaint-button-container">
+                    <button type="button" id="complaintSubmitBtn" class="complaint-submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="complaintOverlay" class="complaint-overlay"></div>
+    <div class="complaint-popup-content" id="complaintPopupContent">
+        <div class="blurred-background"></div>
+        <button id="complaintCloseButton" class="complaint-close-button">&times;</button>
+        <h2>Complaint Details</h2>
+        <form id="complaintDetails">
+
+            <div class="form-group">
+                <label for="complaintType">Complaint Type:</label>
+                <p id="complaintType"></p>
+            </div>
+            <div class="form-group">
+                <label for="respondent">Respondent:</label>
+                <p id="respondent"></p>
+            </div>
+            <div class="form-group">
+                <label for="respondentAddress">Respondent Address:</label>
+                <p id="respondentAddress"></p>
+            </div>
+            <div class="form-group">
+                <label for="complainant">Complainant:</label>
+                <p id="complainant"></p>
+            </div>
+            <div class="form-group">
+                <label for="complainantAddress">Complainant Address:</label>
+                <p id="complainantAddress"></p>
+            </div>
+            
+            <div class="form-group">
+                <label for="assignedOfficer">Assigned Officer:</label>
+                <p id="assignedOfficer"></p>
+            </div>
+            <div class="form-group">
+                <label for="status">Status:</label>
+                <p id="status"></p>
+            </div>
+            <div class="form-group">
+                <label for="resolutionDate">Resolution Date:</label>
+                <p id="resolutionDate"></p>
+            </div>
+
+            <div class="form-group">
+                <label for="issue">Issue</label>
+                <p id="issue"></p>
+            </div>
+        </form>
+        
+        <div class="button-group">
+            <button id="approveButton" onclick="handleComplaint('${complaintId}', 'approve')">Approve</button>
+            <button id="rejectButton" onclick="handleComplaint('${complaintId}', 'reject')">Reject</button>
+            <button id="updateButton" onclick="updateComplaint('${complaintId}')">Update</button>
+        </div>
+    </div>
+
+    
+
+    <!-- ###### NOTIFICATION DETAILS ####### -->
+    <div id="documentDetailspopup" class="document-details-popup" style="display:none;">
+        <div class="document-details-content">
+            <span id="closePopup" class="close">&times;</span>
+            <h2>Resident's Update Request</h2>
+            <div id="detailsPopupContent">
+                <p><strong>Full Name:</strong> <span id="residentName"></span></p>
+                <p><strong>Email:</strong> <span id="residentEmail"></span></p>
+                <p><strong>Requested Changes:</strong></p>
+                <ul id="changeRequestList"></ul>
+            </div>
+            <!-- <button id="approveBtn">Approve</button>
+            <button id="rejectBtn">Reject</button> -->
+        </div>
+    </div>
+
+    <div id="restrictedPopup" class="popup">
+        <div class="popup-content">
+            <h3>Access Restricted</h3>
+            <p>You do not have permission to access this module.</p>
+            <button id="closeRestrictedPopup">Close</button>
+        </div>
+    </div>
+    
+
+    <div id="loader-container" style="display: none;">
+        <div class="loader"></div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
+
+
+    <script type="module" src="../js/script.js"></script> <!--"/"-->
+    <script type="module" src="../js/admin_complaints.js"></script>
+    
+    <script type="module" src="../js/firebaseConfig.js"></script>
+    <script type="module" src="../js/admin_logs.js"></script>
+
+    <!-- <script type="module" src="../js/admin_notification.js"></script> -->
+    <script type="module" src="../js/logOut.js"></script>
+
+
+
+    <script>        
+    document.addEventListener("DOMContentLoaded", function () {
+    // Get all links with the class 'restrictedLink'
+    const restrictedLinks = document.querySelectorAll('.restrictedLink');
+    
+    // Loop through all links and add event listeners
+    restrictedLinks.forEach(function (link) {
+        link.addEventListener('click', function (event) {
+            event.preventDefault();  // Prevent navigation to the restricted page
+            document.getElementById('restrictedPopup').style.display = 'block';  // Show the popup
+        });
+    });
+
+    // Close the popup when the 'Close' button is clicked
+    document.getElementById('closeRestrictedPopup').addEventListener('click', function () {
+        document.getElementById('restrictedPopup').style.display = 'none';  // Hide the popup
+    });
+});
+
+
+
+        function toggleDropdown() {
+            document.getElementById("dropdownMenu").classList.toggle("show");
+        }
+        
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+            if (!event.target.closest('.toggle-menu')) {
+                var dropdown = document.getElementById("dropdownMenu");
+                if (dropdown.classList.contains('show')) {
+                    dropdown.classList.remove('show');
+                }
+            }
+        }
+        
+        function handleLogout() {
+            logout();
+            toggleDropdown();
+        }
+        </script>
+
+    <script type="module">
+        import { checkAuth } from './js/authadmin.js';
+        checkAuth();
+
+        const notificationIndicator = document.getElementById('notificationIndicator');
+
+        function updateNotificationIndicator(count) {
+            if (count > 0) {
+                notificationIndicator.textContent = count;
+                notificationIndicator.style.display = 'inline';
+            } else {
+                notificationIndicator.style.display = 'none';
+            }
+        }
+
+        document.querySelector('.notification-icon').classList.add('show');
+        document.querySelector('.notification-icon').classList.remove('show');
+
+        function updateDate() {
+            const currentDate = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+            document.getElementById('current-date').textContent = currentDate.toLocaleDateString('en-US', options);
+            const userContainer = document.getElementById('current-user');
+            userContainer.textContent = "Welcome, " + currentUser + " | " + currentDate.toLocaleDateString('en-US', options);
+        }
+
+        window.onload = function () {
+            updateDate();
+        };
+
+        function closePopup() {
+    console.log("close button is clicked!");
+    const popup = document.getElementById('documentDetailspopup');
+    popup.style.display = 'none';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    console.log("DOMContentLoaded event fired");
+    
+    const closeButton = document.getElementById('documentDetailspopup');
+    if (closeButton) {
+        closeButton.addEventListener('click', closePopup);
+    }
+});
+
+document.getElementById('closePopup').addEventListener('click', closePopup);
+</script>
+
+
+    </body>
+</html>
+

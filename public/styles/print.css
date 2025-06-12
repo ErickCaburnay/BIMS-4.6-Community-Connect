@@ -1,0 +1,89 @@
+/* print.css */
+
+@media print {
+    /* Hide unnecessary elements */
+    body * {
+        visibility: hidden;
+    }
+
+    /* Show only the printable content */
+    #previewClearance, #previewClearance * {
+        visibility: visible;
+    }
+
+    /* Set the printable content to be full width and remove margins */
+    #previewClearance {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 20px;
+    }
+
+    /* Set the font family and size for the printed content */
+    #previewClearance {
+        font-family: Arial, sans-serif;
+        font-size: 12pt;
+    }
+
+    /* Adjust the layout and styling of the printed content */
+    #previewClearance h1, #previewClearance h2, #previewClearance h3 {
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
+    #previewClearance p {
+        margin-bottom: 10px;
+    }
+
+    #previewClearance table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    #previewClearance th, #previewClearance td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: left;
+    }
+
+    #previewClearance th {
+        background-color: #f2f2f2;
+        font-weight: bold;
+    }
+
+    /* Add page breaks for multi-page documents */
+    #previewClearance {
+        page-break-after: always;
+    }
+
+    /* Customize the printed header and footer */
+    @page {
+        size: A4;
+        margin: 20mm;
+    }
+
+    @page :first {
+        margin-top: 30mm;
+    }
+
+    #previewClearance header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 30mm;
+        /* Add your header content and styling */
+    }
+
+    #previewClearance footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 20mm;
+        /* Add your footer content and styling */
+    }
+}

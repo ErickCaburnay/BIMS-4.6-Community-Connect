@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Barangay Information Management System</title>
+    <link rel="stylesheet" href="../styles/mainstyle.css" />
+    <link rel="stylesheet" href="../styles/admin_reports.css" />
+    <link rel="stylesheet" href="../styles/admin_notification.css" />
+    <link rel="stylesheet" href="../styles/loader.css" />
+    
+  </head>
+  <body>
+    <div class="container">
+      <div id="loader" style="display: none;">
+          <div class="loader"></div>
+      </div>
+  
+      <div class="emergency-container">
+          <div class="toggle-menu-container">
+              <h1>Community-Connect</h1>
+          </div>
+          <div class="emergency-right">
+              <div class="current-date">
+                  <p id="current-date"></p>
+              </div>
+          </div>
+          <div class="header-icons">
+              <h1></h1>
+              <div class="icons">
+                  <div class="notification-wrapper">
+                      <div class="notification-icon" id="notificationIcon">
+                        <img src="../resources/icons/bell (2).png" alt="Bell" />
+                        <span class="notification-count" id="notificationCount"></span>
+                      </div>
+                      <div class="notification-dropdown" id="notificationDropdown">
+                        <ul id="notificationList"></ul>
+                      </div>
+                  </div>
+              </div>
+              <div class="icons">
+                  <img src="../resources/icons/question.png" alt="Help Circle" />
+              </div>
+              <div class="icons">
+                  <button class="toggle-menu" onclick="toggleDropdown()">
+                      <img src="../resources/icons/account.png" alt="User" />
+                  </button>
+              </div>
+  
+              <div class="icons">
+                  <p><span id="current-user"></span></p>
+              </div>
+          </div>
+      </div>
+  
+      <div class="dropdown-menu" id="dropdownMenu">
+          <div class="dropdown-item" onclick="editProfile()">Edit Admin Profile</div>
+          <div class="dropdown-item" onclick="changePassword()">Change Password</div>
+          <div class="dropdown-item" onclick="logout()">Logout</div>
+      </div>
+  
+      <div class="sidebar">
+          <div class="logo-above-sidebar">
+              <img src="../resources/logo.png" alt="Logo" class="logo" width="150" height="150">
+              <h1>San Antonio De Padua I</h1>
+          </div>
+          <div class="tab" id="dashboard-tab">
+              <a href="admin_dashboard.html"><img src="../resources/icons/dashboard_icon2.png" alt="Dashboard">Dashboard</a> <!--"/"-->
+          </div>
+          <div class="tab" id="officials-tab" class="restricted" data-role="Top Level Admin">
+              <a href="admin_officials.html"><img src="../resources/icons/gov.png" alt="officials">Brgy Officials</a>
+          </div>
+          <div class="tab" id="residents-tab">
+              <a href="admin_resident_records.html"><img src="../resources/icons/users.png" alt="Records">Residents
+                  Records</a>
+          </div>
+          <div class="tab" id="household-tab">
+              <a href="admin_household_records.html"><img src="../resources/icons/household.png" alt="Records">Household</a>
+          </div> 
+          <div class="tab" id="bbi-tab">
+              <a href="admin_bbi.html"><img src="../resources/icons/bldg.png" alt="bbi">BBI</a>
+          </div>
+          <div class="tab" id="reports-tab">
+              <a href="admin_reports.html"><img src="../resources/icons/reports.png" alt="reports">Reports</a>
+          </div>
+          <div class="tab" id="requests-tab">
+              <a href="admin_requests.html"><img src="../resources/icons/document.png" alt="Requests">Requests
+                  <!-- <span id="notificationIndicator"></span> -->
+              </a>
+          </div>
+          <div class="tab" id="complaints-tab">
+              <a href="admin_complaints.html"><img src="../resources/icons/complaint.png" alt="complaints">Complaints
+                  <!-- <div class="notification-icon">
+                      <span class="notification-count" id="notificationCount">0</span>
+                  </div> -->
+              </a>
+          </div>
+          <div class="tab" id="logs-tab">
+              <a href="admin_logs.html"><img src="../resources/icons/logs_icon.png" alt="logs">Logs</a>
+            </div>
+          <!-- <div class="tab" id="document-forms-tab">
+              <a href="admin_document_forms.html"><img src="/resources/forms_icon.svg" alt="forms">Document Forms</a>
+          </div> -->
+          <div class="tab" id="settings-tab">
+              <a href="admin_settings.html"><img src="../resources/icons/settings.png" alt="settings">Settings</a>
+          </div>
+      </div>
+
+    <!--------------------------BARANGAY REPORTS---------------------------->
+      <div class="main-content">
+        <h1>BIMS - Barangay Reports</h1>
+        <div class="search-filter">
+          <div class="add-button-container">
+            <button id="addReportBtn" class="add-report-btn">
+              Add New Report
+            </button>
+          </div>
+
+          <div class="search-container">
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Search reports..."
+              class="search-input"
+            />
+          </div>
+          <div class="filter-container">
+            <select id="filterType" class="filter-select">
+              <option value="">All Types</option>
+              <option value="Weekly">Weekly</option>
+              <option value="Monthly">Monthly</option>
+              <option value="Quarterly">Quarterly</option>
+              <option value="Yearly">Yearly</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="reportModal" class="modal">
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add New Report</h2>
+            <form id="reportForm">
+              <label for="reportTitle">Title:</label>
+              <input type="text" id="reportTitle" required />
+              <label for="reportDescription">Description:</label>
+              <textarea id="reportDescription" rows="4"></textarea>
+              <label for="reportType">Type:</label>
+              <select id="reportType">
+                <option value="Weekly">Weekly</option>
+                <option value="Monthly">Monthly</option>
+                <option value="Quarterly">Quarterly</option>
+                <option value="Yearly">Yearly</option>
+              </select>
+              <button type="submit">Add Report</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="reports-grid" id="reportsGrid"></div>
+      </div>
+    </div>
+
+    <!------^^^^^^^^^^^^--------------------BARANGAY REPORTS-----------^^^^^^^^^^^^^^^^^^----------------->
+
+    <!-- ###### NOTIFICATION DETAILS ####### -->
+    <div
+      id="documentDetailspopup"
+      class="document-details-popup"
+      style="display: none"
+    >
+      <div class="document-details-content">
+        <span id="closePopup" class="close">&times;</span>
+        <h2>Resident's Update Request</h2>
+        <div id="detailsPopupContent">
+          <!-- Resident details will be loaded here dynamically -->
+          <p><strong>Full Name:</strong> <span id="residentName"></span></p>
+          <p><strong>Email:</strong> <span id="residentEmail"></span></p>
+          <p><strong>Requested Changes:</strong></p>
+          <ul id="changeRequestList"></ul>
+        </div>
+        <!-- <button id="approveBtn">Approve</button>
+        <button id="rejectBtn">Reject</button> -->
+      </div>
+    </div>
+
+    <script type="module" src="../js/script.js"></script>
+    <script type="module" src="../js/admin_notification.js"></script>
+    <script type="module" src="../js/firebaseConfig.js"></script>
+    <script type="module" src="../js/logOut.js"></script>
+
+    <script type="module" src="../js/admin_reports.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.6.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/docxtemplater/3.19.1/docxtemplater.js"></script>
+
+    <script>
+      function toggleDropdown() {
+        document.getElementById("dropdownMenu").classList.toggle("show");
+      }
+
+      // Close the dropdown if the user clicks outside of it
+      window.onclick = function (event) {
+        if (!event.target.closest(".toggle-menu")) {
+          var dropdown = document.getElementById("dropdownMenu");
+          if (dropdown.classList.contains("show")) {
+            dropdown.classList.remove("show");
+          }
+        }
+      };
+
+      function handleLogout() {
+        logout();
+        toggleDropdown();
+      }
+    </script>
+
+    <script type="module">
+      import { checkAuth } from "/js/authadmin.js";
+      checkAuth();
+
+      const notificationIndicator = document.getElementById(
+        "notificationIndicator"
+      );
+
+      function updateNotificationIndicator(count) {
+        if (count > 0) {
+          notificationIndicator.textContent = count;
+          notificationIndicator.style.display = "inline";
+        } else {
+          notificationIndicator.style.display = "none";
+        }
+      }
+
+      document.querySelector(".notification-icon").classList.add("show");
+      document.querySelector(".notification-icon").classList.remove("show");
+
+      function updateDate() {
+        const currentDate = new Date();
+        const options = {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+        };
+        document.getElementById("current-date").textContent =
+          currentDate.toLocaleDateString("en-US", options);
+        const userContainer = document.getElementById("current-user");
+        userContainer.textContent =
+          "Welcome, " +
+          currentUser +
+          " | " +
+          currentDate.toLocaleDateString("en-US", options);
+      }
+
+      window.onload = function () {
+        updateDate();
+      };
+    </script>
+
+    <script src="/js/script.js"></script>
+    <script>
+      window.onload = function () {
+        updateDate();
+      };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,732 @@
+.archives-container {
+    max-width: 2000px;
+    padding: 20px 0;
+}
+
+/* Archive Header */
+.archives-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
+}
+
+.storage-info {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.storage-meter {
+    width: 200px;
+    height: 8px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.storage-used {
+    width: 65%;
+    height: 100%;
+    background-color: #2196f3;
+}
+
+.storage-text {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Main Layout */
+.archives-layout {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    /* gap: 20px; */
+    /* background: white; */
+    border-radius: 8px;
+    min-height: calc(100vh - 200px);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Categories Sidebar */
+.categories-sidebar {
+    padding: 5px;
+    border-right: 1px solid #2196f3;
+    background: transparent;
+    height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+
+.category-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.category-item {
+    margin-bottom: 8px;
+}
+
+.category-button {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    background: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: #cdcdcd;
+    transition: all 0.3s ease;
+}
+
+.category-button:hover {
+    background-color: #095387;
+    color: #cdcdcd;
+}
+
+.category-button.active {
+    background-color: #2196f3;
+    color: white;
+}
+
+.category-count {
+    margin-left: auto;
+    background-color: rgb(255, 255, 255, 0.1);
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+/* Content Area */
+.content-area {
+    height: calc(100vh - 200px);
+    padding: 10px;
+    overflow-y: auto; 
+    overflow-x: hidden;
+}
+
+/* Search and Filter Bar */
+.search-filters {
+    display: grid;
+    grid-template-columns: 1fr auto auto auto;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.search-input {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.filter-select {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+    font-size: 14px;
+}
+
+/* Archive Items Grid */
+.archive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.archive-item {
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.archive-item:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.item-preview {
+    height: 120px;
+    background-color: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #eee;
+}
+
+.preview-icon {
+    font-size: 40px;
+    color: #666;
+}
+
+.item-info {
+    padding: 15px;
+}
+
+.item-title {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.item-meta {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.item-actions {
+    display: flex;
+    gap: 8px;
+}
+
+/* Status badges if needed */
+.status-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+}
+
+.status-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.action-button {
+    flex: 1 !important;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.view-btn {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+.download-btn {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.view-btn:hover {
+    background-color: #bbdefb;
+}
+
+.download-btn:hover {
+    background-color: #e0e0e0;
+}
+
+/* File Preview Modal */
+.preview-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.preview-content {
+    position: relative;
+    background-color: white;
+    max-width: 800px;
+    height: 80vh;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: auto;
+}
+
+.close-preview {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .archives-layout {
+        grid-template-columns: 200px 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .archives-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .categories-sidebar {
+        border-right: none;
+        border-bottom: 1px solid #eee;
+    }
+
+    .search-filters {
+        grid-template-columns: 1fr;
+    }
+
+    .storage-info {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+.category-content {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.category-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Content Specific Styles */
+.announcement-card {
+    background: white;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.resident-record {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.resident-card {
+    background: white;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.clearance-item {
+    background: white;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.complaint-card {
+    background: #fff5f5;
+    border-left: 4px solid #f56565;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.report-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+}
+
+.report-card {
+    background: white;
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status-pending {
+    background: #fff3dc;
+    color: #b45309;
+}
+
+.status-approved {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.status-denied {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+
+/* ############################### ADMIN ACCOUNTS ARCHIVE CSS ################################## */
+.admin-accounts-card {
+    background: transparent;
+    border-radius: 8px;
+    padding: 20px;
+    width: 100%;
+}
+
+
+
+/* Table Styles */
+.adminAccounts-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color: #053252;
+}
+
+.adminAccounts-table thead tr {
+    background-color: #08416b;
+}
+
+.adminAccounts-table th,
+.adminAccounts-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 2px solid #095387;
+    color: #cdcdcd;
+}
+
+.adminAccounts-table th {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.adminAccounts-table td {
+    font-size: 13px;
+}
+
+.adminAccounts-table tbody tr:hover {
+    background-color: #095387;
+    transition: background-color 0.3s ease;
+}
+
+
+/* Showing Entries Text */
+.showingEntries {
+    color: #cdcdcd;
+    font-size: 14px;
+    margin: 10px 0;
+    text-align: center;
+}
+
+/* Pagination Controls */
+/* .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+} */
+
+.pagination button {
+    padding: 8px 12px;
+    border: 1px solid #095387;
+    border-radius: 4px;
+    background-color: transparent;
+    color: #cdcdcd;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.pagination button:hover {
+    background-color: #095387;
+}
+
+.pagination button.active {
+    background-color: #095387;
+    color: white;
+}
+
+.pagination button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.records-info-container {
+display: block;
+}
+
+.records-info {
+    color: #cdcdcd;
+    align-self: center;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .search-filters {
+        grid-template-columns: 1fr;
+    }
+    
+    .adminAccounts-table {
+        overflow-x: auto;
+        display: block;
+    }
+    
+    .adminAccounts-table th,
+    .adminAccounts-table td {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+}
+
+/* ############################### OFFICIALS ARCHIVE CSS ################################## */
+.table-container {
+    max-height: 400px;
+    overflow-y: auto;
+    border: 1px solid #095387;
+    border-radius: 8px;
+    background-color: #053252;
+}
+
+.official-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+}
+
+.official-table thead th {
+    position: sticky;
+    top: 0;
+    background-color: #08416b;
+    color: #cdcdcd;
+    font-weight: 600;
+    z-index: 2;
+    padding: 0.75rem;
+}
+
+.official-table th, 
+.official-table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 2px solid #095387;
+    color: #cdcdcd;
+}
+
+.official-table tbody tr:hover {
+    background-color: #095387;
+}
+
+.pagination {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding: 1rem;
+    position: sticky;
+    bottom: 0;
+}
+
+.pagination-btn {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #fff;
+    cursor: pointer;
+}
+
+.pagination-btn:disabled {
+    background: #f5f5f5;
+    cursor: not-allowed;
+}
+
+
+/* Additional specific styles for table containers */
+/* .admin-accounts-card,
+.official-card,
+.resident-records-card {
+    background: transparent;
+    border-radius: 8px;
+    padding: 20px;
+    overflow-x: auto;
+} */
+
+/* Showing entries text styling */
+/* #showingEntriesAdminAccounts,
+#showingEntriesOfficials,
+#showingEntriesResidentRecords {
+    color: #cdcdcd;
+    margin: 10px 0;
+    text-align: center;
+} */
+
+/* ############################### RESIDENT RECORDS ARCHIVE CSS ################################## */
+.table-container {
+    max-height: 400px; /* Set maximum height for scrollable area */
+    overflow-y: auto; /* Enable vertical scrolling */
+    border: 1px solid #095387;
+    border-radius: 8px;
+    background-color: #053252; /* Match the table's background */
+}
+
+
+
+tbody {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 2px solid #cdcdcd;
+    color: #cdcdcd;
+    font-size: 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.resident-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+}
+
+.resident-table thead th {
+    position: sticky;
+    top: 0;
+    background-color: #08416b;
+    color: #cdcdcd;
+    font-weight: 600;
+    z-index: 2; /* Ensure it stays above scrolling rows */
+}
+
+.resident-table th,
+.resident-table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 2px solid #095387;
+    color: #cdcdcd;
+}
+
+.resident-table th {
+    background-color: #08416b;
+    font-weight: 600;
+    /* text-align: left; */
+}
+
+.resident-table tbody tr:hover {
+    background-color: #095387;
+}
+
+#resident-records {
+    margin-bottom: 40px; /* Add space for pagination */
+}
+
+.status-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem;
+}
+
+.status-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.status-employment {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+.status-voter {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.status-pwd {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.status-4ps {
+    background-color: #ede9fe;
+    color: #5b21b6;
+}
+
+.status-solo-parent {
+    background-color: #fae8ff;
+    color: #86198f;
+}
+
+.pagination-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding: 1rem;    
+    position: sticky;
+    bottom: 0;
+}
+
+.pagination-btn {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #fff;
+    cursor: pointer;
+}
+
+.pagination-btn:disabled {
+    background: #f5f5f5;
+    cursor: not-allowed;
+}
+
+/* .records-info-container {
+    margin: 1rem 0;
+    text-align: right;
+    color: #cdcdcd;
+    font-size: 0.9rem;
+} */
+
+.restore-btn {
+    padding: 0.5rem 1rem;
+    background-color: #10b981;
+    color: white;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: background-color 0.2s;
+}
+
+.restore-btn:hover {
+    background-color: #059669;
+}
+
+.restore-btn:active {
+    background-color: #047857;
+}

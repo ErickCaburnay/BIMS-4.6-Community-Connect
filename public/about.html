@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1.5, user-scalable=yes">-->
+    <title>Barangay Information Management System</title>
+    <script async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjmGuRAoRcP5sZqmlv8g24jOsENEp5y5s&callback=console.debug&libraries=maps,marker&v=beta"></script>
+    <link rel="stylesheet" href="styles/mainstyle.css">
+    <link rel="stylesheet" href="styles/landingpage.css">
+
+
+    <style>
+        /* Smartphones (small phones) */
+@media (max-width: 320px) {
+    body {
+        font-size: 12px;
+    }
+}
+
+/* Medium Smartphones */
+@media (min-width: 321px) and (max-width: 480px) {
+    body {
+        font-size: 14px;
+    }
+}
+
+/* Large Smartphones */
+@media (min-width: 481px) and (max-width: 767px) {
+    body {
+        font-size: 16px;
+    }
+}
+
+/* Tablets */
+@media (min-width: 768px) and (max-width: 1024px) {
+    body {
+        font-size: 18px;
+    }
+}
+
+/* Laptops */
+@media (min-width: 1025px) and (max-width: 1440px) {
+    body {
+        font-size: 20px;
+    }
+}
+
+/* Desktops */
+@media (min-width: 1441px) {
+    body {
+        font-size: 22px;
+    }
+}
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+            justify-content: center; 
+            text-align: center; 
+        }
+        .logo-container {
+            position: relative;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            display: flex;
+        }
+
+        .logo-container h3 {
+            margin: auto;
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        .logo {
+            position: relative;
+            max-width: 50%;
+            height: auto;
+            margin-top: 20px;
+        }
+
+        .brgy_name {
+            color: rgb(255, 255, 255);
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bolder;
+            font-size: 50px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .hotline {
+            position: fixed;
+            width: 100%;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            z-index: 1;
+        }
+
+        .hotline img {
+            height: 35px;
+        }
+
+        .hotline p {
+            display: inline;
+            font-size: 16px;
+        }
+
+        .hotline p:not(:last-child) {
+            margin-right: 10px;
+        }
+
+        /*===========================ABOUT CONTENT=============================*/
+
+        .content {
+            max-width: 800px;
+            margin: 5% 0;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.5);
+            align-items: center;
+        }
+
+        .content h2 {
+            color: #00c026;
+            border-bottom: 2px solid #00c026;
+            padding-bottom: 10px;
+            text-align: center;
+        }
+
+        .content p,
+        ul {
+            line-height: 1.6;
+            color: #fff;
+        }
+
+        /*============================MAP================================*/
+        .map-container {
+            width: 100%;
+
+            margin: auto;
+        }
+
+        .map-responsive {
+            overflow: hidden;
+            padding-bottom: 56.25%;
+            position: relative;
+            height: 400px;
+            width: 80%;
+            
+        }
+
+        .map-responsive iframe {
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+        }
+
+        #map {
+            height: 400px;
+            width: 100%;
+            display: flex;
+            border-radius: 10px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        gmp-map {
+            margin: auto;
+            height: 200%;
+            width: 80%;
+            box-shadow: 3px 2px 4px rgba(0, 0, 0, 50);
+            border: none;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="emergency-container">
+        <div class="toggle-menu-container">            
+            <h1>Community-Connect</h1>
+        </div>
+        <div class="emergency-right">
+            <div class="current-date">
+                <p id="current-date"></p>
+            </div>
+        </div>
+        <div class="header-icons">
+            <a href="index.html">
+                <div class="icons">                
+                    <img src="resources/icons/home_icon.png" alt="" />                      
+                </div>
+                
+            </a>
+            <a href="about.html">
+                <div class="icons">                
+                    <img src="resources/icons/about_icon.png" alt="" />                      
+                </div>
+                
+            </a>
+            <a href="contact.html">
+                <div class="icons">                
+                    <img src="resources/icons/phone_icon.png" alt="" />                      
+                </div>
+                
+            </a>
+            <a href="loginPage.html">
+                <div class="icons">                
+                    <img src="resources/icons/login_icon.png" alt="" />                      
+                </div>
+                
+            </a>
+
+            <div class="icons">
+                <p><span id="current-user"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="hotline">
+        <img src="resources/attention.png" alt="ATTENTION!">
+        <p>Emergency Hotline 0917-572-0253</p>
+        <p>|</p>
+        <p>CDRRMO 0917-572-0253</p>
+        <p>|</p>
+        <p>Landline: (046) 506-3804</p>
+        <p>|</p>
+        <p>Brgy Health Center (046) 765 - 4321</p>
+        <img src="resources/attention.png" alt="ATTENTION!">
+    </div> -->
+
+<div class="main-content">
+    <div class="logo-container">
+        <img src="resources/logo.png" class="logo">
+        <h1 class="brgy_name">San Antonio De Padua I</h1>
+        <h3>Blk.7 lot 22, Dasmariñas, Cavite</h3>
+        <h3>Open Hours: Monday to Friday (7am - 6pm)</h3>
+        <h3>brgysanantoniodepadua1@gmail.com</h3>
+        <h3>09123456789</h3>
+    </div>
+
+    <div class="content">
+        <h2>Welcome to "Community-Connect" of Barangay San Antonio De Padua I Management Information System (BMIS)</h2>
+        <p>Welcome to the official portal of San Antonio De Padua I Management Information System (BMIS). Our BMIS is
+            designed to streamline and enhance the administrative processes of our barangay, providing efficient
+            services to our residents and stakeholders.</p>
+
+        <h2>About San Antonio De Padua I</h2>
+        <p>San Antonio De Padua I is a vibrant community nestled in Dasmariñas, Cavite. With a population of 3,875, our
+            barangay is home to diverse cultures, traditions, and livelihoods. Our dedicated barangay officials and
+            staff work tirelessly to ensure the welfare and development of our community.</p>
+
+        <h2>Mission</h2>
+        <p>Our mission is to foster a safe, inclusive, and sustainable community by providing responsive governance,
+            quality services, and opportunities for growth and development.</p>
+
+        <h2>Vision</h2>
+        <p>Our vision is to be a model barangay where residents live harmoniously, empowered to achieve their fullest
+            potential amidst a thriving and resilient community.</p>
+
+
+        <h2>Our Services</h2>
+        <ul>
+            <li>Barangay Documents: Apply for and process various barangay documents such as barangay clearances,
+                permits, certifications, and endorsements.</li>
+            <li>Community Programs: Stay informed about upcoming community programs, events, and initiatives aimed at
+                promoting social welfare, health, and education.</li>
+            <li>Incident Reporting: Report incidents, complaints, or concerns within the barangay through our online
+                reporting system. Our barangay officials are committed to addressing issues promptly and effectively.
+            </li>
+            <li>Community Directory: Access contact information for barangay officials, departments, and key
+                stakeholders within our barangay.</li>
+            <li>Community News and Updates: Stay up-to-date with the latest news, announcements, and developments
+                happening in our barangay.</li>
+        </ul>
+
+        <h2>How to Use BMIS</h2>
+        <p>Navigating through our BMIS is simple and user-friendly. Use the menu options or search function to find the
+            information or service you need. Our system is accessible 24/7, providing convenience and accessibility to
+            our residents.</p>
+
+        <h2>Get Involved</h2>
+        <p>We encourage residents to actively participate in barangay activities and initiatives. Whether it's
+            volunteering for community projects, attending barangay assemblies, or providing feedback on our services,
+            your involvement is vital to the progress and development of our barangay.</p>
+
+        <h2>Contact Us</h2>
+        <p>Have questions, feedback, or suggestions? Feel free to reach out to us through our contact information
+            provided. Our barangay office is always ready to assist you with your inquiries or concerns.</p>
+    </div>
+
+    <div class="map-container">
+        <div class="map-responsive" id="map">
+            <gmp-map center="14.318788528442383,120.95709991455078" zoom="14" map-id="DEMO_MAP_ID">
+                <gmp-advanced-marker position="14.318788528442383,120.95709991455078"
+                    title="My location"></gmp-advanced-marker>
+            </gmp-map>
+        </div>
+    </div>
+</div>
+
+    <footer id="main-footer">
+        <div class="footer-container">
+
+            <!-- Government Links Section -->
+            <div class="footer-govt-links">
+                <h4>Government Links</h4>
+                <ol>
+                    <li><a href="#">Philippine Government Portal</a></li>
+                    <li><a href="#">DOH Official Website</a></li>
+                    <li><a href="#">DSWD Official Website</a></li>
+                </ol>
+            </div>
+
+            <!-- Image Section -->
+            <div class="footer-logo">
+                <img src="resources/ph_seal.avif" alt="Philippine Seal" />
+            </div>
+                
+            <!-- Emergency Numbers Section -->
+            <div class="footer-emergency">
+                <h4>Emergency Numbers</h4>
+                <ol>
+                    <li>Police: 117</li>
+                    <li>Fire Department: 911</li>
+                    <li>Hospital: (02) 1234 5678</li>
+                </ol>
+            </div>
+        </div>
+    
+        <div id="footer-bottom">
+            <p>&copy; 2024. All Rights Reserved. Official Website of Brgy. | <a href="#">Webmail</a></p>
+            <div class="footer-social-icons">
+                <a href="https://facebook.com" target="_blank">
+                    <img src="icons/fb_icon.png" alt="Facebook Icon" />
+                </a>
+                <a href="https://twitter.com" target="_blank">
+                    <img src="icons/twitter_icon.png" alt="Twitter Icon" />
+                </a>
+                <a href="https://instagram.com" target="_blank">
+                    <img src="icons/ig_icon.png" alt="Instagram Icon" />
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function initMap() {
+            // Specify the coordinates of your barangay hall
+            var myLatLng = { lat: 14.3187937, lng: 120.9545072 };
+
+            // Create a map object and specify the DOM element for display
+            var map = new google.maps.Map(document.getElementById('map'), {
+                center: myLatLng,
+                zoom: 17
+            });
+
+            // Create a marker and set its position
+            var marker = new google.maps.Marker({
+                map: map,
+                position: myLatLng,
+                title: 'San Antonio de Padua I Barangay Hall' 
+            });
+        }
+
+        //=====================================MAP===================================//
+
+        function updateDate() {
+            const currentDate = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
+            document.getElementById('current-date').textContent = currentDate.toLocaleDateString('en-US', options);
+        }
+
+        window.onload = function () {
+            updateDate();
+        };
+
+        document.getElementById('login-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            console.log("Username:", username);
+            console.log("Password:", password);
+
+            window.location.href = "dashboard.html";
+        });
+
+    </script>
+</body>
+
+</html>

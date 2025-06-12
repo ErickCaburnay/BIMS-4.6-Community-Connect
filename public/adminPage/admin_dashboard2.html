@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Barangay Information Management System</title>
+    <link rel="stylesheet" href="/styles/mainstyle.css" />
+    <link rel="stylesheet" href="/styles/admin_dashboard.css" />
+    <link rel="stylesheet" href="/styles/loader.css" />
+    <link rel="stylesheet" href="/styles/admin_logs.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+      }
+
+      .main-content {
+        padding: 20px;
+        box-sizing: border-box;
+      }
+
+      .section-title {
+        font-size: 2.5em;
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 20px;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+      }
+
+      .totals-container {
+        background: #e3f2fd; /* Light blue background */
+        padding: 20px;
+        border-radius: 8px;
+        margin-bottom: 40px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .charts-container {
+        background: #f1f8e9; /* Light green background */
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .cards-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+      }
+
+      .card {
+        background: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      }
+
+      .card h3 {
+        margin-bottom: 20px;
+        font-size: 1.8em;
+        color: #34495e;
+      }
+
+      .chart-container {
+        position: relative;
+        height: 400px; /* Adjusted height for better readability */
+        width: 100%;
+        overflow: hidden; /* Prevent overflow */
+        padding: 10px; /* Added padding for better spacing */
+      }
+
+      .data-value {
+        font-size: 2em;
+        font-weight: bold;
+        margin: 20px 0;
+        color: #e74c3c;
+      }
+
+      @media (min-width: 768px) {
+        .charts-container .cards-container {
+          grid-template-columns: repeat(3, 1fr); /* 3 charts per row */
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+    <!-- Header Section -->
+    <div class="emergency-container">
+      <div class="toggle-menu-container">
+        <h1>Community-Connect</h1>
+      </div>
+      <div class="emergency-right">
+        <div class="current-date">
+          <p id="current-date"></p>
+        </div>
+      </div>
+      <div class="header-icons">
+        <div class="icons">
+          <img src="/resources/icons/bell (2).png" alt="Bell" />
+        </div>
+        <div class="icons">
+          <img src="/resources/icons/question.png" alt="Help Circle" />
+        </div>
+        <div class="icons">
+          <button class="toggle-menu" onclick="toggleDropdown()">
+            <img src="/resources/icons/account.png" alt="User" />
+          </button>
+        </div>
+        <div class="icons">
+          <p><span id="current-user"></span></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dropdown Menu -->
+    <div class="dropdown-menu" id="dropdownMenu">
+      <div class="dropdown-item" onclick="editProfile()">
+        Edit Admin Profile
+      </div>
+      <div class="dropdown-item" onclick="changePassword()">
+        Change Password
+      </div>
+      <div class="dropdown-item" onclick="logout()">Logout</div>
+    </div>
+
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+      <div class="logo-above-sidebar">
+        <img
+          src="/resources/logo.png"
+          alt="Logo"
+          class="logo"
+          width="150"
+          height="150"
+        />
+        <h1>San Antonio De Padua I</h1>
+      </div>
+      <div class="tab" id="dashboard-tab">
+        <a href="admin_dashboard.html"
+          ><img
+            src="/resources/icons/dashboard_icon2.png"
+            alt="Dashboard"
+          />Dashboard</a
+        >
+      </div>
+      <div
+        class="tab"
+        id="officials-tab"
+        class="restricted"
+        data-role="Top Level Admin"
+      >
+        <a href="admin_officials.html"
+          ><img src="/resources/icons/gov.png" alt="officials" />Brgy
+          Officials</a
+        >
+      </div>
+      <div class="tab" id="residents-tab">
+        <a href="admin_resident_records.html"
+          ><img src="/resources/icons/users.png" alt="Records" />Residents
+          Records</a
+        >
+      </div>
+      <div class="tab" id="household-tab">
+        <a href="admin_household_records.html"
+          ><img
+            src="/resources/icons/household.png"
+            alt="Records"
+          />Household</a
+        >
+      </div>
+      <div class="tab" id="bbi-tab">
+        <a href="admin_bbi.html"
+          ><img src="/resources/icons/bldg.png" alt="bbi" />BBI</a
+        >
+      </div>
+      <div class="tab" id="reports-tab">
+        <a href="admin_reports.html"
+          ><img src="/resources/icons/reports.png" alt="reports" />Reports</a
+        >
+      </div>
+      <div class="tab" id="requests-tab">
+        <a href="admin_requests.html"
+          ><img src="/resources/icons/document.png" alt="Requests" />Requests
+          <span id="notificationIndicator"></span
+        ></a>
+      </div>
+      <div class="tab" id="complaints-tab">
+        <a href="admin_complaints.html"
+          ><img
+            src="/resources/icons/complaint.png"
+            alt="complaints"
+          />Complaints
+          <div class="notification-icon">
+            <span class="notification-count" id="notificationCount">0</span>
+          </div>
+        </a>
+      </div>
+      <div class="tab" id="logs-tab">
+        <a href="admin_logs.html"><img src="/resources/icons/logs.png" alt="logs">Logs</a>
+    </div>
+      <div class="tab" id="settings-tab">
+        <a href="admin_settings.html"
+          ><img src="/resources/icons/settings.png" alt="settings" />Settings</a
+        >
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Totals Section -->
+      <div class="totals-container">
+        <h2 class="section-title">Totals</h2>
+        <div class="cards-container">
+          <div class="card">
+            <h3><i class="fas fa-hand-holding-heart"></i> NGO Count Total</h3>
+            <div class="data-value" id="ngoCounterValue">0</div>
+          </div>
+          <div class="card">
+            <h3><i class="fas fa-building"></i> Establishments Total Count</h3>
+            <div class="data-value" id="establishmentsCounterValue">0</div>
+          </div>
+          <div class="card">
+            <h3><i class="fas fa-venus-mars"></i> Gender Count</h3>
+            <div class="data-value" id="maleCounterValue">0</div>
+            <div class="data-value" id="femaleCounterValue">Female: 0</div>
+          </div>
+          <div class="card">
+            <h3><i class="fas fa-users"></i> Total Population</h3>
+            <div class="data-value" id="totalPopulationValue">0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Section -->
+      <div class="charts-container">
+        <h2 class="section-title">Charts</h2>
+        <div class="cards-container">
+          <div class="card">
+            <h3>NGO Counter Distribution</h3>
+            <div class="chart-container"><canvas id="pieChart"></canvas></div>
+          </div>
+          <div class="card">
+            <h3>Establishments Count Distribution</h3>
+            <div class="chart-container">
+              <canvas id="columnChart"></canvas>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Gender Distribution</h3>
+            <div class="chart-container">
+              <canvas id="genderBarChart"></canvas>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Marital Status Distribution</h3>
+            <div class="chart-container">
+              <canvas id="maritalBarChart"></canvas>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Employment Status Distribution</h3>
+            <div class="chart-container">
+              <canvas id="horizontalBarChart"></canvas>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Population Distribution</h3>
+            <div class="chart-container">
+              <canvas id="populationBarChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loader -->
+    <div id="loader-container" style="display: none">
+      <div class="loader"></div>
+    </div>
+  </div>
+    <!-- Scripts -->
+    <script type="module">
+      //=======================TOGGLE DROPDOWN========================//
+      function toggleDropdown() {
+        var dropdownMenu = document.getElementById("dropdownMenu");
+        dropdownMenu.classList.toggle("show");
+      }
+
+      function hideDropdown() {
+        var dropdownMenu = document.getElementById("dropdownMenu");
+        dropdownMenu.classList.remove("show");
+      }
+
+      window.addEventListener("click", function (event) {
+        if (!event.target.closest(".toggle-menu")) {
+          hideDropdown();
+        }
+      });
+
+      window.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+          hideDropdown();
+        }
+      });
+
+      window.addEventListener("wheel", function (event) {
+        hideDropdown();
+      });
+
+      document
+        .querySelector(".toggle-menu")
+        .addEventListener("click", toggleDropdown);
+
+      import { checkAuth } from "/js/authadmin.js";
+      checkAuth();
+
+      const notificationIndicator = document.getElementById(
+        "notificationIndicator"
+      );
+
+      function updateNotificationIndicator(count) {
+        if (count > 0) {
+          notificationIndicator.textContent = count;
+          notificationIndicator.style.display = "inline";
+        } else {
+          notificationIndicator.style.display = "none";
+        }
+      }
+
+      document.querySelector(".notification-icon").classList.add("show");
+      document.querySelector(".notification-icon").classList.remove("show");
+
+      function updateDate() {
+        const currentDate = new Date();
+        const options = {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+        };
+        document.getElementById("current-date").textContent =
+          currentDate.toLocaleDateString("en-US", options);
+        const userContainer = document.getElementById("current-user");
+        userContainer.textContent =
+          "Welcome, " +
+          currentUser +
+          " | " +
+          currentDate.toLocaleDateString("en-US", options);
+      }
+
+      window.onload = function () {
+        updateDate();
+      };
+    </script>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
+    <script type="module" src="/js/admin_dashboard.js"></script>
+    <!-- <script type="module" src="/js/script.js"></script>
+    <script type="module" src="/js/sessionManager.js"></script>
+    <script type="module" src="/js/logOut.js"></script>
+    <script src="/js/qrcode.min.js"></script> -->
+
+    <script type="module" src="js/admin_auth.js"></script>
+    <script type="module" src="/js/script.js"></script>
+    <script type="module" src="/js/sessionManager.js"></script>
+    <script type="module" src="/js/logOut.js"></script>
+    <script type="module" src="/js/admin_logs.js"></script>
+
+    <script src="/js/qrcode.min.js"></script>
+  </body>
+</html>

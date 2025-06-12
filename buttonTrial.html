@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disable Button Example</title>
+    <link rel="stylesheet" href="#">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .message {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button id="myButton">Click Me!</button>
+        <div class="message" id="message"></div>
+    </div>
+    
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+        import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+        import { getAuth } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBDp03_t7kWck8XTT9iqv3SIX8UqFp_C6w",
+            authDomain: "bims-9aaa7.firebaseapp.com",
+            projectId: "bims-9aaa7",
+            storageBucket: "bims-9aaa7.appspot.com",
+            messagingSenderId: "323333588672",
+            appId: "1:323333588672:web:cfb7ea2dff4d9eb2004f25",
+            measurementId: "G-RQJBMNMFQ8"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+        const button = document.getElementById("myButton");
+        const messageDiv = document.getElementById("message");
+
+        const buttonDocRef = doc(db, "buttons", "myButton"); // Reference to Firestore document
+
+        // Function to check button status
+        async function checkButtonStatus() {
+            const docSnap = await getDoc(buttonDocRef);
+            const currentTime = new Date().getTime();
+            
+            if (docSnap.exists()) {
+                const { clickedAt } = docSnap.data();
+                if (clickedAt) {
+                    const clickedAtTime = clickedAt.toMillis();
+                    const sixMonthsInMillis = 6 * 30 * 24 * 60 * 60 * 1000; // Approximation
+                    const reactivationTime = clickedAtTime + sixMonthsInMillis;
+                    
+                    if (currentTime < reactivationTime) {
+                        displayCountdown(reactivationTime);
+                        return;
+                    }
+                }
+            }
+            messageDiv.textContent = ""; // Clear message if no restrictions
+        }
+
+        // Function to display the countdown message
+        function displayCountdown(reactivationTime) {
+            const reactivationDate = new Date(reactivationTime);
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            messageDiv.textContent = "You can use this button again on " + reactivationDate.toLocaleDateString(undefined, options);
+
+            // Update every second
+            const interval = setInterval(() => {
+                const currentTime = new Date().getTime();
+                if (currentTime >= reactivationTime) {
+                    clearInterval(interval);
+                    messageDiv.textContent = ""; // Clear message when time is up
+                } else {
+                    const timeRemaining = reactivationTime - currentTime;
+                    const daysRemaining = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+                    const hoursRemaining = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutesRemaining = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+                    // messageDiv.textContent = `You can use this button again in ${daysRemaining} days, ${hoursRemaining} hours, and ${minutesRemaining} minutes.`;
+                }
+            }, 1000);
+        }
+
+        // Function to handle button click
+        async function handleClick() {
+            const clickedAt = serverTimestamp(); // Set the timestamp when clicked
+            await setDoc(buttonDocRef, { clickedAt });
+            displayCountdown(new Date().getTime() + 6 * 30 * 24 * 60 * 60 * 1000); // Approximation
+        }
+
+        // Check button status on page load
+        checkButtonStatus();
+
+        // Add event listener to the button
+        button.addEventListener("click", handleClick);
+    </script>
+</body>
+</html>

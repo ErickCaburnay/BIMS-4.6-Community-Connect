@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Barangay Information Management System</title>
+    <link rel="stylesheet" href="/styles/mainstyle.css" />
+    <!-- <link rel="stylesheet" href="/styles/admin_bbi.css" /> -->
+    <link rel="stylesheet" href="/styles/admin_notification.css" />
+    <link rel="stylesheet" href="/styles/loader.css" />
+    <link rel="stylesheet" href="/styles/admin_bbi 1.css" />
+    <style></style>
+    <script type="module" src="/js/admin_bbi.js"></script>
+  </head>
+  <body>
+    <div class="emergency-container">
+      <div class="toggle-menu-container">
+        <!-- <h1>Community - Connect: A Web-Based Platform for Barangay San Antonio De Padua I Information Management
+                System</h1> -->
+        <h1>Community-Connect</h1>
+      </div>
+      <div class="emergency-right">
+        <div class="current-date">
+          <p id="current-date"></p>
+        </div>
+      </div>
+      <div class="header-icons">
+        <h1></h1>
+        <div class="icons">
+          <div class="notification-wrapper">
+            <div class="notification-icon" id="notificationIcon">
+              <img src="/resources/icons/bell (2).png" alt="Bell" />
+              <span class="notification-count" id="notificationCount"></span>
+            </div>
+            <div class="notification-dropdown" id="notificationDropdown">
+              <ul id="notificationList"></ul>
+            </div>
+          </div>
+        </div>
+        <div class="icons">
+          <img src="/resources/icons/question.png" alt="Help Circle" />
+        </div>
+        <div class="icons">
+          <button class="toggle-menu" onclick="toggleDropdown()">
+            <img src="/resources/icons/account.png" alt="User" />
+          </button>
+        </div>
+
+        <div class="icons">
+          <p><span id="current-user"></span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="dropdown-menu" id="dropdownMenu">
+      <div class="dropdown-item" onclick="editProfile()">
+        Edit Admin Profile
+      </div>
+      <div class="dropdown-item" onclick="changePassword()">
+        Change Password
+      </div>
+      <div class="dropdown-item" onclick="logout()">Logout</div>
+    </div>
+
+    <div class="sidebar">
+      <div class="logo-above-sidebar">
+        <img
+          src="/resources/logo.png"
+          alt="Logo"
+          class="logo"
+          width="150"
+          height="150"
+        />
+        <h1>San Antonio De Padua I</h1>
+      </div>
+      <div class="tab" id="dashboard-tab">
+        <a href="admin_dashboard.html"
+          ><img
+            src="/resources/icons/dashboard_icon2.png"
+            alt="Dashboard"
+          />Dashboard</a
+        >
+      </div>
+      <div
+        class="tab"
+        id="officials-tab"
+        class="restricted"
+        data-role="Top Level Admin"
+      >
+        <a href="admin_officials.html"
+          ><img src="/resources/icons/gov.png" alt="officials" />Brgy
+          Officials</a
+        >
+      </div>
+      <div class="tab" id="residents-tab">
+        <a href="admin_resident_records.html"
+          ><img src="/resources/icons/users.png" alt="Records" />Residents
+          Records</a
+        >
+      </div>
+      <div class="tab" id="household-tab">
+        <a href="admin_household_records.html"
+          ><img
+            src="/resources/icons/household.png"
+            alt="Records"
+          />Household</a
+        >
+      </div>
+      <div class="tab" id="bbi-tab">
+        <a href="admin_bbi.html"
+          ><img src="/resources/icons/bldg.png" alt="bbi" />BBI</a
+        >
+      </div>
+      <div class="tab" id="reports-tab">
+        <a href="admin_reports.html"
+          ><img src="/resources/icons/reports.png" alt="reports" />Reports</a
+        >
+      </div>
+      <div class="tab" id="requests-tab">
+        <a href="admin_requests.html"
+          ><img src="/resources/icons/document.png" alt="Requests" />Requests
+          <span id="notificationIndicator"></span
+        ></a>
+      </div>
+      <div class="tab" id="complaints-tab">
+        <a href="admin_complaints.html"
+          ><img
+            src="/resources/icons/complaint.png"
+            alt="complaints"
+          />Complaints
+          <div class="notification-icon">
+            <!-- <img src="/resources/bell.png" alt="Notification"> -->
+            <span class="notification-count" id="notificationCount">0</span>
+          </div>
+        </a>
+      </div>
+      <!-- <div class="tab" id="document-forms-tab">
+            <a href="admin_document_forms.html"><img src="/resources/forms_icon.svg" alt="forms">Document Forms</a>
+        </div> -->
+      <div class="tab" id="settings-tab">
+        <a href="admin_settings.html"
+          ><img src="/resources/icons/settings.png" alt="settings" />Settings</a
+        >
+      </div>
+    </div>
+    <div class="tabs-container">
+      <div class="tabs-block">
+        <div id="tabs-section" class="tabs">
+          <ul class="tab-head">
+            <li>
+              <a href="#tab-1" class="tab-link active"
+                ><span class="tab-label">BHC</span></a
+              >
+            </li>
+            <li>
+              <a href="#tab-2" class="tab-link"
+                ><span class="tab-label">BPOC</span></a
+              >
+            </li>
+            <li>
+              <a href="#tab-3" class="tab-link"
+                ><span class="tab-label">BDRRMC</span></a
+              >
+            </li>
+            <li>
+              <a href="#tab-4" class="tab-link"
+                ><span class="tab-label">BPFSDC</span></a
+              >
+            </li>
+            <li>
+              <a href="#tab-5" class="tab-link"
+                ><span class="tab-label">BNC</span></a
+              >
+            </li>
+            <li>
+              <a href="#tab-6" class="tab-link"
+                ><span class="tab-label">BADAC</span></a
+              >
+            </li>
+            <li>
+              <a href="#tab-7" class="tab-link"
+                ><span class="tab-label">BSWMC</span></a
+              >
+            </li>
+            <li>
+              <a href="#tab-8" class="tab-link"
+                ><span class="tab-label">BCPC</span></a
+              >
+            </li>
+          </ul>
+
+          <!--------------- BHC ------------------->
+          <section id="tab-1" class="tab-body active">
+            <h1>Barangay Health Council</h1>
+            <button id="bhc-btn" class="post-activity-btn">
+              Activity Scheduling
+            </button>
+
+            <div id="schedulePopup" class="schedule-popup">
+              <div class="popup-content">
+                <span class="close-btn">&times;</span>
+                <h2>Schedule Health Activity</h2>
+                <form id="scheduleForm">
+                  <div class="form-group">
+                    <label for="activityType">Activity Type:</label>
+                    <select id="activityType" required>
+                      <option value="">Select an activity...</option>
+                      <option value="vaccination">Vaccination Program</option>
+                      <option value="checkup">Free Medical Check-up</option>
+                      <option value="circumcision">Circumcision Program</option>
+                      <option value="dental">Dental Mission</option>
+                      <option value="custom">Custom Activity</option>
+                    </select>
+                  </div>
+
+                  <div
+                    id="customTitleContainer"
+                    class="form-group"
+                    style="display: none"
+                  >
+                    <label for="customTitle">Custom Title:</label>
+                    <input type="text" id="customTitle" />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="description">Description:</label>
+                    <textarea id="description" required></textarea>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="date">Date:</label>
+                    <input type="date" id="date" required />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="startTime">Start Time:</label>
+                    <input type="time" id="startTime" required />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="endTime">End Time:</label>
+                    <input type="time" id="endTime" required />
+                  </div>
+
+                  <button type="submit">Schedule Activity</button>
+                </form>
+
+                <!-- Activities Scheduled Section -->
+                <div class="activities-scheduled">
+                  <h3>Activities Scheduled</h3>
+                  <div id="activitiesListContainer">
+                    <!-- Activities will be displayed here -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!--------------- BPOC ------------------->
+
+          <section id="tab-2" class="tab-body">
+            <h1>Barangay Peace and Order Council</h1>
+            <button
+              id="bpoc-btn"
+              class="post-activity-btn"
+              onclick="window.location.href = 'bbi_tanod_scheduling.html'"
+            >
+              Patrol
+            </button>
+          </section>
+
+          <!--------------- BDRRMC ------------------->
+          <section id="tab-3" class="tab-body">
+            <h1>Barangay Disaster Risk Reduction Management Council</h1>
+            <button id="bdrrmc-btn" class="post-activity-btn">
+              Activity Scheduling
+            </button>
+          </section>
+
+          <!--------------- BPFSDC ------------------->
+          <section id="tab-4" class="tab-body">
+            <h1>Barangay Physical Fitness and Sports Development Council</h1>
+            <button id="bpfsdc-btn" class="post-activity-btn">
+              Activity Scheduling
+            </button>
+          </section>
+
+          <!--------------- BNC ------------------->
+          <section id="tab-5" class="tab-body">
+            <h1>Barangay Nutrition Council</h1>
+            <button id="bnc-btn" class="post-activity-btn">
+              Activity Scheduling
+            </button>
+          </section>
+
+          <!--------------- BADAC ------------------->
+          <section id="tab-6" class="tab-body">
+            <h1>Barangay Anti-Drug Abuse Council</h1>
+            <button id="badac-btn" class="post-activity-btn">
+              Activity Scheduling
+            </button>
+          </section>
+
+          <!--------------- BSWMC ------------------->
+          <section id="tab-7" class="tab-body">
+            <h1>Barangay Solid Waste Management Council</h1>
+            <button id="bswmc-btn" class="post-activity-btn">
+              Activity Scheduling
+            </button>
+          </section>
+
+          <!--------------- BCPC ------------------->
+          <section id="tab-8" class="tab-body">
+            <h1>Barangay Council for the Protection of Children</h1>
+            <button id="bcpc-btn" class="post-activity-btn">
+              Activity Scheduling
+            </button>
+          </section>
+        </div>
+      </div>
+    </div>
+    <!--==============================================PATROL SCHEDULING===================================================-->
+    <!--<div id="overlay" class="overlay"></div>
+<div id="schedule-popup" class="sched-popup">
+    <div class="popup-content">
+        <span class="close-button" onclick="closeSchedPopup('schedule-popup')">×</span>
+        <h2>Patrol Schedule</h2>
+        <table>
+            <thead>
+                <tr>                    
+                    <th>Tanod 1</th>
+                    <th>Tanod 2</th>
+                    <th>Tanod 3</th>
+                    <th>Tanod 4</th>
+                    <th>Tanod 5</th>
+                    <th>Tanod 6</th>
+                    <th>Tanod 7</th>
+                    <th>Tanod 8</th>
+                </tr>
+            </thead>
+            <tbody>
+                -- Example row --
+                <tr>                    
+                    <td>June 1 (8:00am - 5:00pm)</td>
+                    <td>June 1 (8:00am - 5:00pm)</td>
+                    <td>June 1 (8:00am - 5:00pm)</td>
+                    <td>June 1 (8:00am - 5:00pm)</td>
+                    <td>June 1 (8:00am - 5:00pm)</td>
+                    <td>June 1 (8:00am - 5:00pm)</td>
+                    <td>June 1 (8:00am - 5:00pm)</td>
+                    <td>June 1 (8:00am - 5:00pm)</td>
+                </tr>
+                -- Add more rows as needed --
+            </tbody>
+        </table>
+        <div class="popup-buttons">
+            <button class="add-sched-button" onclick="addSchedule()">Add Schedule</button>
+            <button class="upd-sched-button" onclick="updateSchedule()">Update Schedule</button>
+        </div>
+    </div>
+</div>
+-->
+
+    <!-- ###### NOTIFICATION DETAILS ####### -->
+    <div
+      id="documentDetailspopup"
+      class="document-details-popup"
+      style="display: none"
+    >
+      <div class="document-details-content">
+        <span id="closePopup" class="close">&times;</span>
+        <h2>Resident's Update Request</h2>
+        <div id="detailsPopupContent">
+          <!-- Resident details will be loaded here dynamically -->
+          <p><strong>Full Name:</strong> <span id="residentName"></span></p>
+          <p><strong>Email:</strong> <span id="residentEmail"></span></p>
+          <p><strong>Requested Changes:</strong></p>
+          <ul id="changeRequestList"></ul>
+        </div>
+        <!-- <button id="approveBtn">Approve</button>
+        <button id="rejectBtn">Reject</button> -->
+      </div>
+    </div>
+
+    <script type="module" src="/js/script.js"></script>
+    <script type="module" src="/js/admin_notification.js"></script>
+    <script type="module" src="/js/firebaseConfig.js"></script>
+    <script type="module" src="/js/logOut.js"></script>
+
+    <script type="module" src="/js/admin_bbi 1.js"></script>
+
+    <script>
+      function toggleDropdown() {
+        document.getElementById("dropdownMenu").classList.toggle("show");
+      }
+
+      // Close the dropdown if the user clicks outside of it
+      window.onclick = function (event) {
+        if (!event.target.closest(".toggle-menu")) {
+          var dropdown = document.getElementById("dropdownMenu");
+          if (dropdown.classList.contains("show")) {
+            dropdown.classList.remove("show");
+          }
+        }
+      };
+
+      function handleLogout() {
+        logout();
+        toggleDropdown();
+      }
+    </script>
+
+    <script type="module">
+      import { checkAuth } from "/js/authadmin.js";
+      checkAuth();
+
+      const notificationIndicator = document.getElementById(
+        "notificationIndicator"
+      );
+
+      function updateNotificationIndicator(count) {
+        if (count > 0) {
+          notificationIndicator.textContent = count;
+          notificationIndicator.style.display = "inline";
+        } else {
+          notificationIndicator.style.display = "none";
+        }
+      }
+
+      document.querySelector(".notification-icon").classList.add("show");
+      document.querySelector(".notification-icon").classList.remove("show");
+
+      function updateDate() {
+        const currentDate = new Date();
+        const options = {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+        };
+        document.getElementById("current-date").textContent =
+          currentDate.toLocaleDateString("en-US", options);
+        const userContainer = document.getElementById("current-user");
+        userContainer.textContent =
+          "Welcome, " +
+          currentUser +
+          " | " +
+          currentDate.toLocaleDateString("en-US", options);
+      }
+
+      window.onload = function () {
+        updateDate();
+      };
+    </script>
+
+    <script src="/js/script.js"></script>
+    <script>
+      /*==========================================SCHEDULE POPUP==================================================*/
+      function openSchedPopup(popupId) {
+        document.getElementById(popupId).style.display = "block";
+        document.getElementById("overlay").style.display = "block";
+      }
+
+      function closeSchedPopup(popupId) {
+        document.getElementById(popupId).style.display = "none";
+        document.getElementById("overlay").style.display = "none";
+      }
+
+      /*==========================================================================================================*/
+      function openPopup() {
+        document.getElementById("bbi-popup-container").style.display = "flex";
+      }
+
+      function closePopup() {
+        document.getElementById("bbi-popup-container").style.display = "none";
+      }
+
+      window.onload = function () {
+        updateDate();
+      };
+    </script>
+  </body>
+</html>

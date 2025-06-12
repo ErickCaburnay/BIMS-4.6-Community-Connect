@@ -1,0 +1,599 @@
+<!-- ######## ADMIN_REQUESTS.HTML ######### -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barangay Information Management System</title>
+    <link rel="stylesheet" href="../styles/mainstyle.css"> <!--"/"-->
+    <link rel="stylesheet" href="../styles/admin_requests.css">
+    <link rel="stylesheet" href="../styles/admin_requests_clearance.css">
+    <!-- <link rel="stylesheet" href="../styles/admin_requests_printdoc.css"> -->
+    <link rel="stylesheet" href="../styles/admin_notification.css">
+    <link rel="stylesheet" href="../styles/loader.css"/>
+
+    <script src="https://cdn.jsdelivr.net/npm/docxtemplater@3.42.4/build/docxtemplater.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pizzip@3.1.4/dist/pizzip.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pizzip@3.1.4/dist/pizzip-utils.min.js"></script>
+</head>
+
+<style>
+    .sortable {
+        cursor: pointer;
+        user-select: none;
+        position: relative;
+    }
+
+    .sortable:hover {
+        background-color: #094d7f;
+    }
+
+    .sort-indicator {
+        margin-left: 5px;
+        font-size: 0.8em;
+    }
+
+    .sortable:hover::after {
+        content: '▲▼';
+        position: absolute;
+        right: 5px;
+        opacity: 0.3;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div class="emergency-container">
+            <div class="toggle-menu-container">
+                <h1>Community-Connect</h1>
+            </div>
+            <div class="emergency-right">
+                <div class="current-date">
+                    <p id="current-date"></p>
+                </div>
+            </div>
+            <div class="header-icons">
+                <h1></h1>
+                <div class="icons">
+                    <div class="notification-wrapper">
+                        <div class="notification-icon" id="notificationIcon"> 
+                            <img src="../resources/icons/bell (2).png" alt="Bell" /> <!--"/"-->
+                            <span class="notification-count" id="notificationCount"></span>
+                        </div>
+                        <div class="notification-dropdown" id="notificationDropdown">
+                            <ul id="notificationList"></ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="icons">
+                    <img src="../resources/icons/question.png" alt="Help Circle" />
+                </div>
+                <div class="icons">
+                    <button class="toggle-menu" onclick="toggleDropdown()">
+                        <img src="../resources/icons/account.png" alt="User" />
+                    </button>
+                </div>
+
+                <div class="icons">
+                    <p><span id="current-user"></span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="dropdown-menu" id="dropdownMenu">
+            <div class="dropdown-item" onclick="editProfile()">Edit Admin Profile</div>
+            <div class="dropdown-item" onclick="changePassword()">Change Password</div>
+            <div class="dropdown-item" onclick="logout()">Logout</div>
+        </div>
+
+        <div class="sidebar">
+            <div class="logo-above-sidebar">
+                <img src="../resources/logo.png" alt="Logo" class="logo" width="150" height="150"> <!--"/"-->
+                <h1>San Antonio De Padua I</h1>
+            </div>
+            <div class="tab" id="dashboard-tab">
+                <a href="admin_dashboard.html"><img src="../resources/icons/dashboard_icon2.png" alt="Dashboard">Dashboard</a>
+            </div>
+            <div class="tab" id="officials-tab" class="restricted" data-role="Top Level Admin">
+                <a href="admin_officials.html"><img src="../resources/icons/gov.png" alt="officials">Brgy Officials</a>
+            </div>
+            <div class="tab" id="residents-tab">
+                <a href="admin_resident_records.html"><img src="../resources/icons/users.png" alt="Records">Residents
+                    Records</a>
+            </div>
+            <div class="tab" id="household-tab">
+                <a href="admin_household_records.html"><img src="../resources/icons/household.png" alt="Records">Household</a>
+            </div> 
+            <div class="tab" id="bbi-tab">
+                <a href="admin_bbi.html"><img src="../resources/icons/bldg.png" alt="bbi">BBI</a>
+            </div>
+            <div class="tab" id="reports-tab">
+                <a href="admin_reports.html"><img src="../resources/icons/reports.png" alt="reports">Reports</a>
+            </div>
+            <div class="tab" id="requests-tab">
+                <a href="admin_requests.html"><img src="../resources/icons/document.png" alt="Requests">Requests
+                </a>
+            </div>
+            <div class="tab" id="complaints-tab">
+                <a href="admin_complaints.html"><img src="../resources/icons/complaint.png" alt="complaints">Complaints
+                    
+                </a>
+            </div>
+            <div class="tab" id="logs-tab">
+                <a href="admin_logs.html"><img src="../resources/icons/logs_icon.png" alt="logs">Logs</a>
+              </div>
+            
+            <div class="tab" id="settings-tab">
+                <a href="admin_settings.html"><img src="../resources/icons/settings.png" alt="settings">Settings</a>
+            </div>
+        </div>
+
+        <div class="main-container">
+            <div class="barangay-requests">
+                <h1>Barangay Document Requests</h1>
+                <div class="search-container">
+                    <button class="button" id="applyRequest">Apply</button>
+                    <input type="text" class="search-input" id="search-requests" placeholder="Search...">
+                    <button class="search-button">Search</button>
+                    <button class="clear-button">Clear</button>
+                    <div class="sort-controls">
+                        <select id="sortOrder" class="sort-select">
+                            <option value="desc">Newest First</option>
+                            <option value="asc">Oldest First</option>
+                        </select>
+                    </div>
+                </div>
+
+                <table id="requestsTable">
+                    <thead>
+                        <tr>
+                            <th>Transaction No</th>
+                            <th>Date Filed</th>
+                            <th>Name of Applicant</th>
+                            <th>Purpose</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Date Issued</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+                <div id="showingEntries"></div>
+                <div id="paginationControls" class="pagination"></div>
+                <!-- <div id="pagination">
+                    <button id="prevButton" disabled>⟨⟨</button>
+                    <span id="pageInfo">Page 1</span>
+                    <button id="nextButton">⟩⟩</button>
+                </div>
+                <div class="showing-entries" id="showingEntries"></div> -->
+            </div>
+        </div>
+    </div>
+
+
+    <div class="popup-overlay" id="documentPopup">
+        <div class="popup-window">
+            <h2 class="popup-title">Select Barangay Document</h2>
+            <div class="document-buttons">
+                <button class="document-button" id="applyBrgyClearance">Barangay Clearance</button>
+                <button class="document-button" id="applyBrgyCertificate">Barangay Certificate</button>
+                <button class="document-button" id="applyBrgyIndigency">Barangay Indigency</button>
+            </div>
+            <button class="doc-close-button" id="closePopup">Close</button>
+        </div>
+    </div>
+
+    <!-- ##### CLEARANCE FORM POPUP CONTAINER ##### -->
+    <div id="overlay" class="overlay">
+        <div class="clearance-popup-container" id="clearancePopupContainer">
+            <div class="blurred-background"></div>
+            <button id="clearanceCloseButton" class="close-button">&times;</button>
+            <h3 class="form-title">Barangay Clearance Form</h3>
+            <h6 class="form-subtitle">Please fill out the form</h6>
+
+            <form id="clearanceForm">
+                <div class="form-group">
+                    <label for="clearanceUniqueId">Unique ID:</label>
+                    <div class="button-container-id">
+                        <input type="text" id="clearanceUniqueId" placeholder="e.g. SADPI-000001">
+                        <button type="button" id="fetchClearanceUserData">Fetch Data</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="clearanceName">Full Name:</label>
+                    <input type="text" id="clearanceName">
+                </div>
+                <div class="form-group">
+                    <label for="clearanceAge">Age:</label>
+                    <input type="number" id="clearanceAge">
+                </div>
+                <div class="form-group">
+                    <label for="clearanceBlklot">Block/Lot:</label>
+                    <input type="text" id="clearanceBlklot">
+                </div>
+                <!-- <div class="form-group">
+                    <label for="clearanceStreet">Street:</label>
+                    <input type="text" id="clearanceStreet">
+                </div> -->
+                <div class="form-group-two">
+                    <label for="clearanceIssueDate">Issue Date:</label>
+                    <input type="date" id="clearanceIssueDate" required>
+
+                    <label for="clearancePurpose">Purpose:</label>
+                    <select id="clearancePurpose" required>
+                        <option value="">Select a purpose</option>
+                        <option value="EMPLOYMENT">EMPLOYMENT</option>
+                        <option value="BANK ACCOUNT OPENING">BANK ACCOUNT OPENING</option>
+                        <option value="POLICE CLEARANCE APPLICATION">POLICE CLEARANCE</option>
+                        <option value="SCHOOL REQUIREMENTS">SCHOOL REQUIREMENTS</option>
+                        <option value="LOAN APPLICATION">LOAN APPLICATION</option>
+                    </select>
+                </div>
+                
+                <div class="button-container">
+                    <button type="button" id="printClearance">Print Clearance</button>
+                    <button type="button" id="clearanceCancelButton">Cancel</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+  
+    <div id="confirmationPopup" class="popup">
+        <div class="popup-content">
+            <h3>Confirmation</h3>
+            <p>Are you sure you want to save and print the barangay clearance?</p>
+            <div class="button-container">
+                <button id="proceedButton">Proceed</button>
+                <button id="confirmationCancelButton">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ##### CERTIFICATE FORM POPUP CONTAINER ##### -->
+
+    <div id="certificateOverlay" class="overlay">
+        <div class="certificate-popup-container" id="certificatePopupContainer">
+            <div class="blurred-background"></div>
+            <button id="certificateCloseButton" class="close-button">&times;</button>
+            <h3 class="form-title">Barangay Certificate Form</h3>
+            <h6 class="form-subtitle">Please fill out the form</h6>
+
+            <form id="certificateForm">
+                <div class="form-group">
+                    <label for="uniqueId">Unique ID:</label>
+                    <div class="button-container-id">
+                        <input type="text" id="certificateUniqueId" placeholder="e.g. SADPI-000001">
+                        <button type="button" id="fetchCertificateUserData">Fetch Data</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="name">Full Name:</label>
+                    <input type="text" id="certificateName">
+                </div>
+                <div class="form-group">
+                    <label for="age">Age:</label>
+                    <input type="number" id="certificateAge">
+                </div>
+                <div class="form-group">
+                    <label for="blklot">Block/Lot:</label>
+                    <input type="text" id="certificateBlklot">
+                </div>
+                <!-- <div class="form-group">
+                    <label for="street">Street:</label>
+                    <input type="text" id="certificateStreet">
+                </div> -->
+                <div class="form-group">
+                    <label for="certificatePurpose">Purpose:</label>
+                    <select id="certificatePurpose" required>
+                        <option value="">Select a purpose</option>
+                        <option value="PROOF OF RESIDENCY">PROOF OF RESIDENCY</option>
+                        <option value="GOOD MORAL CERTIFICATE">GOOD MORAL</option>
+                        <option value="NO PENDING CASE CERTIFICATE">NO PENDING CASE</option>
+                        <option value="PROPERTY VERIFICATION">PROPERTY VERIFICATION</option>
+                        <option value="LEGAL DOCUMENT">LEGAL DOCUMENT</option>
+                    </select>
+                    
+                </div>
+                <div class="form-group-two">
+                    <label for="date-of-residency">Date of Residency:</label>
+                    <input type="date" id="certificateDateOfResidency">
+
+                    <label for="issueDate">Issue Date:</label>
+                    <input type="date" id="certificateIssueDate" required>                    
+                </div>
+                
+                <div class="button-container">
+                    <button type="button" id="printCertificate">Print Certificate</button>
+                    <button type="button" id="certificateCancelButton">Cancel</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    </div>
+
+    <div id="certificateConfirmationPopup" class="popup">
+        <div class="popup-content">
+            <h3>Confirmation</h3>
+            <p>Are you sure you want to save and print the barangay certificate?</p>
+            <div class="button-container">
+                <button id="proceedButtonCertificate">Proceed</button>
+                <button id="confirmationCancelButtonCertificate">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ##### INDIGENCY FORM POPUP CONTAINER ##### -->
+
+    <div id="indigencyOverlay" class="overlay">
+        <div class="indigency-popup-container" id="indigencyPopupContainer">
+            <div class="blurred-background"></div>
+            <button id="indigencyCloseButton" class="close-button">&times;</button>
+            <h3 class="form-title">Barangay Indigency Form</h3>
+            <h6 class="form-subtitle">Please fill out the form</h6>
+
+            <form id="indigencyForm">
+                <div class="form-group">
+                    <label for="uniqueId">Unique ID:</label>
+                    <div class="button-container-id">
+                        <input type="text" id="indigencyUniqueId" placeholder="e.g. SADPI-000001">
+                        <button type="button" id="fetchIndigencyUserData">Fetch Data</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="name">Full Name:</label>
+                    <input type="text" id="indigencyName">
+                </div>
+                <div class="form-group">
+                    <label for="age">Age:</label>
+                    <input type="number" id="indigencyAge">
+                </div>
+                <div class="form-group">
+                    <label for="blklot">Block/Lot:</label>
+                    <input type="text" id="indigencyBlklot">
+                </div>
+                <!-- <div class="form-group">
+                    <label for="street">Street:</label>
+                    <input type="text" id="indigencyStreet">
+                </div> -->
+                <div class="form-group-two">
+
+                    <label for="issueDate">Issue Date:</label>
+                    <input type="date" id="indigencyIssueDate" required>
+
+                    <label for="indigencyPurpose">Purpose:</label>
+                    <select id="indigencyPurpose" required>
+                        <option value="">Select a purpose</option>
+                        <option value="MEDICAL ASSISTANCE">MEDICAL ASSISTANCE</option>
+                        <option value="EDUCATIONAL ASSISTANCE">EDUCATIONAL ASSISTANCE</option>
+                        <option value="BURIAL ASSISTANCE">BURIAL ASSISTANCE</option>
+                        <option value="SOCIAL SERVICES BENEFITS">SOCIAL SERVICES BENEFITS</option>
+                        <option value="LEGAL AID APPLICATION">LEGAL AID APPLICATION</option>
+                    </select>                    
+                </div>
+                
+                <div class="button-container">
+                    <button type="button" id="printIndigency">Print Indigency</button>
+                    <button type="button" id="indigencyCancelButton">Cancel</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <div id="indigencyConfirmationPopup" class="popup">
+        <div class="popup-content">
+            <h3>Confirmation</h3>
+            <p>Are you sure you want to save and print the barangay certificate?</p>
+            <div class="button-container">
+                <button id="proceedButtonIndigency">Proceed</button>
+                <button id="confirmationCancelButtonIndigency">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- POPUP WINDOW FOR UPDATE RESIDENT RECORD -->
+    <div id="documentDetailspopup" class="document-details-popup" style="display:none;">
+        <div class="document-details-content">
+            <span id="closePopup" class="close">&times;</span>
+            <h2>Resident's Update Request</h2>
+            <div id="detailsPopupContent">
+                <!-- Resident details will be loaded here dynamically -->
+                <p><strong>Full Name:</strong> <span id="residentName"></span></p>
+                <p><strong>Email:</strong> <span id="residentEmail"></span></p>
+                <p><strong>Requested Changes:</strong></p>
+                <ul id="changeRequestList"></ul>
+            </div>
+            <!-- <button id="approveBtn">Approve</button>
+            <button id="rejectBtn">Reject</button> -->
+        </div>
+    </div>
+
+    <div id="loader-container" style="display: none;">
+        <div class="loader"></div>
+    </div>
+
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/docxtemplater@3.42.4/build/docxtemplater.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pizzip@3.1.4/dist/pizzip.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pizzip@3.1.4/dist/pizzip-utils.min.js"></script>
+
+    <script type="module" src="../js/firebaseConfig.js"></script>
+    <script type="module" src="../js/admin_auth.js"></script> <!--"/"-->
+    <script type="module" src="../js/script.js"></script>
+    <script type="module" src="../js/sessionManager.js"></script>
+
+    <!-- <script type="module" src="../js/admin_notification.js"></script> -->
+    <script type="module" src="../js/admin_request_notif.js"></script>
+    <script type="module" src="../js/admin_requests.js"></script>
+    <!-- <script type="module" src="../js/admin_requests_clearance.js"></script>
+    <script type="module" src="../js/admin_requests_certificate.js"></script>
+    <script type="module" src="../js/admin_requests_indigency.js"></script> -->
+
+    <script type="module" src="../js/logOut.js"></script>
+
+    <script type="module">
+        import { db } from '../js/firebaseConfig.js';
+        import { initializeNotifications } from '../js/admin_request_notif.js';
+        initializeNotifications(db);
+    </script>
+
+    <script>    
+        function toggleDropdown() {
+            const dropdown = document.getElementById("dropdownMenu");
+            console.log("Toggle clicked");
+            console.log("Dropdown element:", dropdown);
+            console.log("Current classList:", dropdown ? dropdown.classList : "Element not found");
+            
+            if (dropdown) {
+                dropdown.classList.toggle("show");
+                console.log("New classList:", dropdown.classList);
+            } else {
+                console.error("Dropdown menu element not found");
+            }
+        }
+
+        function toggleDropdown() {
+            document.getElementById("dropdownMenu").classList.toggle("show");
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function (event) {
+            if (!event.target.closest('.toggle-menu')) {
+                var dropdown = document.getElementById("dropdownMenu");
+                if (dropdown.classList.contains('show')) {
+                    dropdown.classList.remove('show');
+                }
+            }
+        }
+
+        function updateDate() {
+            const currentDate = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+            document.getElementById('current-date').textContent = currentDate.toLocaleDateString('en-US', options);
+            const userContainer = document.getElementById('current-user');
+            userContainer.textContent = "Welcome, " + currentUser + " | " + currentDate.toLocaleDateString('en-US', options);
+        }
+
+        window.onload = function () {
+            updateDate();
+        };
+
+        function handleLogout() {
+            logout();
+            toggleDropdown();
+        }
+
+        document.getElementById('applyRequest').addEventListener('click', function () {
+            document.getElementById('documentPopup').style.display = 'flex';
+        });
+
+        document.getElementById('closePopup').addEventListener('click', function () {
+            document.getElementById('documentPopup').style.display = 'none';
+        });
+
+        // Function to show the Barangay Clearance popup
+        function showClearancePopup() {
+            document.getElementById('overlay').style.display = 'flex';
+            document.getElementById('clearancePopupContainer').style.display = 'block';
+            // Hide the document selection popup
+            document.getElementById('documentPopup').style.display = 'none';
+        }
+
+        function showCertificatePopup() {
+            document.getElementById('certificateOverlay').style.display = 'flex';
+            document.getElementById('certificatePopupContainer').style.display = 'block';
+
+            document.getElementById('documentPopup').style.display = 'none';
+        }
+
+        function showIndigencyPopup() {
+            document.getElementById('indigencyOverlay').style.display = 'flex';
+            document.getElementById('indigencyPopupContainer').style.display = 'block';
+
+            document.getElementById('documentPopup').style.display = 'none';
+        }
+
+        // Function to hide the Barangay Clearance popup
+        function hideClearancePopup() {
+            document.getElementById('overlay').style.display = 'none';
+            document.getElementById('clearancePopupContainer').style.display = 'none';
+        }
+
+        function hideCertificatePopup() {
+            document.getElementById('certificateOverlay').style.display = 'none';
+            document.getElementById('certificatePopupContainer').style.display = 'none';
+        }
+
+        function hideIndigencyPopup() {
+            document.getElementById('indigencyOverlay').style.display = 'none';
+            document.getElementById('indigencyPopupContainer').style.display = 'none';
+        }
+
+        // Add click event listener to the Barangay Clearance button
+        document.getElementById('applyBrgyClearance').addEventListener('click', showClearancePopup);
+        document.getElementById('applyBrgyCertificate').addEventListener('click', showCertificatePopup);
+        document.getElementById('applyBrgyIndigency').addEventListener('click', showIndigencyPopup);
+
+        document.getElementById('clearanceCloseButton').addEventListener('click', hideClearancePopup);
+        document.getElementById('clearanceCancelButton').addEventListener('click', hideClearancePopup);
+        document.getElementById('certificateCloseButton').addEventListener('click', hideCertificatePopup);
+
+        document.getElementById('certificateCancelButton').addEventListener('click', hideCertificatePopup);
+        document.getElementById('indigencyCloseButton').addEventListener('click', hideIndigencyPopup);
+        document.getElementById('indigencyCancelButton').addEventListener('click', hideIndigencyPopup);
+
+        // Optional: Close the popup when clicking outside of it
+        document.getElementById('overlay').addEventListener('click', function (event) {
+            if (event.target === this) {
+                hideClearancePopup();
+                hideCertificatePopup();
+                hideIndigencyPopup();
+            }
+        });
+
+        function closePopup() {
+            console.log("close button is clicked!");
+            const popup = document.getElementById('documentDetailspopup');
+            popup.style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("DOMContentLoaded event fired");
+
+            const closeButton = document.getElementById('documentDetailspopup');
+            if (closeButton) {
+                closeButton.addEventListener('click', closePopup);
+            }
+        });
+
+        // document.getElementById('closePopup').addEventListener('click', closePopup);        
+    </script>
+
+    <script type="module">
+        import { checkAuth } from './js/admin_auth.js';
+        checkAuth();        
+    </script>
+
+    <!-- <script type="module" src="/js/AdminSideNotif.js"></script> -->
+
+    <!-- <script type="module">
+        import { clearancePopup } from '/js/admin_request_clearance.js';
+        window.clearancePopup = clearancePopup;
+    </script>   
+     -->
+
+</body>
+
+</html>

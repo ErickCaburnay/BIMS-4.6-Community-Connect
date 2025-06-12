@@ -1,0 +1,111 @@
+ /* General OTP container styling */
+ .otp-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    max-width: 400px;
+    margin: 50px auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Error message styling */
+  #otp-error-message {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  /* Title styling */
+  .title {
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 15px;
+  }
+  
+  /* Input box container styling */
+  .input-box {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  /* Input styling */
+  .input-box input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+  
+  .input-box input:focus {
+    border-color: #4285f4;
+  }
+  
+  /* Input label styling */
+  .input-box label {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    color: #777;
+    transform: translateY(-50%);
+    pointer-events: none;
+    transition: all 0.3s ease;
+  }
+  
+  .input-box input:focus + label,
+  .input-box input:not(:placeholder-shown) + label {
+    top: -8px;
+    left: 10px;
+    font-size: 12px;
+    color: #4285f4;
+    background-color: #f5f5f5;
+    padding: 0 4px;
+  }
+  
+  /* Verify OTP button styling */
+  .verify-otp {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #4285f4;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .verify-otp:hover {
+    background-color: #357ae8;
+  }
+  
+  /* Basic container styling for reCAPTCHA */
+  #recaptcha-container {
+    display: none; /* Hidden initially since you are using invisible reCAPTCHA */
+    margin: 10px 0;
+    text-align: center; /* Center the reCAPTCHA container if needed */
+  }
+  
+  /* If you want to reveal the reCAPTCHA during debugging, remove 'display: none' */
+  .show-recaptcha #recaptcha-container {
+    display: block; /* Show the reCAPTCHA container when needed */
+  }
+  
+  /* Style if you are using reCAPTCHA in a visible state */
+  .recaptcha-visible {
+    border: 1px solid #ccc;
+    padding: 10px;
+    display: inline-block;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+  }

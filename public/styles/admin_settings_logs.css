@@ -1,0 +1,101 @@
+/* ################################### ADMIN_SETTINGS_LOGS.CSS ###################################### */
+
+/* General Logs Container */
+.logs-container {
+    background-color: transparent;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Header */
+.logs-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.logs-header h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #cdcdcd;
+    margin: 0;
+    text-align: center;
+    justify-self: center;
+    align-items: center;
+}
+
+.logs-header .search-logs {
+    width: 250px;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.logs-header .search-logs:focus {
+    border-color: #2196f3;
+    outline: none;
+    box-shadow: 0 0 5px rgba(33, 150, 243, 0.5);
+}
+
+/* Logs Table */
+.logs-table-container {
+    overflow-x: auto; /* For responsiveness */
+    border-top: 1px solid #e0e0e0;
+}
+
+.logs-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.logs-table thead th {
+    background-color: #094d7f;
+    color: #ffffff;
+    text-align: left;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.logs-table tbody tr {
+    border-bottom: 1px solid #e0e0e0;
+    transition: background-color 0.3s ease;
+}
+
+.logs-table tbody tr:hover {
+    background-color: #f1f9ff;
+}
+
+.logs-table tbody td {
+    padding: 12px;
+    color: #cdcdcd;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .logs-header h2 {
+        font-size: 20px;
+    }
+
+    .logs-header .search-logs {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .logs-header {
+        flex-wrap: wrap;
+    }
+
+    .logs-table thead th,
+    .logs-table tbody td {
+        padding: 8px;
+        font-size: 13px;
+    }
+}

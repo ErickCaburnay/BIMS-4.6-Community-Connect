@@ -1,0 +1,594 @@
+.main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    height: 80%;
+    margin-left: 200px;
+    position: relative;
+    top: 5%;
+}
+
+.profile-container {
+    background: #FFFFFF;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);  
+    background: linear-gradient(
+        to bottom right,
+        #042136,
+        #07385c,
+        #094d7f,
+        #0c6bb1,
+        #1095f7
+    );  
+    overflow: hidden;
+    width: 80%;
+    max-width: 1000px;
+    padding: 20px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    background: linear-gradient(
+  315deg,
+  #e6f3e6,
+  #c1e1c1,
+  #a3d1a3,
+  #85c185,
+  #6ab26a
+);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+#current-user {
+    margin-right: 30px;
+}
+
+.content-wrapper {
+    display: flex;
+    gap: 20px;
+    height: 200px;
+}
+
+.left-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    float: left;
+}
+
+.right-column {
+    flex: 1;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.profile {
+    background-color: #FFFFFF;
+    width: 50%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+}
+
+.profile img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 3px solid #eee;
+}
+
+.profile .file-input-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+#file-input {
+    display: none;
+}
+
+.camera-icon {
+    position: absolute;
+    top: 70%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 50%;
+    padding: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.camera-icon:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.qr-code img {
+    width: 80px;
+    height: 80px;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 3px solid #eee;
+    padding: 10px;
+}
+
+.unique-id {
+    display: flex;
+    font-size: 18px;
+    color: #cdcdcd;
+    font-size: 30px;
+}
+
+.unique-id label {
+    font-weight: bold;
+    margin-right: 5px;
+    font-size: 30px;
+}
+
+#personal-info {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+}
+
+.display-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 15px;
+    margin: 10px;
+}
+
+.display-group label {
+    flex: 0 0 50px;
+    font-weight: bold;
+    color: #cdcdcd;
+}
+
+.fullname-container {
+    display: block;
+    margin: 20px 0;
+}
+
+.display-fullname {
+    padding: 20px 0;
+    color: #cdcdcd;
+    font-size: 30px;
+}
+
+.styled-input {
+    flex: 1;
+    font-size: 16px;
+    color: #555;
+    background-color: #fff;
+    padding: 5px;
+    border-radius: 20px;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}
+
+#fullName {
+    width: 50%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 30px;
+}
+
+/* #address {
+    flex: 0 0 45%;
+}
+
+#suffix,
+#age {
+    flex: 0 0 5%;
+}
+
+#citizenship {
+    flex: 0 0 10%;
+}
+
+#gender,
+#voter {
+    flex: 0 0 10%;
+}
+
+label[for="display-voter"] {
+    flex: 0 0 15%;
+} */
+
+#update-btn {
+    display: block;
+    position: relative;
+    width: 10%;
+    font-size: 14px;
+    float: right;
+    top: 2%;
+    margin: 5px;
+    padding: 5px;
+    background-color: #094d7f;
+    color: #f0f0f0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#update-btn:hover {
+    background-color: #1095f7;
+}
+
+.inactive-submit {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+    }
+
+    .profile-container,
+    .container {
+        width: 90%;
+    }
+
+    .content-wrapper {
+        flex-direction: column;
+    }
+
+    .left-column,
+    .right-column {
+        flex: 1;
+    }
+
+    .profile img,
+    .qr-code img {
+        max-width: 100%;
+    }
+}
+
+/*####################################### DISPLAY POPUP #############################################*/
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+}
+
+.popup {
+    display: block;
+    width: 65%;
+    margin: 0 auto;
+    padding: 30px;
+    background: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    position: fixed;
+    top: 50%;
+    left: 60%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.popup .blurred-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom right,
+        #042136,
+        #07385c,
+        #094d7f,
+        #0c6bb1,
+        #1095f7
+    );
+    /* background-image: url('/resources/honeycomb3.png'); */
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    filter: blur(5px);
+    z-index: -1;
+}
+
+.form-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #cdcdcd;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.form-subtitle {
+    font-size: 14px;
+    color: #9e9c9c;
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.legend {
+    color: #cdcdcd;
+    font-size: 10px;
+    margin-bottom: 20px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    color: #cdcdcd;
+    background: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 30%;
+    transition: color 0.3s;
+}
+
+.close-btn:hover {
+    color: #FFF;
+    background-color: #1095f7;
+}
+
+.upd-window-btn {
+    position: relative;
+    display: flex;
+    float: right;
+    padding: 10px;
+}
+
+.label-group label::after {
+    content: "*";
+    color: red;
+    margin-left: 5px;
+}
+
+label[for="suffix"]::after {
+    content: "";
+}
+
+label[for="blklot"]::after, 
+label[for="citizenship"]::after, 
+label[for="birthdate"]::after, 
+label[for="email"]::after, 
+label[for="phone"]::after, 
+label[for="gender"]::after, 
+label[for="voter"]::after, 
+label[for="marital-status"]::after {
+    content: "*";
+    color: red;
+    margin-left: 5px;
+}
+
+
+
+.input-group {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-bottom: 10px;
+    width: 100%;
+    background: transparent;    
+    outline: none;
+    border-radius: 40px;
+    font-size: 1em;
+    color: #858585;
+    transition: .5s ease;
+}
+
+.input-group-select {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    margin-bottom: 10px;
+    width: 100%;
+    background: transparent;    
+    outline: none;
+    border-radius: 40px;
+    font-size: 1em;
+    color: #858585;
+    transition: .5s ease;
+}
+
+.label-group {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    color: #cdcdcd;
+    font-size: 14px;
+}
+
+.label-group-four {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    color: #cdcdcd;
+    font-size: 14px;
+}
+
+.input-group-four {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    padding: 20px 0;
+    width: 100%;
+    background: transparent;    
+    outline: none;
+    border-radius: 40px;
+    font-size: 1em;
+    color: #858585;
+    transition: .5s ease;
+}
+
+.input-group-five {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 30px;
+    padding: 20px 0;
+    width: 100%;
+    background: transparent;    
+    outline: none;
+    border-radius: 40px;
+    font-size: 1em;
+    color: #858585;
+    transition: .5s ease;
+}
+
+.label-group-five {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 30px;
+    color: #cdcdcd;
+    font-size: 14px;
+}
+
+.label-group-select {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    color: #cdcdcd;
+    font-size: 14px
+}
+
+.input-group input {
+    width: 95%;
+    margin: 5px 0;
+    padding-left: 15px;
+    background: transparent;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #cdcdcd;
+    font-size: 1em;
+    color: #cdcdcd;
+    transition: .5s ease;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="email"],
+input[type="tel"],
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border: none;
+    border-radius: 20px;
+    border-bottom: 1px solid #cdcdcd;
+    box-sizing: border-box;
+    color: #f0f0f0;
+    font-size: 14px;
+}
+
+select {
+    border: none;
+    border-bottom: 1px solid #cdcdcd;
+    padding: 5px;
+    font-size: 10px;
+    outline: none;
+    color: #858585;
+    background-color: transparent;
+}
+
+
+button[type="submit"],
+button[type="button"] {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+button[type="button"] {
+    background-color: #f75757;
+    color: white;
+    margin-left: 10px;
+}
+
+button[type="button"]:hover {
+    background-color: #bc1d1d;
+}
+
+.declaration-container {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.declaration-container p {
+    color: #cdcdcd;
+}
+
+.declaration-container input[type="checkbox"] {
+margin-right: 10px;
+margin-top: 5px;
+}
+
+.declaration-container label {
+text-align: justify;
+}
+
+#submit-update-btn:disabled {
+background-color: #ccc;
+cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+    .popup {
+        width: 95%;
+        margin: 5% auto;
+    }
+
+    .input-group {
+        flex-direction: column;
+    }
+}

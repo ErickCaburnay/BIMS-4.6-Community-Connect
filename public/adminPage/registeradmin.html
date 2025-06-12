@@ -1,0 +1,219 @@
+<!-- ##################################### REGISTERADMIN.HTML #####################################3 -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barangay Information Management System</title>
+    <link rel="stylesheet" href="/styles/mainstyle.css">
+    <link rel="stylesheet" href="/styles/register.css"> 
+    <link rel="stylesheet" href="/styles/newlogin.css">  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.2/css/pikaday.min.css">
+
+    <style>
+        
+    </style>
+</head>
+
+<body>
+    <header id="home">
+        <nav>
+            <div class="marquee-container">
+                <h1 class="cc">Community - Connect: A Web-Based Platform for Barangay San Antonio De Padua I Information
+                    Management System</h1>
+            </div>
+            <div class="menu">
+                <ul>
+                    <li>
+                        <a href="/landingpage.html">Home</a>
+                        <a href="/#about">About</a>
+                        <a href="/#contact">Contact</a>
+                        <a href="/newLogin.html">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div class="main-container">
+        <div class="logo-container">
+            <img src="/resources/logo.png" alt="Logo" class="logo">
+            <p class="logo-text">San Antonio De Padua I</p>
+        </div>
+        <div class="reg-container">
+            <p class="title">Admin Registration</p>
+            <form id="personal-info-form">
+                <select name="role" id="role" required>
+                    <option value="" disabled selected>Select role</option>
+                    <option value="admin">Admin</option>
+                    <option value="sub-admin">Sub-Admin</option>
+                </select> 
+                <input type="text" name="username" id="username" placeholder="User Name" required>
+                <input type="password" name="password" id="password" placeholder="Password" required>
+                <input type="text" name="fname" id="fname" placeholder="First Name" required>
+                <input type="text" name="lname" id="lname" placeholder="Last Name" required>
+                <input type="email" name="email" id="email" placeholder="Email">
+                <input type="tel" name="phone" id="phone" placeholder="Phone Number" required>            
+
+                <button type="submit" id="submit-btn">Submit</button>
+            </form>
+        </div>
+    </div>    
+
+    <div class="popup" id="popup">
+        <h2>Registration Successful</h2>
+        <div id="qrcode"></div>
+        <div id="popupContent"></div>
+        <button id="closePopup">Close</button>
+    </div>
+
+    
+
+    <script type="module" src="/js/firebaseConfig.js"></script>          
+    
+    <script type="module">
+        // import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+        import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-functions.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+        import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+        import { db, auth } from '/js/firebaseConfig.js';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // const firebaseConfig = {
+            //     apiKey: "AIzaSyBDp03_t7kWck8XTT9iqv3SIX8UqFp_C6w",
+            //     authDomain: "bims-9aaa7.firebaseapp.com",
+            //     projectId: "bims-9aaa7",
+            //     storageBucket: "bims-9aaa7.appspot.com",
+            //     messagingSenderId: "323333588672",
+            //     appId: "1:323333588672:web:cfb7ea2dff4d9eb2004f25",
+            //     measurementId: "G-RQJBMNMFQ8"
+            // };
+    
+            // const app = initializeApp(firebaseConfig);
+            // const db = getFirestore(app);
+            // const auth = getAuth();
+
+
+    const infoForm = document.getElementById('personal-info-form');
+    const closePopupButton = document.getElementById('closePopup');
+
+    const functions = getFunctions();
+    const setAdminRole = httpsCallable(functions, 'setAdminRole');
+
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(infoForm);
+        const data = {
+            username: formData.get('username'),
+            password: formData.get('password'),
+            firstName: formData.get('fname'),
+            lastName: formData.get('lname'),
+            email: formData.get('email') || '',
+            phone: formData.get('phone') || '',
+            role: formData.get('role')
+        };
+
+        try {
+                // Create user in Firebase Authentication
+                const userCredentials = await createUserWithEmailAndPassword(auth, data.email, data.password);
+                const userId = userCredentials.user.uid;
+                await sendEmailVerification(auth.currentUser);
+                alert("Email Verification Sent! User Created!");
+
+                // Save admin details in Firestore
+                await setDoc(doc(db, 'Admin_Accounts', userId), {
+                    username: data.username,
+                    password: data.password,
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    email: data.email,
+                    phone: data.phone,
+                    role: data.role,
+                    admin: true
+                });
+
+                // if (data.role === 'admin') {
+                //     await setAdminRole({ uid: userId, role: 'admin' });
+                // }
+
+                    console.log("Document successfully written to Firestore.");
+                    showPopup(data);
+
+                    infoForm.reset();
+                    // submitBtn.disabled = true;
+                    // submitBtn.classList.add('inactive-submit');
+                } catch (error) {
+                    console.error("Error: ", error);
+                    alert(error.message);
+                }
+            };
+
+    const showPopup = (data) => {
+        const popup = document.getElementById('popup');
+        const popupContent = document.getElementById('popupContent');
+        const togglePasswordButton = document.getElementById('togglePasswordButton');
+        const passwordDisplay = document.getElementById('passwordDisplay');
+
+        if (popupContent) {
+            popupContent.innerHTML = generatePopupContent(data);
+            popup.classList.add('active');
+            const togglePasswordButton = document.getElementById('togglePassword');
+            const passwordDisplay = document.getElementById('passwordDisplay');
+
+            const closePopupButton = document.getElementById('closePopup');
+            if (closePopupButton) {
+                closePopupButton.addEventListener('click', () => {
+                    popup.classList.remove('active');
+                    // alert("Please check your email to verify your account before logging in.");
+                    window.location.href = '/adminPage/loginadmin.html';
+                });
+            }
+
+            if (togglePasswordButton && passwordDisplay) {
+            // Set initial display
+            passwordDisplay.textContent = '*'.repeat(data.password.length);
+            togglePasswordButton.textContent = '👁️'; // Eye icon for showing password
+
+            togglePasswordButton.addEventListener('click', () => {
+                // Toggle password visibility
+                const isPasswordVisible = passwordDisplay.textContent === data.password;
+                passwordDisplay.textContent = isPasswordVisible ? '*'.repeat(data.password.length) : data.password;
+                togglePasswordButton.textContent = isPasswordVisible ? '👁️' : '🙈'; // Change icon based on visibility
+            });
+        } else {
+            console.error("Toggle password button or password display element not found.");
+        }
+    } else {
+        console.error("Popup elements not found in the DOM.");
+    }
+};
+
+    const generatePopupContent = (data) => `
+        <p><strong style="color: #e1e1e1;">Username:&nbsp</strong> ${data.username}</p>
+        <p><strong style="color: #e1e1e1;">Password:&nbsp</strong> 
+        <span id="passwordDisplay">${'*'.repeat(data.password.length)}</span>
+        <button id="togglePassword">👁️</button>
+        </p>
+        <p><strong style="color: #e1e1e1;">First Name:&nbsp</strong> ${data.firstName}</p>
+        <p><strong style="color: #e1e1e1;">Last Name:&nbsp</strong> ${data.lastName}</p>
+        <p><strong style="color: #e1e1e1;">Email:&nbsp</strong> ${data.email}</p>
+        <p><strong style="color: #e1e1e1;">Phone:&nbsp</strong> ${data.phone}</p>
+        <p><strong style="color: #e1e1e1;">Phone:&nbsp</strong> ${data.role}</p>
+
+    `;
+
+    infoForm.addEventListener('submit', handleSubmit);
+
+    if (closePopupButton) {
+        closePopupButton.addEventListener('click', () => {
+            document.getElementById('popup').classList.remove('active');
+        });
+    }
+});
+    </script>
+
+</body>
+</html>

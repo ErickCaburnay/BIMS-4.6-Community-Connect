@@ -1,0 +1,156 @@
+<!-- //########## RESIDENT_TRACK_REQUEST.HTML ########## -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barangay Information Management System</title>
+    <link rel="stylesheet" href="/styles/mainstyle.css">
+    <link rel="stylesheet" href="/styles/residentsComplaint.css">
+    <link rel="stylesheet" href="/styles/complaints.css">
+    <link rel="stylesheet" href="/styles/loader.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.2/css/pikaday.min.css">
+
+    <style>
+/* .tab {
+    position: relative;
+}
+
+.notification-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.notification-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    display: inline-block;
+    cursor: pointer;
+}
+
+.notification-icon img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+}
+
+.notification-indicator {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 12px;
+    height: 12px;
+    background-color: red;
+    border-radius: 50%;
+    display: none;
+}
+
+.notification-icon.has-notification .notification-indicator {
+    display: block;
+}
+
+.tab .notification-icon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 5px;
+}
+
+.tab .notification-icon img {
+    width: 16px;
+    height: 16px;
+}
+
+.tab .notification-indicator {
+    top: -4px;
+    right: -4px;
+    width: 8px;
+    height: 8px;
+} */
+    </style>
+
+</head>
+
+<body>
+    <div class="emergency-container">
+        <div class="toggle-menu-container">
+            <!-- <h1>Community - Connect: A Web-Based Platform for Barangay San Antonio De Padua I Information Management
+                System</h1> -->
+            <h1>Community-Connect</h1>
+        </div>
+        <div class="emergency-right">
+            <div class="current-date">
+                <p id="current-date"></p>
+            </div>            
+        </div>
+        <div class="header-icons">
+            <h1></h1>
+            <div class="icons">                
+                <img src="/resources/bell_icon.svg" alt="Bell" />                
+            </div>
+            <div class="icons">
+                <img src="/resources/question_icon.svg" alt="Help Circle" />                
+            </div>
+            <div class="icons">
+                <button class="toggle-menu" onclick="toggleDropdown()">
+                    <img src="/resources/account_icon.svg" alt="User" />   
+                </button>             
+            </div>
+            
+            <div class="icons">
+                <p><span id="current-user"></span></p>
+            </div>
+        </div>
+    </div>  
+
+    <div class="dropdown-menu" id="dropdownMenu">
+        <!--<div class="dropdown-item" onclick="editProfile()">Edit Admin Profile</div>-->
+        <div class="dropdown-item" onclick="changePassword()">Change Password</div>
+        <div class="dropdown-item" onclick="logout()">Logout</div>
+    </div>
+
+    <div class="sidebar">        
+        <div class="logo-above-sidebar">
+            <img src="/resources/logo.png" alt="Logo" class="logo" width="150" height="150">
+            <h1>San Antonio De Padua I</h1>
+        </div>
+        <div class="tab" id="visitorspage-tab">
+            <a href="/residentsPage/resident_personal_info.html"><img src="/resources/id_icon.svg" alt="personal info">My Personal Info</a>
+        </div>
+
+        <div class="tab" id="documentrequest-tab">
+            <a href="/residentsPage/resident_document_request.html"><img src="/resources/document2_icon.svg" alt="doc request">Document Request</a>
+        </div>
+
+        <div class="tab" id="trackrequest-tab">
+            <a href="/residentsPage/resident_track_request.html"><img src="/resources/track_icon.svg" alt="track request">Track My Request</a>
+        </div>       
+
+        <div class="tab" id="complaint-tab">
+            <a href="/residentsPage/resident_complaint.html"><img src="/resources/report_icon.svg" alt="complaint">
+                File a Complaint
+                <div class="notification-icon">
+                    <!-- <img src="/resources/bell.png" alt="Notification"> -->
+                    <span class="notification-count" id="notificationCount">0</span>
+                </div>
+            </a>
+        </div> 
+        <!-- <div class="tab" onclick="openTab('')">modules</div> -->
+    </div>
+
+
+
+</body>
+
+</html>

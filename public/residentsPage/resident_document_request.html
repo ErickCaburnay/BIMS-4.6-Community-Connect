@@ -1,0 +1,432 @@
+<!-- ####### RESIDENT_DOCUMENT_REQUEST.HTML ####### -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Barangay Information Management System</title>
+    <link rel="stylesheet" href="../styles/mainstyle.css"/>
+    <link rel="stylesheet" href="../styles/admin_requests.css"/>
+    <link rel="stylesheet" href="../styles/admin_notification.css"/>
+    <link rel="stylesheet" href="../styles/admin_requests_clearance.css">
+    <link rel="stylesheet" href="../styles/resident_document_request.css">
+    <link rel="stylesheet" href="../styles/resident_notification.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.2/css/pikaday.min.css">
+
+
+    <style>
+      
+    </style>
+  </head>
+  <body>
+    <div class="emergency-container">
+        <div class="toggle-menu-container">
+            <h1>Community-Connect</h1>
+        </div>
+        <div class="emergency-right">
+            <div class="current-date">
+                <p id="current-date"></p>
+            </div>            
+        </div>
+        <div class="header-icons">
+            <h1></h1>
+            <div class="icons">
+                <div class="notification-wrapper">
+                    <div class="notification-icon" id="notificationIcon">
+                        <img src="../resources/icons/bell (2).png" alt="Bell" />
+                        <span class="notification-count" id="notificationCount"></span>
+                    </div>
+                    <div class="notification-dropdown" id="notificationDropdown">
+                        <ul id="notificationList"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="icons">
+                <img src="../resources/icons/question.png" alt="Help Circle" />                
+            </div>
+            <div class="icons">
+                <button class="toggle-menu" onclick="toggleDropdown()">
+                    <img src="../resources/icons/account.png" alt="User" />   
+                </button>             
+            </div>
+            
+            <div class="icons">
+                <p><span id="current-user"></span></p>
+            </div>
+        </div>
+    </div>  
+
+    <div class="dropdown-menu" id="dropdownMenu">
+        <!--<div class="dropdown-item" onclick="editProfile()">Edit Admin Profile</div>-->
+        <div class="dropdown-item" onclick="changePassword()">Change Password</div>
+        <div class="dropdown-item" onclick="logout()">Logout</div>
+    </div>
+
+    <div class="sidebar">        
+        <div class="logo-above-sidebar">
+            <img src="../resources/logo.png" alt="Logo" class="logo" width="150" height="150">
+            <h1>San Antonio De Padua I</h1>
+        </div>
+        <div class="tab" id="visitorspage-tab">
+            <a href="resident_personal_info.html"><img src="../icons/id_icon.png" alt="personal info">My Personal Info</a>
+        </div>
+
+        <div class="tab" id="documentrequest-tab">
+            <a href="resident_document_request.html"><img src="../icons/document2_icon.png" alt="doc request">Document Request</a>
+        </div>
+
+        <!-- <div class="tab" id="trackrequest-tab">
+            <a href="/residentsPage/resident_track_request.html"><img src="/resources/track_icon.svg" alt="track request">Track My Request</a>
+        </div>        -->
+
+        <div class="tab" id="complaint-tab">
+            <a href="resident_complaint.html"><img src="../icons/report_icon.png" alt="complaint">
+                File a Complaint
+                <div class="notification-icon">
+                    <!-- <img src="/resources/bell.png" alt="Notification"> -->
+                    <span class="notification-count" id="notificationCount">0</span>
+                </div>
+            </a>
+        </div> 
+        <!-- <div class="tab" onclick="openTab('')">modules</div> -->
+    </div>  
+
+<div class="main-container">
+    <div class="brgy-clearance">
+        <h1>Document Request</h1>
+        <div class="search-container">
+            <button class="button" id="applyRequest">Apply</button>
+            <input type="text" class="search-input" placeholder="Search...">
+            <button class="search-button">Search</button>
+            <button class="clear-button">Clear</button>
+            <!-- <button id="refreshTable">Refresh Table</button> -->
+        </div>
+
+        <table id="residentClearanceTable">
+            <thead>
+                <tr>
+                    <th>Transaction No</th>
+                    <th>Date Filed</th>
+                    <th>Name of Applicant</th>
+                    <th>Purpose</th>
+                    <th>Status</th>
+                    <th>Date Issued</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        
+    </div>
+
+
+    <div class="popup-overlay" id="documentPopup">
+        <div class="popup-window">
+            <h2 class="popup-title">Select Barangay Document</h2>
+            <div class="document-buttons">
+                <button class="document-button" id="applyBrgyClearance">Barangay Clearance</button>
+                <button class="document-button" id="applyBrgyCertificate">Barangay Certificate</button>
+                <button class="document-button" id="applyBrgyIndigency">Barangay Indigency</button>
+            </div>
+            <button class="doc-close-button" id="closePopup">Close</button>
+        </div>
+    </div>
+
+
+<div id="overlay" class="overlay">
+    <div class="clearance-popup-container" id="clearancePopupContainer">
+        <div class="blurred-background"></div>
+        <button id="clearanceCloseButton" class="close-button">&times;</button>
+        <h3 class="form-title">Barangay Clearance Form</h3>
+        <h6 class="form-subtitle">Please fill out the form</h6>
+
+        <form id="clearanceForm">                
+            <div class="form-group">
+                <label for="clearanceName">Full Name:</label>
+                <input type="text" id="clearanceName">
+            </div>
+            <div class="form-group">
+                <label for="clearanceAge">Age:</label>
+                <input type="number" id="clearanceAge">
+            </div>
+            <div class="form-group">
+                <label for="clearanceBlklot">Block/Lot:</label>
+                <input type="text" id="clearanceBlklot">
+            </div>
+            <!-- <div class="form-group">
+                <label for="clearanceStreet">Street:</label>
+                <input type="text" id="clearanceStreet">
+            </div>             -->
+            <div class="form-group">
+                <label for="clearanceDateFiled">Date Filed:</label>
+                <input type="date" id="clearanceDateFiled" required>
+            </div>
+            <div class="form-group">
+                <label for="clearancePurpose">Purpose:</label>
+                <select id="clearancePurpose" required>
+                    <option value="">Select a purpose</option>
+                    <option value="EMPLOYMENT">EMPLOYMENT</option>
+                    <option value="BANK ACCOUNT OPENING">BANK ACCOUNT OPENING</option>
+                    <option value="POLICE CLEARANCE APPLICATION">POLICE CLEARANCE</option>
+                    <option value="SCHOOL REQUIREMENTS">SCHOOL REQUIREMENTS</option>
+                    <option value="LOAN APPLICATION">LOAN APPLICATION</option>
+                </select>
+            </div>
+            <div class="button-container">
+                <button type="button" id="submitClearanceBtn">Submit</button>
+                <button type="button" id="clearanceCancelButton">Cancel</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<div id="certificateOverlay" class="overlay">
+    <div class="certificate-popup-container" id="certificatePopupContainer">
+        <div class="blurred-background"></div>
+        <button id="certificateCloseButton" class="close-button">&times;</button>
+        <h3 class="form-title">Barangay Certificate Form</h3>
+        <h6 class="form-subtitle">Please fill out the form</h6>
+
+        <form id="certificateForm">                
+            <div class="form-group">
+                <label for="certificateName">Full Name:</label>
+                <input type="text" id="certificateName">
+            </div>
+            <div class="form-group">
+                <label for="certificateAge">Age:</label>
+                <input type="number" id="certificateAge">
+            </div>
+            <div class="form-group">
+                <label for="certificateBlklot">Block/Lot:</label>
+                <input type="text" id="certificateBlklot">
+            </div>
+            <!-- <div class="form-group">
+                <label for="certificateStreet">Street:</label>
+                <input type="text" id="certificateStreet">
+            </div>             -->
+            <div class="form-group">
+                <label for="certificateDateFiled">Date Filed:</label>
+                <input type="date" id="certificateDateFiled" required>
+            </div>
+            <div class="form-group">
+                <label for="date-of-residency">Date of Residency:</label>
+                <input type="date" id="certificateDateOfResidency">
+            </div>
+            <div class="form-group">
+                <label for="certificatePurpose">Purpose:</label>
+                <select id="certificatePurpose" required>
+                    <option value="">Select a purpose</option>
+                    <option value="PROOF OF RESIDENCY">PROOF OF RESIDENCY</option>
+                    <option value="GOOD MORAL CERTIFICATE">GOOD MORAL CERTIFICATE</option>
+                    <option value="NO PENDING CASE CERTIFICATE">NO PENDING CASE CERTIFICATE</option>
+                    <option value="PROPERTY VERIFICATION">PROPERTY VERIFICATION</option>
+                    <option value="LEGAL DOCUMENT">LEGAL DOCUMENT</option>
+                </select>                
+            </div>
+            <div class="button-container">
+                <button type="button" id="submitCertificateBtn">Submit</button>
+                <button type="button" id="certificateCancelButton">Cancel</button>
+            </div>
+        </form>
+
+        </div>
+    </div>
+
+
+<div id="confirmationPopup" class="popup">
+    <div class="popup-content">
+      <h3>Confirmation</h3>
+      <p>Are you sure you want to save and print the barangay clearance?</p>
+      <div class="button-container">
+        <button id="proceedButton">Proceed</button>
+        <button id="confirmationCancelButton">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+<div id="indigencyOverlay" class="overlay">
+    <div class="indigency-popup-container" id="indigencyPopupContainer">
+        <div class="blurred-background"></div>
+        <button id="indigencyCloseButton" class="close-button">&times;</button>
+        <h3 class="form-title">Barangay Indigency Form</h3>
+        <h6 class="form-subtitle">Please fill out the form</h6>
+
+            <form id="indigencyForm">
+                
+                <div class="form-group">
+                    <label for="indigencyName">Full Name:</label>
+                    <input type="text" id="indigencyName">
+                </div>
+                <div class="form-group">
+                    <label for="indigencyAge">Age:</label>
+                    <input type="number" id="indigencyAge">
+                </div>
+                <div class="form-group">
+                    <label for="indigencyBlklot">Block/Lot:</label>
+                    <input type="text" id="indigencyBlklot">
+                </div>
+                <!-- <div class="form-group">
+                    <label for="indigencyStreet">Street:</label>
+                    <input type="text" id="indigencyStreet">
+                </div>             -->
+                <div class="form-group">
+                    <label for="indigencyDateFiled">Date Filed:</label>
+                    <input type="date" id="indigencyDateFiled" required>
+                </div>
+                <div class="form-group">
+                    <label for="indigencyPurpose">Purpose:</label>
+                    <select id="indigencyPurpose" required>
+                        <option value="">Select a purpose</option>
+                        <option value="MEDICAL ASSISTANCE">MEDICAL ASSISTANCE</option>
+                        <option value="EDUCATIONAL ASSISTANCE">EDUCATIONAL ASSISTANCE</option>
+                        <option value="BURIAL ASSISTANCE">BURIAL ASSISTANCE</option>
+                        <option value="SOCIAL SERVICES BENEFITS">SOCIAL SERVICES BENEFITS</option>
+                        <option value="LEGAL AID APPLICATION">LEGAL AID APPLICATION</option>
+                    </select>
+                    
+                </div>
+                <div class="button-container">
+                    <button type="button" id="submitIndigencyBtn">Submit</button>
+                    <button type="button" id="indigencyCancelButton">Cancel</button>
+                </div>
+            </form>
+    </div>    
+</div>
+
+
+
+
+<div id="loader" style="display: none;">
+    <div class="loader"></div>
+</div>
+
+<script>        
+    function toggleDropdown() {
+        document.getElementById("dropdownMenu").classList.toggle("show");
+    }
+    
+    // Close the dropdown if the user clicks outside of it
+    window.onclick = function(event) {
+        if (!event.target.closest('.toggle-menu')) {
+            var dropdown = document.getElementById("dropdownMenu");
+            if (dropdown.classList.contains('show')) {
+                dropdown.classList.remove('show');
+            }
+        }
+    }
+
+    function updateDate() {
+      console.log("updateDate function called from inline script"); 
+      const currentDate = new Date();
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+      document.getElementById('current-date').textContent = currentDate.toLocaleDateString('en-US', options);
+      const userContainer = document.getElementById('current-user');
+      if (userContainer) {
+          userContainer.textContent = "Welcome, " + currentUser + " | " + currentDate.toLocaleDateString('en-US', options);
+      } else {
+          console.log("current-user element not found");
+      }
+  }
+  window.addEventListener("load", updateDate);
+
+        function handleLogout() {
+            logout();
+            toggleDropdown();
+        }
+
+
+document.getElementById('applyRequest').addEventListener('click', function() {
+document.getElementById('documentPopup').style.display = 'flex';
+});
+
+document.getElementById('closePopup').addEventListener('click', function() {
+document.getElementById('documentPopup').style.display = 'none';
+});
+
+    // Function to show the Barangay Clearance popup
+function showClearancePopup() {
+    document.getElementById('overlay').style.display = 'flex';
+    document.getElementById('clearancePopupContainer').style.display = 'block';
+    // Hide the document selection popup
+    document.getElementById('documentPopup').style.display = 'none';
+}
+
+function showCertificatePopup() {
+    document.getElementById('certificateOverlay').style.display = 'flex';
+    document.getElementById('certificatePopupContainer').style.display = 'block';
+
+    document.getElementById('documentPopup').style.display = 'none';
+}
+
+function showIndigencyPopup() {
+    document.getElementById('indigencyOverlay').style.display = 'flex';
+    document.getElementById('indigencyPopupContainer').style.display = 'block';
+
+    document.getElementById('documentPopup').style.display = 'none';
+}
+
+// Function to hide the Barangay Clearance popup
+function hideClearancePopup() {
+    document.getElementById('overlay').style.display = 'none';
+    document.getElementById('clearancePopupContainer').style.display = 'none';
+}
+
+function hideCertificatePopup() {
+    document.getElementById('certificateOverlay').style.display = 'none';
+    document.getElementById('certificatePopupContainer').style.display = 'none';
+}
+
+function hideIndigencyPopup() {
+    document.getElementById('indigencyOverlay').style.display = 'none';
+    document.getElementById('indigencyPopupContainer').style.display = 'none';
+}
+
+// Add click event listener to the Barangay Clearance button
+document.getElementById('applyBrgyClearance').addEventListener('click', showClearancePopup);
+document.getElementById('applyBrgyCertificate').addEventListener('click', showCertificatePopup);
+document.getElementById('applyBrgyIndigency').addEventListener('click', showIndigencyPopup);
+
+// Add click event listeners to the close and cancel buttons
+document.getElementById('clearanceCloseButton').addEventListener('click', hideClearancePopup);
+document.getElementById('clearanceCancelButton').addEventListener('click', hideClearancePopup);
+document.getElementById('certificateCloseButton').addEventListener('click', hideCertificatePopup);
+document.getElementById('certificateCancelButton').addEventListener('click', hideCertificatePopup);
+document.getElementById('indigencyCloseButton').addEventListener('click', hideIndigencyPopup);
+document.getElementById('indigencyCancelButton').addEventListener('click', hideIndigencyPopup);
+
+// Optional: Close the popup when clicking outside of it
+document.getElementById('overlay').addEventListener('click', function(event) {
+    if (event.target === this) {
+        hideClearancePopup();
+        hideCertificatePopup();
+        hideIndigencyPopup();
+    }
+});
+    
+    function handleLogout() {
+        logout();
+        toggleDropdown();
+    }
+    </script>
+
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
+
+<!-- <script type="module" src="/js/fetchAndDisplayUsername.js"></script> -->
+<!-- <script type="module" src="/js/resident_document_request.js"></script> -->
+<!-- <script type="module" src="/js/script.js"></script> -->
+<!-- <script type="module" src="/js/admin_notification.js"></script> -->
+<!-- <script type="module" src="/js/firebaseConfig.js"></script> -->
+<!-- <script type="module" src="../js/logOut.js"></script> -->
+<script type="module" src="../js/resident_document_request.js"></script>
+<script type="module" src="../js/resident_notification.js"></script>
+<script type="module" src="../js/resident_notification.js"></script>
+
+
+
+
+
+  </body>
+</html>

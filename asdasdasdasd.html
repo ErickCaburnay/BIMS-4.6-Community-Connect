@@ -1,0 +1,31 @@
+"<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoJS Encryption Example</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
+</head>
+<body>
+
+<h1>Encrypt Text with AES (CryptoJS)</h1>
+
+<input type="text" id="plaintext" placeholder="Enter text">
+<button onclick="encryptText()">Encrypt</button>
+
+<p>Encrypted Text: <span id="encryptedText"></span></p>
+
+<script>
+    function encryptText() {
+        const plaintext = document.getElementById('plaintext').value;
+        const key = CryptoJS.enc.Utf8.parse('1234567890123456'); // Example 16-byte key
+        const encrypted = CryptoJS.AES.encrypt(plaintext, key, {
+            mode: CryptoJS.mode.ECB
+        });
+        document.getElementById('encryptedText').textContent = encrypted.toString();
+    }
+</script>
+
+</body>
+</html>
+"

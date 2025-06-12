@@ -1,0 +1,410 @@
+.news-container {
+    padding: 20px 0;
+    max-width: 1200px;
+    height: 100%; 
+}
+
+/* Header Section */
+.news-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.news-controls {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.add-news-btn-container {
+    display: flex;
+    justify-content: center;
+}
+
+.add-news-btn {
+    padding: 10px 10px;
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.add-news-btn:hover {
+    background-color: #1976d2;
+}
+
+/* Filter Section */
+.filter-section {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    background-color: #042136;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.search-box {
+    flex: 1;
+    min-width: 200px;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.category-filter {
+    min-width: 150px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+}
+
+.date-filter {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: white;
+}
+
+/* ########################## NEWS LIST ############################### */
+
+/* Enhanced News List Styles */
+.news-list {
+    max-height: 70vh;
+    overflow-y: auto;
+    padding: 0 20px;
+    background: #042136;
+    border-radius: 12px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* Custom scrollbar for better visual */
+.news-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.news-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.news-list::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+.news-list::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* News Item Layout */
+.news-item {
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    padding: 15px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid #eef2f7;
+    display: flex;
+    gap: 20px;
+}
+
+.news-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Image Container */
+.news-item-image {
+    flex: 0 0 120px;
+    height: 120px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #eef2f7;
+}
+
+.news-item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.3s;
+}
+
+.news-item-image img:hover {
+    transform: scale(1.05);
+}
+
+/* Content Section */
+.news-item-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.news-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 8px;
+}
+
+.news-item-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin: 0;
+}
+
+.news-item-category {
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Category Colors */
+.category-events { background: #e3f2fd; color: #1976d2; }
+.category-health { background: #e8f5e9; color: #2e7d32; }
+.category-safety { background: #fff3e0; color: #f57c00; }
+.category-community { background: #f3e5f5; color: #7b1fa2; }
+.category-education { background: #ede7f6; color: #4527a0; }
+.category-livelihood { background: #fffde7; color: #f9a825; }
+.category-infrastructure { background: #e0f2f1; color: #004d40; }
+.category-disaster-preparedness { background: #ffebee; color: #b71c1c; }
+.category-environmental { background: #e8f5e9; color: #388e3c; }
+.category-youth-and-sports { background: #e1f5fe; color: #0277bd; }
+.category-elderly-pwd-support { background: #fbe9e7; color: #d84315; }
+.category-cultural-and-arts { background: #fce4ec; color: #ad1457; }
+.category-barangay-council { background: #ede7f6; color: #512da8; }
+.category-peace-and-order { background: #e3f2fd; color: #0d47a1; }
+.category-public-services { background: #f9fbe7; color: #827717; }
+.category-barangay-ordinances { background: #fff8e1; color: #ff6f00; }
+.category-agriculture { background: #f1f8e9; color: #558b2f; }
+.category-women-and-children { background: #fce4ec; color: #880e4f; }
+
+.news-item-date {
+    font-size: 0.85rem;
+    color: #6c757d;
+    margin: 5px 0;
+}
+
+.news-item-description {
+    font-size: 0.9rem;
+    color: #505865;
+    line-height: 1.5;
+    margin: 8px 0;
+}
+
+/* Actions Section */
+.news-item-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+}
+
+.action-button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.edit-btn {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+.edit-btn:hover {
+    background-color: #1976d2;
+    color: white;
+}
+
+.delete-btn {
+    background-color: #fee;
+    color: #dc3545;
+}
+
+.delete-btn:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Loading State */
+.loading-indicator {
+    padding: 30px;
+    text-align: center;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #2196f3;
+    border-radius: 50%;
+    margin: 0 auto 15px;
+    animation: spin 1s linear infinite;
+}
+
+.loading-indicator p {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Empty State */
+.no-news {
+    text-align: center;
+    padding: 40px 20px;
+    color: #6c757d;
+}
+
+.no-news p {
+    font-size: 1.1rem;
+    margin: 10px 0;
+}
+
+/* ########################### NEWS MODAL ######################### */
+.news-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    backdrop-filter: blur(2px);
+}
+
+.modal-content {
+    position: relative;
+    background-color: white;
+    margin: 50px auto;
+    padding: 25px;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.close-modal {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #666;
+}
+
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-group label {
+    font-weight: 500;
+    color: #333;
+}
+
+.form-input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .news-header {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .news-controls {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .add-news-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .filter-section {
+        flex-direction: column;
+    }
+
+    .search-box {
+        width: 100%;
+    }
+
+    .news-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ######### EDIT MODAL ######### */
+
+.current-image-preview {
+    margin-bottom: 15px;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    text-align: center;
+}
+
+.current-image-preview img {
+    max-width: 500px; 
+    height: 150px; 
+    object-fit: contain; 
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    background: white;
+    padding: 5px;
+}
+
+.current-image-preview p {
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 8px;
+    font-style: italic;
+}
+
+.image-container {
+    display: inline-block;
+    background: white;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}

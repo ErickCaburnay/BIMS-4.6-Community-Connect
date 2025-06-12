@@ -1,0 +1,249 @@
+<!-- //########## RESIDENTSCOMPLAINTS.HTML ########## -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barangay Information Management System</title>
+    <link rel="stylesheet" href="../styles/mainstyle.css">
+    <link rel="stylesheet" href="../styles/residents_complaint.css">
+    <link rel="stylesheet" href="../styles/resident_notification.css">
+    <!-- <link rel="stylesheet" href="/styles/complaints.css"> -->
+    <link rel="stylesheet" href="../styles/loader.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.2/css/pikaday.min.css">
+
+    <style>
+
+    </style>
+
+</head>
+
+<body>
+    <div class="emergency-container">
+        <div class="toggle-menu-container">
+            <h1>Community-Connect</h1>
+        </div>
+        <div class="emergency-right">
+            <div class="current-date">
+                <p id="current-date"></p>
+            </div>            
+        </div>
+        <div class="header-icons">
+            <h1></h1>
+            <div class="icons">
+                <div class="notification-wrapper">
+                    <div class="notification-icon" id="notificationIcon">
+                        <img src="../resources/icons/bell (2).png" alt="Bell" />
+                        <span class="notification-count" id="notificationCount"></span>
+                    </div>
+                    <div class="notification-dropdown" id="notificationDropdown">
+                        <ul id="notificationList"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="icons">
+                <img src="../resources/icons/question.png" alt="Help Circle" />                
+            </div>
+            <div class="icons">
+                <button class="toggle-menu" onclick="toggleDropdown()">
+                    <img src="../resources/icons/account.png" alt="User" />   
+                </button>             
+            </div>
+            
+            <div class="icons">
+                <p><span id="current-user"></span></p>
+            </div>
+        </div>
+    </div>  
+
+    <div class="dropdown-menu" id="dropdownMenu">
+        <!--<div class="dropdown-item" onclick="editProfile()">Edit Admin Profile</div>-->
+        <div class="dropdown-item" onclick="changePassword()">Change Password</div>
+        <div class="dropdown-item" onclick="logout()">Logout</div>
+    </div>
+
+    <div class="sidebar">        
+        <div class="logo-above-sidebar">
+            <img src="../resources/logo.png" alt="Logo" class="logo" width="150" height="150">
+            <h1>San Antonio De Padua I</h1>
+        </div>
+        <div class="tab" id="visitorspage-tab">
+            <a href="resident_personal_info.html"><img src="../icons/id_icon.png" alt="personal info">My Personal Info</a>
+        </div>
+
+        <div class="tab" id="documentrequest-tab">
+            <a href="resident_document_request.html"><img src="../icons/document2_icon.png" alt="doc request">Document Request</a>
+        </div>
+
+        <!-- <div class="tab" id="trackrequest-tab">
+            <a href="/residentsPage/resident_track_request.html"><img src="/resources/track_icon.svg" alt="track request">Track My Request</a>
+        </div>        -->
+
+        <div class="tab" id="complaint-tab">
+            <a href="resident_complaint.html"><img src="../icons/report_icon.png" alt="complaint">
+                File a Complaint
+                <div class="notification-icon">
+                    <!-- <img src="/resources/bell.png" alt="Notification"> -->
+                    <span class="notification-count" id="notificationCount">0</span>
+                </div>
+            </a>
+        </div> 
+        <!-- <div class="tab" onclick="openTab('')">modules</div> -->
+    </div>  
+
+    <div class="main-container">        
+        <div class="title-header">
+            <h2>Complaint History</h2>            
+        </div>
+        <div class="search-container">    
+            <button class="search-complaint-button">Search</button>            
+            <input type="text" class="search-input" id="search-complaint" placeholder="Search...">                
+            <button class="clear-complaint-button">Clear</button>
+            <button class="complaintButton" id="fileComplaintBtn" onclick="showComplaintPopup()">File a Complaint</button>
+       </div>
+            <table id="complaintsTable">                    
+                <thead>
+                    <tr>                        
+                        <th>Complaint ID</th>
+                        <th>Type of Complaint</th>
+                        <th>Date Filed</th>
+                        <th>Respondent</th>
+                        <th>Complainant</th>
+                        <th>Assigned Officer</th> 
+                        <th>Status</th>
+                        <th>Resolution Date</th> 
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>                
+                <div id="showingEntriesComplaints"></div>
+                <div id="paginationControls" class="pagination"></div>            
+    </div>        
+    
+
+    <div class="complaint-popup" id="complaintPopup">
+        <div class="complaint-container">
+            <div class="blurred-background"></div>
+            <button class="complaint-close-button" id="complaintCloseBtn">&times;</button>
+                <h3 class="form-title">File a Complaint</h3>
+                <h6 class="form-subtitle">Please fill out this form</h6>
+            <form id="complaintForm">
+                <div class="form-group">
+                    <label for="complaint-type">Type of Complaint:</label>
+                    <select name="complaint-type" id="complaintType" required>
+                        <option value="" disabled selected>Select a type of complaint</option>
+                        <option value="Public-Safety">Public Safety</option>
+                        <option value="Health-and-Sanitation">Health and Sanitation</option>
+                        <option value="Noise-Disturbance">Noise Disturbance</option>
+                        <!-- <option value="Public-Services">Public Services</option> -->
+                        <option value="Community-and-Social-Issues">Community and Social Issues</option>
+                        <!-- <option value="Land-and-Propert-Dispute">Land and Property Dispute</option>
+                        <option value="Administrative Issues"></option> -->
+                    </select>
+                    <div class="form-group">
+                        <label for="respondent">Respondent:</label>
+                        <input type="text" id="respondent" placeholder="Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="respondent-address">Address:</label>
+                        <input type="text" id="respondent-address" placeholder="Respondent's Address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="complainant">Complainant:</label>
+                        <input type="text" id="complainant" placeholder="Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="complainant-address">Address:</label>
+                        <input type="text" id="complainant-address" placeholder="Complainant's Address" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="issue">Nature of the Problem:</label>
+                    <textarea id="issue" name="issue" rows="5" cols="50" required></textarea>   
+                </div>
+                <div class="complaint-button-container">
+                    <button type="button" id="complaint-btn" class="complaint-submit">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="loader-container">
+        <div class="loader"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.2/pikaday.min.js"></script>
+    <script src="/js/datepicker.js"></script>
+
+    <!-- <script type="module" src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script> -->
+
+    <!-- <script type="module" src="/js/script.js"></script> -->
+    <script type="module" src="../js/residentsComplaint.js"></script>
+    <script type="module" src="../js/resident_notification.js"></script>
+    <!-- <script type="module" src="../js/logOut.js"></script> -->
+
+    <script>
+        // First initialize Firebase and get Firestore instance
+        // import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js';
+        // import { getFirestore, doc, onSnapshot } from 'https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js';
+        
+        // // Your Firebase configuration
+        // const firebaseConfig = {
+        //     apiKey: "AIzaSyBDp03_t7kWck8XTT9iqv3SIX8UqFp_C6w",
+        //     authDomain: "bims-9aaa7.firebaseapp.com",
+        //     databaseURL: "https://bims-9aaa7-default-rtdb.firebaseio.com",
+        //     projectId: "bims-9aaa7",
+        //     storageBucket: "bims-9aaa7.appspot.com",
+        //     messagingSenderId: "323333588672",
+        //     appId: "1:323333588672:web:cfb7ea2dff4d9eb2004f25",
+        //     measurementId: "G-RQJBMNMFQ8"
+        // };
+        
+        // // Initialize Firebase
+        // const app = initializeApp(firebaseConfig);
+        // const db = getFirestore(app);
+        
+        // function updateNotificationIcon(hasNotification) {
+        //     const notificationIcon = document.querySelector('.notification-icon');
+        //     if (hasNotification) {
+        //         notificationIcon.classList.add('has-notification');
+        //     } else {
+        //         notificationIcon.classList.remove('has-notification');
+        //     }
+        // }
+        
+        // function checkComplaintStatus(complaintId) {
+        //     const complaintRef = doc(db, 'Complaints', complaintId);
+        //     onSnapshot(complaintRef, (snapshot) => {
+        //         const complaint = snapshot.data();
+        //         if (complaint.status === 'APPROVED' || complaint.status === 'REJECTED') {
+        //             updateNotificationIcon(true);
+        //             // Display a notification message or perform any desired action
+        //             alert(`Your complaint (ID: ${complaintId}) has been ${complaint.status.toLowerCase()}.`);
+        //         }
+        //     });
+        // }
+        
+        function updateDate() {
+            const currentDate = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+            document.getElementById('current-date').textContent = currentDate.toLocaleDateString('en-US', options);
+            const userContainer = document.getElementById('current-user');
+            // Fix: Remove the dash in current-user as it's not valid JavaScript
+            userContainer.textContent = "Welcome, " + currentUser + " | " + currentDate.toLocaleDateString('en-US', options);
+        }
+        
+        window.onload = function () {
+            updateDate();
+        };
+        document.addEventListener("DOMContentLoaded", updateDate);
+        </script>
+</body>
+
+</html>

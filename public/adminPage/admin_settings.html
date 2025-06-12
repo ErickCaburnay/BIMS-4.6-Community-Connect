@@ -1,0 +1,1165 @@
+<!-- ######## ADMIN_SETTINGS.HTML ######### -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barangay Information Management System</title>
+    <link rel="stylesheet" href="../styles/mainstyle.css"> <!--"/"-->
+    <link rel="stylesheet" href="../styles/admin_settings.css">
+    <link rel="stylesheet" href="../styles/admin_settings_announcement.css">
+    <link rel="stylesheet" href="../styles/admin_settings_newsupdates.css">
+    <link rel="stylesheet" href="../styles/admin_settings_portfolio.css">
+    <link rel="stylesheet" href="../styles/admin_settings_useraccounts.css">
+    <link rel="stylesheet" href="../styles/admin_settings_archives.css">
+    <link rel="stylesheet" href="../styles/admin_settings_turnover.css">
+    <link rel="stylesheet" href="../styles/admin_settings_logs.css">
+    <link rel="stylesheet" href="../styles/loader.css">
+    <link rel="stylesheet" href="../styles/admin_notification.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
+
+</head>
+
+<body>
+    <!-- <div class="container"> -->
+        <div class="emergency-container">
+            <div class="toggle-menu-container">
+                <h1>Community-Connect</h1>
+            </div>
+            <div class="emergency-right">
+                <div class="current-date">
+                    <p id="current-date"></p>
+                </div>
+            </div>
+            <div class="header-icons">
+                <h1></h1>
+                <div class="icons">
+                    <div class="notification-wrapper">
+                        <div class="notification-icon" id="notificationIcon">
+                            <img src="../resources/icons/bell (2).png" alt="Bell" /> <!--"/"-->
+                            <span class="notification-count" id="notificationCount"></span>
+                        </div>
+                        <div class="notification-dropdown" id="notificationDropdown">
+                            <ul id="notificationList"></ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="icons">
+                    <img src="../resources/icons/question.png" alt="Help Circle" />
+                </div>
+                <div class="icons">
+                    <button class="toggle-menu" onclick="toggleDropdown()">
+                        <img src="../resources/icons/account.png" alt="User" />
+                    </button>
+                </div>
+
+                <div class="icons">
+                    <p><span id="current-user"></span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="dropdown-menu" id="dropdownMenu">
+            <div class="dropdown-item" onclick="editProfile()">Edit Admin Profile</div>
+            <div class="dropdown-item" onclick="changePassword()">Change Password</div>
+            <div class="dropdown-item" onclick="logout()">Logout</div>
+        </div>
+
+        <div class="sidebar">
+            <div class="logo-above-sidebar">
+                <img src="../resources/logo.png" alt="Logo" class="logo" width="150" height="150"> <!--"/"-->
+                <h1>San Antonio De Padua I</h1>
+            </div>
+            <div class="tab" id="dashboard-tab">
+                <a href="admin_dashboard.html"><img src="../resources/icons/dashboard_icon2.png"
+                        alt="Dashboard">Dashboard</a>
+            </div>
+            <div class="tab" id="officials-tab" class="restricted" data-role="Top Level Admin">
+                <a href="admin_officials.html"><img src="../resources/icons/gov.png" alt="officials">Brgy Officials</a>
+            </div>
+            <div class="tab" id="residents-tab">
+                <a href="admin_resident_records.html"><img src="../resources/icons/users.png" alt="Records">Residents
+                    Records</a>
+            </div>
+            <div class="tab" id="household-tab">
+                <a href="admin_household_records.html"><img src="../resources/icons/household.png"
+                        alt="Records">Household</a>
+            </div>
+            <div class="tab" id="bbi-tab">
+                <a href="admin_bbi.html"><img src="../resources/icons/bldg.png" alt="bbi">BBI</a>
+            </div>
+            <div class="tab" id="reports-tab">
+                <a href="admin_reports.html"><img src="../resources/icons/reports.png" alt="reports">Reports</a>
+            </div>
+            <div class="tab" id="requests-tab">
+                <a href="admin_requests.html"><img src="../resources/icons/document.png" alt="Requests">Requests
+                </a>
+            </div>
+            <div class="tab" id="complaints-tab">
+                <a href="admin_complaints.html"><img src="../resources/icons/complaint.png" alt="complaints">Complaints
+
+                </a>
+            </div>
+            <div class="tab" id="logs-tab">
+                <a href="admin_logs.html"><img src="../resources/icons/logs_icon.png" alt="logs">Logs</a>
+            </div>
+
+            <div class="tab" id="settings-tab">
+                <a href="admin_settings.html"><img src="../resources/icons/settings.png" alt="settings">Settings</a>
+            </div>
+        </div>
+
+
+        <div class="main-content">
+            <h1>Settings</h1>
+            <div class="tab-container">
+                <!-- Tab Navigation -->
+                <div class="tabs settings">
+                    <button class="tab-selection active" data-tab="announcement">Announcements</button>
+                    <button class="tab-selection" data-tab="newsupdates">News & Updates</button>
+                    <button class="tab-selection" data-tab="portfolio">Punong Barangay Portfolio</button>
+                    <button class="tab-selection" data-tab="useraccounts">User Accounts</button>
+                    <button class="tab-selection" data-tab="archive">Archives</button>
+                    <!-- <button class="tab-selection" data-tab="turnover">Turn Over</button> -->
+                    <!-- <button class="tab-selection" data-tab="activitylogs">User Logs</button> -->
+                </div>
+        
+                <!-- ########################### ANNOUNCEMENT TAB ############################### -->
+        
+                <!-- Announcement Tab -->
+                <div id="announcement" class="tab-content active" >
+                    <div class="announcement-container">
+                        <h2>Announcements</h2>
+                        <div class="announcement-layout">
+                            <!-- Announcement Form Section -->
+                            <div class="form-section">
+                                <div class="announcement-form">
+                                    <h3>Create Announcement</h3>
+                                    <div class="form-group">
+                                        <label for="announcement-title">Title</label>
+                                        <input type="text" id="announcement-title" class="input-field" placeholder="Enter announcement title">
+                                    </div>
+        
+                                    <div class="form-group">
+                                        <label for="announcement-content">Content</label>
+                                        <textarea id="announcement-content" class="input-field announcement-textarea" placeholder="Enter announcement details"></textarea>
+                                    </div>
+        
+                                    <div class="form-group-2">
+                                        <div class="form-group">
+                                            <label for="announcement-date">Start Date</label>
+                                            <input type="date" id="announcement-date" class="input-field date-picker">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="announcement-exp-date">End Date</label>
+                                            <input type="date" id="announcement-exp-date" class="input-field date-picker">
+                                        </div>
+                                    </div>
+        
+                                    <div class="form-group">
+                                        <label for="announcement-image">Upload Image</label>
+                                        <input type="file" id="announcement-image" class="input-field image-uploader" accept="image/*">
+                                    </div>
+        
+                                    <div class="button-container">
+                                        <button type="submit" class="post-button">Post Announcement</button>
+                                        <button class="clear-button">Clear</button>
+                                    </div>
+                                </div>
+                            </div>
+        
+                            <!-- Announcements List Section -->
+                            <div class="announcements-list">
+                                <div class="list-header">
+                                    <h3>Recent Announcements</h3>
+                                    <input type="text" class="recent-search-box" placeholder="Search announcements...">
+                                </div>
+        
+                                <!-- Loading indicator -->
+                                <div id="loadingIndicator" class="loading-indicator">
+                                    <div class="spinner"></div>
+                                    <p>Loading announcements...</p>
+                                </div>
+        
+                                <!-- Dynamic announcements container -->
+                                <div id="announcementsContainer">
+                                    <!-- Announcements will be loaded here dynamically -->
+                                </div>
+        
+                                <!-- No announcements message -->
+                                <div id="noAnnouncementsMessage" class="no-announcements" style="display: none;">
+                                    <p>No announcements found.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- ########################## NEWS AND UPDATES TAB ############################ -->
+                 
+                <!-- News Updates Tab -->
+                <div id="newsupdates" class="tab-content">
+                    <div class="news-container">
+                        <h2>News & Updates</h2>
+                        <div class="news-header">
+                            <div class="news-controls">
+                                <button class="add-news-btn" id="addNewsBtn">
+                                    <span>➕</span> Add News
+                                </button>
+                            </div>
+                        </div>
+        
+                        <!-- Filter Section -->
+                        <div class="filter-section">
+                            <input type="text" class="search-box" placeholder="Search news...">
+                            <select class="category-filter">
+                                <option value="">All Categories</option>
+                                <option value="events">Events</option>
+                                <option value="health">Health</option>
+                                <option value="community">Community</option>
+                                <option value="livelihood">Livelihood</option>
+                                <option value="barangay-council">Barangay Council Announcements</option>
+                                <option value="barangay-ordinances">Barangay Ordinances</option>
+                            </select>
+                            <input type="date" class="date-filter">
+                        </div>
+        
+                        <!-- News List Section -->
+                        <div class="news-list">
+                            <div id="loadingIndicator" class="loading-indicator">
+                                <div class="spinner"></div>
+                                <p>Loading news...</p>
+                            </div>
+                            <div id="newsContainer">
+                                <!-- News items will be loaded here dynamically -->
+                            </div>
+                            <div id="noNewsMessage" class="no-news" style="display: none;">
+                                <p>No news found.</p>
+                            </div>
+                        </div>
+        
+                        <!-- Add/Edit News Modal -->
+                        <div id="newsModal" class="news-modal">
+                            <div class="modal-content">
+                                <span class="close-modal" id="closeAddModal">&times;</span>
+                                <h3>Add News</h3>
+                                <form class="modal-form">
+                                    <div class="form-group">
+                                        <label for="news-title">Title</label>
+                                        <input type="text" id="news-title" class="form-input"
+                                            placeholder="Enter news title">
+                                    </div>
+        
+                                    <div class="form-group">
+                                        <label for="news-category">Category</label>
+                                        <select id="news-category" class="form-input">
+                                            <option value="">All Categories</option>
+                                            <option value="events">Events</option>
+                                            <option value="health">Health</option>
+                                            <option value="safety">Safety</option>
+                                            <option value="community">Community</option>
+                                            <option value="education">Education</option>
+                                            <option value="livelihood">Livelihood</option>
+                                            <option value="infrastructure">Infrastructure</option>
+                                            <option value="disaster-preparedness">Disaster Preparedness</option>
+                                            <option value="environmental">Environmental</option>
+                                            <option value="youth-and-sports">Youth and Sports</option>
+                                            <option value="elderly-pwd-support">Elderly and PWD Support</option>
+                                            <option value="cultural-and-arts">Cultural and Arts</option>
+                                            <option value="barangay-council">Barangay Council Announcements</option>
+                                            <option value="peace-and-order">Peace and Order</option>
+                                            <option value="public-services">Public Services</option>
+                                            <option value="barangay-ordinances">Barangay Ordinances</option>
+                                            <option value="agriculture">Agriculture</option>
+                                            <option value="women-and-children">Women and Children</option>
+                                        </select>
+                                    </div>
+        
+                                    <div class="form-group">
+                                        <label for="news-date">Date</label>
+                                        <input type="date" id="news-date" class="form-input">
+                                    </div>
+        
+                                    <div class="form-group">
+                                        <label for="news-description">Description</label>
+                                        <textarea id="news-description" class="form-input form-textarea"
+                                            placeholder="Enter news description"></textarea>
+                                    </div>
+        
+                                    <div class="form-group">
+                                        <label for="news-image">Image</label>
+                                        <input type="file" id="news-image" class="form-input" accept="image/*">
+                                    </div>
+                                    <div class="add-news-btn-container">
+                                        <button type="submit" class="add-news-btn">Save News</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- ############################# PORTFOLIO TAB ################################ -->
+                 
+                <!-- Portfolio Tab -->
+                <div id="portfolio" class="tab-content">
+                    <div class="portfolio-container">
+                        <h2>Portfolio Content Management</h2>
+                        <div class="portfolio-layout">
+                            <!-- Portfolio Form Section -->
+                            <div class="form-section">
+                                <div class="portfolio-form">
+                                    <h3>Edit Portfolio</h3>
+                                    <form id="portfolioForm">
+                                        <div class="form-group">
+                                            <label class="portfolio-form-label">First Name</label>
+                                            <input type="text" class="form-input" name="firstName"
+                                                placeholder="Enter first name" required>
+                                        </div>
+        
+                                        <div class="form-group">
+                                            <label class="portfolio-form-label">Middle Name</label>
+                                            <input type="text" class="form-input" name="middleName"
+                                                placeholder="Enter middle name" required>
+                                        </div>
+        
+                                        <div class="form-group">
+                                            <label class="portfolio-form-label">Last Name</label>
+                                            <input type="text" class="form-input" name="lastName"
+                                                placeholder="Enter last name" required>
+                                        </div>
+        
+                                        <div class="form-group">
+                                            <label class="portfolio-form-label">Slogan/Tagline</label>
+                                            <input type="text" class="form-input" name="slogan"
+                                                placeholder="Enter slogan">
+                                        </div>
+        
+                                        <div class="form-group">
+                                            <label class="portfolio-form-label">Leadership Quote</label>
+                                            <textarea class="form-textarea" name="quote"
+                                                placeholder="Enter your leadership quote"></textarea>
+                                        </div>
+        
+                                        <div class="form-group">
+                                            <label class="portfolio-form-label">Brief Description</label>
+                                            <textarea class="form-textarea" name="description"
+                                                placeholder="Enter brief description about the official"></textarea>
+                                        </div>
+        
+                                        <div class="form-group">
+                                            <label class="form-label">Profile Image</label>
+                                            <input type="file" class="form-input" name="profileImage" accept="image/*">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+        
+                            <!-- Preview Section -->
+                            <div class="preview-section">
+                                <div class="preview-header">
+                                    <h3>Live Preview</h3>
+                                </div>
+                                <div class="preview-content" id="portfolioPreview">
+                                    <!-- Preview content will be dynamically updated here -->
+                                </div>
+                                <div class="button-container">
+                                    <!-- <button type="button" id="btn-save" class="btn-save">Save Changes</button> -->
+                                    <button type="submit" id="btn-submit" class="btn-submit">Submit</button>
+                                    <button type="button" id="btn-clear" class="btn-clear">Clear Form</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- ########################### USER ACCOUNT TAB ################################ -->
+        
+                <!-- User Accounts Tab -->
+                <div id="useraccounts" class="tab-content">
+                    <div class="user-management-container">
+                        <div class="management-header">
+                            <h2 class="header-title">User Accounts</h2>
+                            <div class="user-stats">
+                                <div class="stat-card stat-card-total">
+                                    <div class="stat-number">0</div>
+                                    <div class="stat-label">Total Users</div>
+                                </div>
+                                <div class="stat-card stat-card-active">
+                                    <div class="stat-number">0</div>
+                                    <div class="stat-label">Active Users</div>
+                                </div>
+                                <div class="stat-card stat-card-inactive">
+                                    <div class="stat-number">0</div>
+                                    <div class="stat-label">Inactive Users</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Filter Section -->
+                        <div class="ua-filter-section">
+                            <div class="filter-grid">
+                                <div class="filter-group">
+                                    <label class="filter-label">Search</label>
+                                    <input type="text" class="filter-input" placeholder="Search by name or email...">
+                                </div>
+                                
+                                <div class="filter-group">
+                                    <label class="filter-label">Roles</label>
+                                    <select class="filter-input">
+                                        <option value="ALL">All</option>
+                                        <option value="ADMIN">Admin</option>
+                                        <option value="SUBADMIN">Subadmin</option>
+                                        <option value="RESIDENT">Resident</option>
+                                    </select>
+                                </div>
+                                <div class="filter-group">
+                                    <label class="filter-label">Date Registered</label>
+                                    <input type="date" class="filter-input" id="dateFilterInput" onchange="this.setAttribute('data-value', this.value);">
+                                </div>
+                                <div class="filter-group">
+                                    <button class="clear-filter-btn" id="clearFilterBtn">Clear Filters</button>
+                                </div>
+                                <div class="filter-group">
+                                    <button class="ad-reg-btn" id="adminRegSubmitBtn">Admin Registration</button>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <!-- User Table -->
+                        <div class="table-container">
+                            <table class="user-table" id="userTable">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Full Name</th>
+                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th>Status</th>
+                                        <th>Last Login</th>
+                                        <!-- <th>Actions</th> -->
+                                    </tr>
+                                </thead>                                    
+                                <tbody>
+                                    <!-- Add more rows as needed -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="pagination">
+                            <div class="page-info">
+                                Showing 1-10 of 2,547 users
+                            </div>
+                            <div class="page-buttons">
+                                <button class="page-btn">⟨⟨</button>
+                                <button class="page-btn active">1</button>
+                                <button class="page-btn">2</button>
+                                <button class="page-btn">3</button>
+                                <button class="page-btn">⟩⟩</button>
+                            </div>
+                        </div>
+        
+                        <!-- Modals -->
+                        <div id="editModal" class="modal">
+                            <div class="modal-content">
+                                <span class="close-modal" onclick="closeEditModal()">&times;</span>
+                                <h3>Edit User</h3>
+                                <form class="modal-form">
+                                    <div class="filter-group">
+                                        <label class="filter-label">Full Name</label>
+                                        <input type="text" class="filter-input" placeholder="Enter full name">
+                                    </div>
+                                    <div class="filter-group">
+                                        <label class="filter-label">Email</label>
+                                        <input type="email" class="filter-input" placeholder="Enter email">
+                                    </div>
+                                    <div class="filter-group">
+                                        <label class="filter-label">Role</label>
+                                        <select class="filter-input">
+                                            <option value="admin">Admin</option>
+                                            <option value="resident">Resident</option>
+                                            <option value="staff">Staff</option>
+                                        </select>
+                                    </div>
+                                    <div class="filter-group">
+                                        <label class="filter-label">Status</label>
+                                        <select class="filter-input">
+                                            <option value="active">Active</option>
+                                            <option value="inactive">Inactive</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="action-btn edit-btn">Save Changes</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="overlay" id="adminRegOverlay"></div>
+                            <div id="adminRegisterModal" class="admin-register">
+                                <div class="blurred-background"></div>
+                                <button class="close-btn" id="adminRegCloseBtn">&times;</button>
+                                <div class="logo-container">
+                                    <!-- <img src="/resources/logo.png" alt="Logo" class="logo"> -->
+                                    <!-- <p class="logo-text">San Antonio De Padua I</p> -->
+                                </div>
+                                <div class="admin-reg-container">
+                                    <p class="title">Admin Registration</p>
+                                    <form id="admin-reg-form">
+                                        <select name="position" id="position" required>
+                                            <option value="" disabled selected>Select position</option>
+                                            <option value="PB">Punong barangay</option>
+                                            <option value="SEC">Secretary</option>
+                                            <option value="OTHER">Other</option>
+                                        </select> 
+                                        <select name="role" id="role" disabled required>
+                                            <option value="" disabled selected>Select role</option>
+                                            <option value="ADMIN">Admin</option>
+                                            <option value="SUBADMIN">Sub-Admin</option>
+                                        </select> 
+                                        <div class="form-group">
+                                            <label for="username">Userame:</label>
+                                            <input type="text" name="username" id="username">
+                        
+                                            <label for="password">Password:</label>
+                                            <div class="input-wrapper">
+                                                <input type="password" name="password" id="password" required>
+                                                <span class="eye-icon" id="toggle-password">
+                                                    <img id="eye" src="../icons/eye_slash_icon_white.jpg" alt="Show password" />
+                                                    <img id="eye-slash" src="../icons/eye_icon_white.jpg" alt="Hide password" style="display: none;" />
+                                                </span>
+                                            </div>                   
+                        
+                                            <label for="fname">Firstname:</label>
+                                            <input type="text" name="firstName" id="firstName">
+                        
+                                            <label for="lname">Lastname:</label>
+                                            <input type="text" name="lastName" id="lastName">
+                        
+                                            <label for="email">Email:</label>
+                                            <input type="email" name="email" id="email">
+                        
+                                            <label for="phone">Contact No.:</label>
+                                            <input type="tel" name="phone" id="phone" placeholder="09XX XXX XXXX" pattern="[0-9]*" maxlength="11" required>
+                        
+                                            <label for="birthdate">Birthdate:</label>
+                                            <input type="date" name="birthdate" id="birthdate" placeholder="DD/MM/YYYY" required>
+                                        </div>             
+                        
+                                        <button type="submit" id="submit-btn">Submit</button>
+                                    </form>
+                                    <div id="loader-container" style="display: none;">
+                                        <div class="loader"></div>
+                                    </div>
+                                </div>
+                            </div>    
+                        
+                            <div class="admin-reg-popup" id="adminRegPopup">
+                                <h2>Registration Successful</h2>                    
+                                <div id="popupContent"></div>
+                                <button id="closePopup">Close</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- ############################## ARCHIVE TAB ################################# -->
+        
+                <!-- Archive Tab -->
+                <div id="archive" class="tab-content">
+                    <div class="archives-container">
+                        <h2>Archives</h2>
+                        <!-- <div class="search-filters">                                
+                        </div> -->
+                        <div class="archives-layout">
+                            <!-- Categories Sidebar -->
+                            <div class="categories-sidebar">
+                                <ul class="category-list">
+                                    <li class="category-item">
+                                        <button class="category-button">
+                                            Admin Accounts
+                                            <span class="category-count">5</span>
+                                        </button>
+                                    </li>
+                                    <li class="category-item">
+                                        <button class="category-button">
+                                            Officials
+                                            <span class="category-count">11</span>
+                                        </button>
+                                    </li>
+                                    <li class="category-item">
+                                        <button class="category-button">
+                                            Announcements
+                                            <span class="category-count">56</span>
+                                        </button>
+                                    </li>
+                                    <li class="category-item">
+                                        <button class="category-button">
+                                            Resident Records
+                                            <span class="category-count">289</span>
+                                        </button>
+                                    </li>
+                                    <!-- <li class="category-item">
+                                        <button class="category-button">
+                                            Barangay Documents
+                                            <span class="category-count">167</span>
+                                        </button>
+                                    </li> -->
+                                    <li class="category-item">
+                                        <button class="category-button">
+                                            Complaints
+                                            <span class="category-count">89</span>
+                                        </button>
+                                    </li>
+                                    <!-- <li class="category-item">
+                                        <button class="category-button">
+                                            Reports
+                                            <span class="category-count">33</span>
+                                        </button>
+                                    </li> -->
+                                </ul>
+                            </div>
+        
+                            <!-- Content Area -->
+                            <div class="content-area">
+                                <!-- Archive content sections -->
+                                
+                                <!-- ADMIN ACCOUNTS -->
+                                <div id="adminAccounts" class="category-content active">
+                                    <div class="admin-accounts-card">
+                                        <div class="search-filters">
+                                            <input type="text" class="search-input" placeholder="Search archives...">                                            
+                                            <select class="filter-select">
+                                                <option value="">Date Range</option>
+                                                <option value="today">Today</option>
+                                                <option value="week">This Week</option>
+                                                <option value="month">This Month</option>
+                                                <option value="year">This Year</option>
+                                            </select>
+                                            <select class="filter-select">
+                                                <option value="">Sort By</option>
+                                                <option value="date">Date</option>
+                                                <option value="name">Name</option>
+                                                <option value="size">Size</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <table class="adminAccounts-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Admin ID</th>
+                                                    <th>Username</th>
+                                                    <th>Email</th>
+                                                    <th>Role</th>  
+                                                    <th>Archived Date</th>
+                                                    <th>Archived By</th>                                               
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- Data will be populated here -->
+                                            </tbody>
+                                        </table>
+                                        <div id="showingEntriesAdminAccounts" class="showingEntries"></div>
+                                        <div id="paginationControlsAdminAccounts" class="pagination"></div>
+                                    </div>
+                                </div>
+        
+                                <!-- OFFICIALS -->
+                                <div id="officials" class="category-content">
+                                    <div class="official-card">
+                                        <div class="search-filters">
+                                            <input type="text" class="search-input" placeholder="Search archives...">
+                                            <select class="filter-select">
+                                                <option value="">Date Range</option>
+                                                <option value="today">Today</option>
+                                                <option value="week">This Week</option>
+                                                <option value="month">This Month</option>
+                                                <option value="year">This Year</option>
+                                            </select>
+                                            <select class="filter-select">
+                                                <option value="">Sort By</option>
+                                                <option value="date">Date</option>
+                                                <option value="name">Name</option>
+                                                <option value="size">Size</option>
+                                            </select>
+                                        </div>
+                                        <!-- Scrollable Table Container -->
+                                        <div class="table-container">
+                                            <table class="official-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Position</th>
+                                                        <th>Committee(s) Held</th>
+                                                        <th>Start Date</th>
+                                                        <th>End Date</th>
+                                                        <th>Status</th>
+                                                        <th>Archived By</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <!-- Rows will be dynamically populated -->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div id="showingEntriesOfficials" class="showingEntries"></div>
+                                        <div id="paginationControlsOfficials" class="pagination"></div>
+                                    </div>
+                                </div>
+
+
+                                
+                                <!-- ANNOUNCEMENTS -->
+                                <div id="announcements" class="category-content">
+                                    <div class="search-filters">
+                                        <input type="text" class="search-input" placeholder="Search archives...">                                            
+                                        <select class="filter-select">
+                                            <option value="">Date Range</option>
+                                            <option value="today">Today</option>
+                                            <option value="week">This Week</option>
+                                            <option value="month">This Month</option>
+                                            <option value="year">This Year</option>
+                                        </select>
+                                        <select class="filter-select">
+                                            <option value="">Sort By</option>
+                                            <option value="date">Date</option>
+                                            <option value="name">Name</option>
+                                            <option value="size">Size</option>
+                                        </select>
+                                    </div>
+                                    <div class="announcement-card">                                        
+                                        <h3>Community Clean-up Drive</h3>
+                                        <p class="text-gray-600">Posted on: November 15, 2024</p>
+                                        <p>Join us this Saturday for our monthly community clean-up drive...</p>
+                                    </div>
+                                </div>
+        
+                                <!-- RESIDENTS RECORDS -->
+                                <div id="resident-records" class="category-content">
+                                    <div class="resident-records-card">
+                                            <div class="search-filters">
+                                                <input type="text" class="search-input" placeholder="Search archives...">                                            
+                                                <select class="filter-select">
+                                                    <option value="">Date Range</option>
+                                                    <option value="today">Today</option>
+                                                    <option value="week">This Week</option>
+                                                    <option value="month">This Month</option>
+                                                    <option value="year">This Year</option>
+                                                </select>
+                                                <select class="filter-select">
+                                                    <option value="">Sort By</option>
+                                                    <option value="date">Date</option>
+                                                    <option value="name">Name</option>
+                                                    <option value="size">Size</option>
+                                                </select>
+                                            </div>
+                                                <div class="table-container">
+                                                <table class="resident-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Unique ID</th>
+                                                            <th>Name</th>
+                                                            <th>Address</th>
+                                                            <th>Contact Info</th>
+                                                            <th>Personal Info</th>
+                                                            <th>Status</th>
+                                                            <th>Archived Info</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div id="showingEntriesResidentRecords" class="showingEntries"></div>
+                                            <div id="paginationControlsResidentRecords" class="pagination"></div>
+                                    </div>
+                                </div>
+        
+                                <!-- DOCUMENTS -->
+                                <div id="clearances" class="category-content">
+                                    <div class="search-filters">
+                                        <input type="text" class="search-input" placeholder="Search archives...">                                            
+                                        <select class="filter-select">
+                                            <option value="">Date Range</option>
+                                            <option value="today">Today</option>
+                                            <option value="week">This Week</option>
+                                            <option value="month">This Month</option>
+                                            <option value="year">This Year</option>
+                                        </select>
+                                        <select class="filter-select">
+                                            <option value="">Sort By</option>
+                                            <option value="date">Date</option>
+                                            <option value="name">Name</option>
+                                            <option value="size">Size</option>
+                                        </select>
+                                    </div>
+                                    <div class="clearance-item">
+                                        <div>
+                                            <h4>Business Permit Clearance</h4>
+                                            <p>Requested by: John Smith</p>
+                                            <p>Date: Nov 16, 2024</p>
+                                        </div>
+                                        <span class="status-badge status-pending">Processing</span>
+                                    </div>
+                                </div>
+        
+                                <!-- COMPLAINTS -->
+                                <div id="complaints" class="category-content">
+                                    <div class="search-filters">
+                                        <input type="text" class="search-input" placeholder="Search archives...">                                            
+                                        <select class="filter-select">
+                                            <option value="">Date Range</option>
+                                            <option value="today">Today</option>
+                                            <option value="week">This Week</option>
+                                            <option value="month">This Month</option>
+                                            <option value="year">This Year</option>
+                                        </select>
+                                        <select class="filter-select">
+                                            <option value="">Sort By</option>
+                                            <option value="date">Date</option>
+                                            <option value="name">Name</option>
+                                            <option value="size">Size</option>
+                                        </select>
+                                    </div>
+                                    <div class="complaint-card">
+                                        <h4>Noise Complaint</h4>
+                                        <p>Filed by: Anonymous</p>
+                                        <p>Date: Nov 14, 2024</p>
+                                        <span class="status-badge status-pending">Under Investigation</span>
+                                    </div>
+                                </div>
+        
+                                <!-- REPORTS -->
+                                <div id="reports" class="category-content">
+                                    <div class="search-filters">
+                                        <input type="text" class="search-input" placeholder="Search archives...">                                            
+                                        <select class="filter-select">
+                                            <option value="">Date Range</option>
+                                            <option value="today">Today</option>
+                                            <option value="week">This Week</option>
+                                            <option value="month">This Month</option>
+                                            <option value="year">This Year</option>
+                                        </select>
+                                        <select class="filter-select">
+                                            <option value="">Sort By</option>
+                                            <option value="date">Date</option>
+                                            <option value="name">Name</option>
+                                            <option value="size">Size</option>
+                                        </select>
+                                    </div>
+                                    <div class="report-grid">
+                                        <div class="report-card">
+                                            <h4>Monthly Activity Report</h4>
+                                            <p>Period: October 2024</p>
+                                            <p>Size: 2.3 MB</p>
+                                            <button class="action-button view-btn">View Report</button>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- ############################## TURONOVER TAB ############################### -->
+        
+                <!-- Turnover Tab -->
+                <div id="turnover" class="tab-content">
+                    <div class="turnover-container">
+                        <h3 class="form-title">PAG ISIPAN PA KUNG IREMOVE TO</h3>
+                        <h3 class="form-title">Admin Turnover Form</h3>
+                        <h6 class="form-subtitle">Please complete the turnover information (* are required fields)</h6>
+                        
+                        <!-- Outgoing Admin Section -->
+                        <!-- <div class="turnover-section">
+                            <div class="section-header">
+                                <h3 class="section-title">
+                                    <span>👤</span> Outgoing Admin Information
+                                </h3>
+                                <span class="section-status status-pending">Thank you for your hardwork!</span>
+                            </div>
+        
+                            <form id="outgoingAdmin">
+                                <div class="form-grid">
+                                    <div class="form-grid-group">
+                                        <div class="form-group">
+                                            <label>* Last Name</label>
+                                            <input type="text" id="lastName" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>* First Name</label>
+                                            <input type="text" id="firstName" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Middle Name</label>
+                                            <input type="text" id="middleName">
+                                        </div>
+                                    </div>
+                                    <div class="select-group">
+                                        <div class="form-group">
+                                            <label>* Position</label>
+                                            <select name="position" id="position" required>
+                                                <option value="" disabled selected></option>
+                                                <option value="PB">Punong Barangay</option>
+                                                <option value="SEC">Secretary</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>* Role</label>
+                                            <select name="role" id="role" required>
+                                                <option value="" disabled selected></option>
+                                                <option value="ADMIN">Admin</option>
+                                                <option value="SUBADMIN">Sub-Admin</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-grid-group">
+                                        <div class="form-group">
+                                            <label>* Username</label>
+                                            <input type="text" id="username" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>* Email</label>
+                                            <input type="email" id="email" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="phone">Contact Number</label>
+                                            <input type="tel" id="phone" placeholder="+63XXXXXXXXXX" pattern="\+63[0-9]{10}" 
+                                                title="Phone number must start with '+63' followed by 10 digits">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" class="action-btn primary-btn" id="outClearBtn" >Clear Form</button>
+                                </div>
+                            </form>
+                        </div> -->
+                
+                        <!-- Incoming Admin Section -->
+                        <div class="turnover-section">
+                            <div class="section-header">
+                                <h3 class="section-title">
+                                    <span>👥</span> Incoming Admin Information
+                                </h3>
+                                <span class="section-status status-pending">We are counting on you!</span>
+                            </div>
+        
+                            <form id="incomingAdmin">
+                                <div class="form-grid">
+                                    <div class="form-grid-group">
+                                        <div class="form-group">
+                                            <label>* Last Name</label>
+                                            <input type="text" id="inLname" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>* First Name</label>
+                                            <input type="text" id="inFname" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Middle Name</label>
+                                            <input type="text" id="inMname" >
+                                        </div>
+                                    </div>
+                                    <div class="select-group">
+                                        <div class="form-group">
+                                            <label>* Position</label>
+                                            <select name="position-incoming" id="positionIncoming" required>
+                                                <option value="" disabled selected></option>
+                                                <option value="PB">Punong Barangay</option>
+                                                <option value="SEC">Secretary</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>* Role</label>
+                                            <select name="role-incoming" id="roleIncoming" required>
+                                                <option value="" disabled selected></option>
+                                                <option value="ADMIN">Admin</option>
+                                                <option value="SUBADMIN">Sub-Admin</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-grid-group">
+                                        <div class="form-group">
+                                            <label>* Username</label>
+                                            <input type="text" id="inUsername" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>* Email</label>
+                                            <input type="email" id="inEmail" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inPhone">Contact Number</label>
+                                            <input type="tel" id="inPhone" placeholder="+63XXXXXXXXXX" pattern="\+63[0-9]{10}" 
+                                                title="Phone number must start with '+63' followed by 10 digits">
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" class="action-btn primary-btn" id="inClearBtn" >Clear Form</button>
+                                </div>
+                            </form>        
+                        </div>
+
+                        <div class="turnover-section">
+                            <div class="section-header">
+                                <h3 class="section-title">
+                                    <!-- <span>✍️</span> Final Acknowledgments -->
+                                </h3>
+                                <span class="section-status status-pending">Welcome to HELL!!!</span>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="action-btn primary-btn" id="saveDraftBtn">Save as Draft</button>
+                                <button class="action-btn primary-btn" id="completeTurnoverBtn">Complete Turnover</button>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <div id="passwordModal" class="modal">
+                    <div class="password-modal-content">
+                        <div class="modal-header">
+                            <h3>Confirm Your Password</h3>
+                            <span class="close-modal">&times;</span>
+                        </div>
+                        <div class="modal-body">
+                            <p>Please enter your password to complete the turnover process.</p>
+                            <div class="password-input-group">
+                                <input type="password" id="confirmPassword" placeholder="Enter your password">
+                                <span class="eye-icon" id="passwordToggle">
+                                    <img id="eyes" src="../icons/eye_slash_icon_white.jpg" alt="Show password" />
+                                    <img id="eyes-slash" src="../icons/eye_icon_white.jpg" alt="Hide password" style="display: none;" />
+                                </span>
+                            </div>
+                            <div id="passwordError" class="error-message"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="action-btn secondary-btn" id="cancelPasswordBtn">Cancel</button>
+                            <button class="action-btn primary-btn" id="confirmPasswordBtn">Confirm</button>
+                        </div>
+                    </div>
+                </div>
+        
+                <!-- ############################## USER LOGS ################################### -->
+        
+                <!-- Activity Logs Tab -->
+                <div id="activitylogs" class="tab-content">
+                    <div class="logs-container">
+                        <div class="logs-header">
+                            <h2>User Activity Logs</h2>
+                            <input type="text" class="search-logs" placeholder="Search logs...">
+                        </div>
+                        <div class="logs-table-container">
+                            <table class="logs-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Date & Time</th>
+                                                <th>User</th>
+                                                <th>Action</th>
+                                                <th>Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Sample Data -->
+                                            <tr>
+                                                <td>2024-11-14 08:45 AM</td>
+                                                <td>Juan Dela Cruz</td>
+                                                <td>Login</td>
+                                                <td>Logged into the system</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2024-11-14 09:15 AM</td>
+                                                <td>Maria Santos</td>
+                                                <td>Updated</td>
+                                                <td>Updated resident record: John Doe</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2024-11-14 10:00 AM</td>
+                                                <td>Pedro Ramos</td>
+                                                <td>Logout</td>
+                                                <td>Logged out of the system</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                        </div>
+                    </div>
+                </div>
+        
+            </div>
+        </div>
+
+
+        <script type="module" src="../js/firebaseConfig.js"></script> <!--"/"-->
+
+        <script type="module" src="../js/script.js"></script>
+        <script type="module" src="../js/admin_auth.js"></script>
+        <!-- <script type="module" src="/public/js/admin_settings.js"></script> -->
+        <script type="module" src="../js/sessionManager.js"></script>
+        <!-- <script type="module" src="/js/admin_logs.js"></script> -->
+
+        <script type="module" src="../js/admin_notification.js"></script>
+        <script type="module" src="../js/admin_settings.js"></script>
+
+        <script type="module" src="../js/admin_settings_announcements.js"></script>
+        <script type="module" src="../js/admin_settins_news.js"></script>
+        <script type="module" src="../js/admin_settings_portfolio.js"></script>
+        <script type="module" src="../js/admin_settings_useraccounts.js"></script>
+        <script type="module" src="../js/admin_settings_archives.js"></script>
+        <script type="module" src="../js/admin_settings_turnover.js"></script>
+
+
+
+        <script type="module" src="../js/logOut.js"></script>
+
+        <script>        
+            function toggleDropdown() {
+                document.getElementById("dropdownMenu").classList.toggle("show");
+            }
+            
+            // Close the dropdown if the user clicks outside of it
+            window.onclick = function(event) {
+                if (!event.target.closest('.toggle-menu')) {
+                    var dropdown = document.getElementById("dropdownMenu");
+                    if (dropdown.classList.contains('show')) {
+                        dropdown.classList.remove('show');
+                    }
+                }
+            }
+            
+            function handleLogout() {
+                logout();
+                toggleDropdown();
+            }
+        </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const tabs = document.querySelectorAll('.tab-selection');
+                const tabContents = document.querySelectorAll('.tab-content');
+
+                tabs.forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        // Remove active class from all tabs and contents
+                        tabs.forEach(t => t.classList.remove('active'));
+                        tabContents.forEach(content => content.classList.remove('active'));
+
+                        // Add active class to clicked tab and corresponding content
+                        tab.classList.add('active');
+                        const tabId = tab.getAttribute('data-tab');
+                        document.getElementById(tabId).classList.add('active');
+                    });
+                });
+            });
+        </script>
+
+        <script type="module">
+            import { checkAuth } from './js/admin_auth.js';
+            checkAuth();
+            
+        </script>
+
+</body>
+
+</html>

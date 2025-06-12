@@ -1,0 +1,1003 @@
+
+
+/* .dashboard {
+  margin-left: 350px;
+  padding: 30px;
+  width: calc(100% - 500px);
+  min-height: calc(100vh - 100px);
+  position: absolute;
+  top: 100px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  background-color: #042136;
+  border-radius: 10px;
+  z-index: 1;
+  overflow-y: auto;
+} */
+
+.dashboard {
+  margin-left: 15%; 
+  padding: 30px;
+  width: calc(85% - 60px);
+  height: calc(100vh - 80px); 
+  overflow-y: auto; 
+  top: 50px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  background-color: #042136;
+  z-index: 1;
+  bottom: 10px;
+}
+
+.dashboard h1, h2 {
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.dashboard h1 {
+  font-size: 2.5em;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 10px;
+}
+
+.dashboard h2 {
+  font-size: 2em;
+  margin-top: 40px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
+  margin-top: 20px;
+
+  /* display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-top: 20px;
+  align-items: stretch; */
+}
+
+.card {
+  /* background-color: #0a3d62;
+  border-radius: 12px;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+  padding: 25px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; */
+
+  flex-direction: column;
+  height: 100%;
+  min-height: 450px;
+  background-color: #0a3d62;
+  border-radius: 12px;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+  padding: 25px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.population-number,
+.education-number,
+.voters-number,
+.age-number,
+.household-number {
+  font-size: 2.5em;
+  font-weight: bold;
+  display: block;
+  margin: 10px 0;
+  height: 60px;
+  line-height: 60px;
+}
+
+/* Consistent chart container heights */
+.gender-chart-container,
+.education-chart-container,
+.voter-chart-container,
+.age-chart-container,
+.household-chart-container {
+  width: 100%;
+  height: 250px;
+  position: relative;
+  margin: 20px 0;
+}
+
+/* Consistent icon styling */
+.population-icon,
+.education-icon,
+.voters-icon,
+.age-icon,
+.household-icon {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Card header alignment */
+.card h3 {
+  margin: 0 0 20px 0;
+  color: #3498db;
+  font-size: 1.4em;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card canvas {
+  width: 100% !important;
+  height: auto !important;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.card-icon {
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+}
+
+.card h3 {
+  margin-top: 0;
+  color: #3498db;
+  font-size: 1.4em;
+  margin-bottom: 15px;
+}
+
+.card p {
+  font-size: 50px;
+  font-weight: bold;
+  color: #ecf0f1;
+}
+
+select {
+  display: block;
+  margin: 0 auto 30px;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  background-color: #ecf0f1;
+  color: #2c3e50;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+select:hover {
+  background-color: #bdc3c7;
+}
+
+.gender-chart-container,
+.education-chart-container,
+.voter-chart-container,
+.age-chart-container,
+.household-chart-container {
+  width: 100%;
+  height: 185px !important;
+  position: relative;
+  margin: 10px 0;
+}
+
+canvas {
+  /* max-width: 100%;
+  height: auto;
+  margin-top: 15px; */
+
+  width: 100% !important;
+  height: 100% !important;
+  aspect-ratio: 1 / 1;
+  object-fit: contain;
+}
+
+@media (max-width: 1200px) {
+  .dashboard {
+      margin-left: 0;
+      width: 100%;
+      border-radius: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid {
+      grid-template-columns: 1fr;
+  }
+}
+
+/* ######################## POPULATION AND GENDER CHART ############################ */
+.population-gender-card {
+  background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+  color: white;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  height: 700px;
+}
+
+.population-icon {
+  width: 50px;  
+  height: auto;  
+  margin-right: 10px;
+  display: inline-block;
+  vertical-align: middle; 
+}
+
+.population-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.total-population {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.population-number {
+  font-size: 3em;
+  font-weight: bold;
+  display: block;
+}
+
+.population-label {
+  font-size: 1em;
+  opacity: 0.8;
+}
+
+.gender-distribution {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gender-chart-container {
+  width: 100%;
+  height: 200px;
+  position: relative;
+}
+
+.gender-legend {
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 15px;
+  border-radius: 10px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin: 5px 10px;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.legend-color.male {
+  background-color: #00aaff;
+}
+
+.legend-color.female {
+  background-color: #ff6ec7;
+}
+
+.legend-color.undefined {
+  background-color: #cccccc;
+}
+
+.legend-label {
+  margin-right: 5px;
+}
+
+.legend-percentage {
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .population-number {
+      font-size: 2.5em;
+  }
+  
+  .gender-chart-container {
+      height: 180px;
+  }
+}
+
+/* ################# EDUCATION LEVEL CHART CHART #################### */
+.education-card {
+  background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+  color: white;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  height: 700px;
+}
+
+.education-icon {
+  width: 50px;
+  height: auto;
+  margin-right: 10px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.education-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.total-education {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.education-number {
+  font-size: 3em;
+  font-weight: bold;
+  display: block;
+}
+
+.education-label {
+  font-size: 1em;
+  opacity: 0.8;
+}
+
+.education-distribution {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.education-chart-container {
+  width: 100%;
+  height: 250px;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.education-legend {
+  /* display: grid; */
+  background: rgba(255, 255, 255, 0.1);
+  /* grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));   */
+  /* width: 100%; */
+  margin-top: 15px;
+  padding: 0 10px;
+  border-radius: 10px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  font-size: 0.85em;
+  padding: 2px 5px;
+}
+
+.legend-color {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+  flex-shrink: 0;
+}
+
+.legend-color.elementary-incomplete { background-color: #4CAF50; }
+.legend-color.elementary-complete { background-color: #81C784; }
+.legend-color.high-school-incomplete { background-color: #2196F3; }
+.legend-color.high-school-complete { background-color: #64B5F6; }
+.legend-color.vocational-technical { background-color: #FF9800; }
+.legend-color.college-incomplete { background-color: #9C27B0; }
+.legend-color.college-complete { background-color: #BA68C8; }
+.legend-color.postgraduate { background-color: #F44336; }
+.legend-color.doctorate { background-color: #E57373; }
+.legend-color.no-formal-education { background-color: #795548; }
+.legend-color.undefined { background-color: #9E9E9E; }
+
+.legend-label {
+  margin-right: 5px;
+  white-space: nowrap;
+  flex-grow: 1;
+}
+
+.legend-percentage {
+  font-weight: bold;
+  margin-left: auto;
+}
+
+@media (max-width: 768px) {
+  .education-number {
+      font-size: 2.5em;
+  }
+  
+  .education-chart-container {
+      height: 220px;
+  }
+  
+  .education-legend {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      font-size: 0.8em;
+  }
+
+  .legend-item {
+      font-size: 0.8em;
+  }
+}
+
+/* ################# VOTERS CHART #################### */
+
+.voters-card {
+  background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+  color: white;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.voters-icon {
+  width: 50px;  
+  height: auto;  
+  margin-right: 10px;
+  display: inline-block;
+  vertical-align: middle; 
+}
+
+.voters-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.total-voters {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.voters-number {
+  font-size: 3em;
+  font-weight: bold;
+  display: block;
+}
+
+.voters-label {
+  font-size: 1em;
+  opacity: 0.8;
+}
+
+.voter-distribution {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.voter-chart-container {
+  width: 100%;
+  height: 200px; 
+  position: relative;
+  /* margin-bottom: 20px;  */
+}
+
+#votersChart {
+  margin-bottom: 10px; 
+}
+
+.voter-legend {
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 15px;
+  border-radius: 10px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin: 5px 10px;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.legend-color.voters {
+  background-color: #4caf50;
+}
+
+.legend-color.non-voters {
+  background-color: #f44336;
+}
+
+.legend-label {
+  margin-right: 5px;
+}
+
+.legend-percentage {
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .voters-number {
+      font-size: 2.5em;
+  }
+  
+  .voter-chart-container {
+      height: 180px;
+  }
+}
+
+/* ################# AGE DISTRIBUTION CHART #################### */
+
+.age-distribution-card {
+  background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+  color: white;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.age-icon {
+  width: 50px;  
+  height: auto;  
+  margin-right: 10px;
+  display: inline-block;
+  vertical-align: middle; 
+}
+
+.age-distribution-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.total-age-group {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.age-number {
+  font-size: 3em;
+  font-weight: bold;
+  display: block;
+}
+
+.age-label {
+  font-size: 1em;
+  opacity: 0.8;
+}
+
+.age-group-distribution {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.age-chart-container {
+  width: 100%;
+  height: 200px;
+  position: relative;
+}
+
+#ageDistributionChart {
+  margin-bottom: 10px;
+}
+
+.age-legend {
+  display: flex;
+  background: rgba(255, 255, 255, 0.1);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 15px;
+  border-radius: 10px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin: 5px 10px;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.legend-color.seniors {
+  background-color: #9c27b0;
+}
+
+.legend-color.legal-age {
+  background-color: #2196f3;
+}
+
+.legend-color.minors {
+  background-color: #ff9800;
+}
+
+.legend-label {
+  margin-right: 5px;
+}
+
+.legend-percentage {
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .age-number {
+    font-size: 2.5em;
+  }
+
+  .age-chart-container {
+    height: 180px;
+  }
+}
+
+/* ################### HOUSEHOLD CHART #################### */
+
+/* HOUSEHOLD CHART STYLES */
+.household-card {
+  background: linear-gradient(135deg, #00796B 0%, #004D40 100%);
+  color: white;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.household-icon {
+  width: 50px;
+  height: auto;
+  margin-right: 10px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.household-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.total-households {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.household-number {
+  font-size: 3em;
+  font-weight: bold;
+  display: block;
+}
+
+.household-label {
+  font-size: 1em;
+  opacity: 0.8;
+}
+
+.household-distribution {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.household-chart-container {
+  width: 100%;
+  height: 250px;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.household-legend {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  width: 100%;
+  padding: 0 10px;
+}
+
+.legend-section {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.legend-section h4 {
+  margin: 0 0 10px 0;
+  font-size: 1em;
+  opacity: 0.9;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  font-size: 0.85em;
+  padding: 5px 0;
+}
+
+.legend-color {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+/* Household Size Colors */
+.legend-color.small-household { background-color: #4CAF50; }
+.legend-color.medium-household { background-color: #2196F3; }
+.legend-color.large-household { background-color: #9C27B0; }
+.legend-color.xl-household { background-color: #FF9800; }
+
+/* Household Type Colors */
+.legend-color.owned { background-color: #F44336; }
+.legend-color.rented { background-color: #795548; }
+.legend-color.informal { background-color: #607D8B; }
+
+.legend-label {
+  flex-grow: 1;
+  white-space: nowrap;
+}
+
+.legend-percentage {
+  font-weight: bold;
+  margin-left: auto;
+}
+
+@media (max-width: 768px) {
+  .household-legend {
+      grid-template-columns: 1fr;
+      gap: 10px;
+  }
+
+  .household-number {
+      font-size: 2.5em;
+  }
+
+  .household-chart-container {
+      height: 220px;
+  }
+
+  .legend-item {
+      font-size: 0.8em;
+  }
+}
+
+/* ################### DOCUMENTS #################### */
+
+.documents-card {
+  background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+  color: white;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.documents-icon {
+  width: 50px;
+  height: auto;
+  margin-right: 10px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.filter-container {
+  margin-bottom: 20px;
+}
+
+#timeFilter, #documentTypeSelect {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 16px;
+}
+
+#timeFilter option, #documentTypeSelect option {
+  background-color: #858585;
+  color: white;
+}
+
+.documents-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.document-status, .document-types, .document-purposes {
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.status-chart-container, .types-chart-container, .purposes-chart-container {
+  width: 100%;
+  height: 200px;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.status-legend, .types-legend, .purposes-legend {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  margin: 5px 10px;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.legend-label {
+  margin-right: 5px;
+}
+
+.legend-percentage {
+  font-weight: bold;
+}
+
+/* Status colors */
+.legend-color.pending { background-color: #ffa726; }
+.legend-color.cancelled { background-color: #ef5350; }
+.legend-color.printed { background-color: #66bb6a; }
+
+/* Document type colors */
+.legend-color.indigency { background-color: #29b6f6; }
+.legend-color.certificate { background-color: #ab47bc; }
+.legend-color.clearance { background-color: #26a69a; }
+
+@media (max-width: 768px) {
+  .status-chart-container, .types-chart-container, .purposes-chart-container {
+      height: 180px;
+  }
+  
+  .legend-item {
+      font-size: 14px;
+  }
+}
+
+/* ################## DOCUMENT PURPOSES ################## */
+.document-purposes-container {
+  background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+  color: white;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.document-purposes-container h4 {
+  color: #3498db;
+  font-size: 1.4em;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.tab-button {
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  margin: 0 5px;
+}
+
+.tab-button.active {
+  background-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-3px);
+}
+
+.tab-button:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.tab-content {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.tab-pane {
+  display: none;
+}
+
+.tab-pane.active {
+  display: block;
+}
+
+.tab-pane h5 {
+  color: #3498db;
+  font-size: 1.2em;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.purpose-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.purpose-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.purpose-list li:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.purpose-name {
+  font-weight: bold;
+}
+
+.purpose-percentage {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .tabs {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .tab-button {
+    margin-bottom: 10px;
+    width: 80%;
+  }
+
+  .purpose-list li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .purpose-percentage {
+    margin-top: 5px;
+    align-self: flex-end;
+  }
+}

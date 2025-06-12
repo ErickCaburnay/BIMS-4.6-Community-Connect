@@ -1,0 +1,560 @@
+<!-- ############### INDEX / LANDINGPAGE.HTML ############# -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1.5, user-scalable=yes">-->
+    <title>Barangay Information Management System</title>
+    <link rel="stylesheet" href="styles/mainstyle.css">
+    <link rel="stylesheet" href="styles/newsUpdates.css">
+    <link rel="stylesheet" href="styles/landingpage.css">
+    <link rel="stylesheet" href="styles/announcement_popup.css">
+    <link rel="stylesheet" href="styles/newsUpdates.css">
+
+
+
+
+    <style>
+#scrollTopBtn {
+    display: none; 
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    z-index: 1000; 
+    background-color: #0c6bb1;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); 
+    transition: background-color 0.3s, opacity 0.3s;
+}
+
+#scrollTopBtn:hover {
+    background-color: #094d7f;
+}
+
+#scrollTopBtn img {
+    width: 20px;
+    height: 20px;
+    display: block;
+}
+
+    </style>
+</head>
+
+<body>
+
+    <div class="emergency-container">
+        <div class="toggle-menu-container">            
+            <h1>Community-Connect</h1>
+        </div>
+        <div class="emergency-right">
+            <div class="current-date">
+                <p id="current-date"></p>
+            </div>
+        </div>
+        <div class="header-icons">
+            <a href="/index.html">
+                <div class="icons">                
+                    <img src="/resources/icons/home_icon.png" alt="" />                      
+                </div>
+                
+            </a>
+            <a href="/about.html">
+                <div class="icons">                
+                    <img src="/resources/icons/about_icon.png" alt="" />                      
+                </div>
+                
+            </a>
+            <a href="/contact.html">
+                <div class="icons">                
+                    <img src="/resources/icons/phone_icon.png" alt="" />                      
+                </div>
+                
+            </a>
+            <a href="/loginPage.html">
+                <div class="icons">                
+                    <img src="/resources/icons/login_icon.png" alt="" />                      
+                </div>
+                
+            </a>
+
+            <div class="icons">
+                <p><span id="current-user"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="announcement-popup" id="announcementPopup">
+        <div class="popup-content">
+            <!-- Popup Header -->
+            <div class="popup-header">
+                <h2 class="popup-title">📢 Important Announcement</h2>
+                <button class="popup-close" onclick="closeAnnouncement()">&times;</button>
+            </div>
+
+            <!-- Popup Body -->
+            <div class="popup-body">
+                <div class="announcement-content">
+                    <span class="announcement-priority-badge priority-high" id="priorityLevel">ATTENTION!!!</span>
+                    <div class="announcement-date"></div>
+                    <p class="announcement-text">
+                        Loading...                   
+                    </p>
+                    <!-- <img src="#" alt="announcement-image" class="announcement-image"> -->
+                </div>
+            </div>
+
+            <!-- Updated Popup Footer -->
+            <div class="popup-footer">
+                <label class="dont-show-again">
+                    <input type="checkbox" class="dont-show-checkbox">
+                    Don't show this again today
+                </label>
+                <!-- <div class="button-container">
+                    <button class="close-button" onclick="closeAnnouncement()">Got it!</button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    
+<div class="blur-container">
+    <div class="logo-container">
+        <img src="resources/logo.png" class="logo">
+        <h1 class="brgy_name">San Antonio De Padua I</h1>
+        <h3>Blk.7 lot 22, Dasmariñas, Cavite</h3>
+        <h3>Open Hours: Monday to Friday (7am - 6pm)</h3>
+        <h3>brgysanantoniodepadua1@gmail.com</h3>
+        <h3>09123456789</h3>
+    </div>
+
+
+<!-- ###### NEWS EVENTS UPDATES SECTION ###### -->
+<section class="news-events-section">
+    <h2 class="section-title">News & Events</h2>
+    
+    <!-- Search and Filter Bar -->
+    <div class="search-filter-bar">
+        <input type="search" placeholder="Search news and events..." class="search-input">
+        <div class="filter-controls">
+            <select class="category-filter">
+                <option value="">All Categories</option>
+                <option value="events">Events</option>
+                <option value="health">Health</option>
+                <option value="safety">Safety</option>
+                <option value="community">Community</option>
+                <option value="education">Education</option>
+                <option value="livelihood">Livelihood</option>
+                <option value="infrastructure">Infrastructure</option>
+                <option value="disaster-preparedness">Disaster Preparedness</option>
+                <option value="environmental">Environmental</option>
+                <option value="youth-and-sports">Youth and Sports</option>
+                <option value="elderly-pwd-support">Elderly and PWD Support</option>
+                <option value="cultural-and-arts">Cultural and Arts</option>
+                <option value="barangay-council">Barangay Council Announcements</option>
+                <option value="peace-and-order">Peace and Order</option>
+                <option value="public-services">Public Services</option>
+                <option value="barangay-ordinances">Barangay Ordinances</option>
+                <option value="agriculture">Agriculture</option>
+                <option value="women-and-children">Women and Children</option>
+            </select>
+            <input type="date" class="date-filter">
+        </div>
+    </div>
+
+    <!-- Priority Updates -->
+    <div class="priority-updates">
+        <div class="priority-card">
+            <span class="priority-badge">Emergency Alert</span>
+            <h3>Important Community Announcement</h3>
+            <p class="post-meta">Posted on: August 15, 2024 | By: Admin</p>
+            <p class="post-excerpt">Critical information regarding the upcoming community meeting...</p>
+            <button class="read-more-btn">Read More</button>
+        </div>
+    </div>
+
+    <!-- Main News Grid Container -->
+    <div class="news-grid-container">
+        <!-- News Grid -->
+        <div class="news-grid">
+            <!-- News items will be dynamically inserted here -->
+        </div>
+        <!-- Pagination Dots (moved outside the grid) -->
+        <div class="pagination-dots"></div>
+    </div>
+
+    <!-- Load More Button -->
+    <button class="load-more-btn">Load More News</button>
+
+    <!-- News Detail Modal -->
+<div id="newsDetailModal" class="modal">
+    <div class="modal-overlay"></div> <!-- Add this overlay div -->
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div id="newsDetailContent">
+                <!-- Content will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+
+
+
+<section class="portfolio-section">
+    <div class="portfolio-container">
+        <div id="" class="portfolio-image">
+            <img src="resources/portfolio-img.png" alt="Carter P. Manzano" />
+        </div>
+        <div id="" class="portfolio-content">
+            <h4 class="protfolio-title">Barangay Captain</h4>
+            <h2 id="" class="pname">Carter P. Manzano</h2>
+            <blockquote id="">"A true leader does not create division but unites people." 
+                – Carter P. Manzano.</blockquote>
+            <p id="" class="portfolio-description">Barangay Captain Carter P. Manzano, a dedicated advocate for the community 
+                and a proud representative of the district, has been serving since 2024. 
+                Learn more about Barangay Captain Carter P. Manzano and read his blog.</p>
+        </div>
+    </div>
+    <div id="slogan" class="slogan">
+        <h3 contenteditable="TRUE">Slogan</h2>
+        <h3 contenteditable="TRUE">Here</h3>
+    </div>
+</section>
+
+
+<section>
+    <div class="officials-container" id="officialsContainer">
+        <h2>Elected Barangay Officials</h2>
+
+        <div class="top-row" id="officialsRow">
+            <!-- Punong Barangay -->
+            <div class="member" id="official-container">
+                <img id="official-image-pb" alt="Punong Barangay">
+                <div class="official-info">
+                    <div id="official-name" class="full-name">
+                        <span class="prefix">Hon. </span>
+                        <span id="official-name-dynamic">Punong Barangay</span>
+                    </div>
+                    <div id="official-position" class="position">Punong Barangay</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" id="officialsRow">
+
+        <!-- Secretary -->
+        <div class="member" id="official-container">
+            <img id="official-image-sc" alt="Secretary">
+            <div class="official-info">
+                <div id="official-name" class="full-name">
+                    <span class="prefix">Hon. </span>
+                    <span id="official-name-dynamic">Secretary</span>
+                </div>
+                <div id="official-position" class="position">Secretary</div>
+            </div>
+        </div>
+
+        <!-- Treasurer -->
+        <div class="member" id="official-container">
+            <img id="official-image-tr" alt="Treasurer">
+            <div class="official-info">
+                <div id="official-name" class="full-name">
+                    <span class="prefix">Hon. </span>
+                    <span id="official-name-dynamic">Treasurer</span>
+                </div>
+                <div id="official-position" class="position">Treasurer</div>
+            </div>
+        </div>
+
+        <!-- SK Chairman -->
+        <div class="member" id="official-container">
+            <img id="official-image-sk" alt="SK Chairman">
+            <div class="official-info">
+                <div id="official-name" class="full-name">
+                    <span class="prefix">Hon. </span>
+                    <span id="official-name-dynamic">SK Chairman</span>
+                </div>
+                <div id="official-position" class="position">SK Chairman</div>
+            </div>
+        </div>
+
+        <!-- Konsehal 1 -->
+        <div class="member" id="official-container">
+            <img id="official-image" alt="Konsehal 1">
+            <div class="official-info">
+                <div class="full-name">
+                    <span class="prefix">Hon. </span>
+                    <span class="official-name-dynamic">Konsehal</span>
+                </div>
+                <div class="position">Konsehal</div>
+            </div>
+        </div>
+
+        <!-- Konsehal 2 -->
+        <div class="member" id="official-container">
+            <img id="official-image" alt="Konsehal 2">
+            <div class="official-info">
+                <div class="full-name">
+                    <span class="prefix">Hon. </span>
+                    <span class="official-name-dynamic">Konsehal</span>
+                </div>
+                <div class="position">Konsehal</div>
+            </div>
+        </div>
+
+        <!-- Konsehal 3 -->
+        <div class="member" id="official-container">
+            <img id="official-image" alt="Konsehal 3">
+            <div class="official-info">
+                <div class="full-name">
+                    <span class="prefix">Hon. </span>
+                    <span class="official-name-dynamic">Konsehal</span>
+                </div>
+                <div class="position">Konsehal</div>
+            </div>
+        </div>
+
+        <!-- Konsehal 4 -->
+        <div class="member" id="official-container">
+            <img id="official-image" alt="Konsehal 4">
+            <div class="official-info">
+                <div class="full-name">
+                    <span class="prefix">Hon. </span>
+                    <span class="official-name-dynamic">Konsehal</span>
+                </div>
+                <div class="position">Konsehal</div>
+            </div>
+        </div>
+
+        <!-- Konsehal 5 -->
+        <div class="member" id="official-container">
+            <img id="official-image" alt="Konsehal 5">
+            <div class="official-info">
+                <div class="full-name">
+                    <span class="prefix">Hon. </span>
+                    <span class="official-name-dynamic">Konsehal</span>
+                </div>
+                <div class="position">Konsehal</div>
+            </div>
+        </div>
+
+        <!-- Konsehal 6 -->
+        <div class="member" id="official-container">
+            <img id="official-image" alt="Konsehal 6">
+            <div class="official-info">
+                <div class="full-name">
+                    <span class="prefix">Hon. </span>
+                    <span class="official-name-dynamic">Konsehal</span>
+                </div>
+                <div class="position">Konsehal</div>
+            </div>
+        </div>
+
+        <!-- Konsehal 7 -->
+        <div class="member" id="official-container">
+            <img id="official-image" alt="Konsehal 7">
+            <div class="official-info">
+                <div class="full-name">
+                    <span class="prefix">Hon. </span>
+                    <span class="official-name-dynamic">Konsehal</span>
+                </div>
+                <div class="position">Konsehal</div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+
+
+    <footer id="main-footer">
+        <div class="footer-container">
+
+            <!-- Government Links Section -->
+            <div class="footer-govt-links">
+                <h4>Government Links</h4>
+                <ol>
+                    <li><a href="#">Philippine Government Portal</a></li>
+                    <li><a href="#">DOH Official Website</a></li>
+                    <li><a href="#">DSWD Official Website</a></li>
+                </ol>
+            </div>
+
+            <!-- Image Section -->
+            <div class="footer-logo">
+                <img src="resources/ph_seal.avif" alt="Philippine Seal" />
+            </div>
+                
+            <!-- Emergency Numbers Section -->
+            <div class="footer-emergency">
+                <h4>Emergency Numbers</h4>
+                <ul>
+                    <li>Police: 117</li>
+                    <li>Fire Department: 911</li>
+                    <li>Hospital: (02) 1234 5678</li>
+                </ul>
+            </div>
+        </div>
+
+        
+
+    
+        <div id="footer-bottom">
+            <p>&copy; 2024. All Rights Reserved. Official Website of Brgy. | <a href="#">Webmail</a></p>
+            <div class="footer-social-icons">
+                <a href="https://facebook.com" target="_blank">
+                    <img src="icons/fb_icon.png" alt="Facebook Icon" />
+                </a>
+                <a href="https://twitter.com" target="_blank">
+                    <img src="icons/twitter_icon.png" alt="Twitter Icon" />
+                </a>
+                <a href="https://instagram.com" target="_blank">
+                    <img src="icons/ig_icon.png" alt="Instagram Icon" />
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <button id="scrollTopBtn" title="Go to top">
+        <img src="icons/arrow_up.png" alt="Scroll to Top" width="20" height="20">
+    </button>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
+
+
+    <!-- <script type="module" src="/js/admin_officials.js"></script> -->
+    <!-- <script type="module" src="/js/admin_news.js"></script> -->
+    <script type="module" src="js/firebaseConfig.js"></script>  
+    <script type="module" src="js/landingPage.js"></script>  
+    <script type="module" src="js/landingPage_announcement.js"></script>    
+    <script type="module" src="js/landingPage_newsupdates.js"></script>    
+    <script type="module" src="js/landingPage_searchNews.js"></script>    
+    <script type="module" src="js/landingPage_portfolio.js"></script>    
+
+
+    <script>
+/*============================================ANNOUNCEMENT POPUP==========================================*/
+// Show popup when page loads
+document.addEventListener('DOMContentLoaded', () => {
+            // Check if user has chosen not to see it today
+            const hideAnnouncement = localStorage.getItem('hideAnnouncement');
+            const lastShown = localStorage.getItem('lastShown');
+            const today = new Date().toDateString();
+
+            if (!hideAnnouncement || lastShown !== today) {
+                showAnnouncement();
+            }
+        });
+
+        function showAnnouncement() {
+            document.getElementById('announcementPopup').style.display = 'block';
+            document.body.style.overflow = 'scroll'; 
+        }
+
+        function closeAnnouncement() {
+            const popup = document.getElementById('announcementPopup');
+            const dontShowCheckbox = document.querySelector('.dont-show-checkbox');
+
+            // If "Don't show again" is checked, save to localStorage
+            if (dontShowCheckbox.checked) {
+                localStorage.setItem('hideAnnouncement', 'true');
+                localStorage.setItem('lastShown', new Date().toDateString());
+            }
+
+            // Hide popup with fade out animation
+            popup.style.opacity = '0';
+            popup.style.transition = 'opacity 0.3s ease';
+            
+            setTimeout(() => {
+                popup.style.display = 'none';
+                document.body.style.overflow = ''; // Restore scrolling
+            }, 300);
+        }
+
+        // Close popup when clicking outside
+        document.getElementById('announcementPopup').addEventListener('click', (e) => {
+            if (e.target.className === 'announcement-popup') {
+                closeAnnouncement();
+            }
+        });
+
+        // Prevent closing when clicking inside popup content
+        document.querySelector('.popup-content').addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+
+
+        /*======================================================================*/
+
+        function updateDate() {
+            const currentDate = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
+            document.getElementById('current-date').textContent = currentDate.toLocaleDateString('en-US', options);
+        }
+
+        window.onload = function () {
+            updateDate();
+        };                
+    </script>
+
+<script>
+    // Get the button
+    const scrollTopBtn = document.getElementById("scrollTopBtn");
+    
+    // Function to check scroll position and show/hide button
+    function handleScroll() {
+        // Get total document height
+        const totalHeight = document.documentElement.scrollHeight;
+        
+        // Get current scroll position
+        const scrollPosition = window.scrollY + window.innerHeight;
+        
+        // Calculate how close to bottom (e.g., 90% of page)
+        const scrollThreshold = totalHeight * 0.9;
+        
+        // Show button if user has scrolled past threshold
+        if (scrollPosition >= scrollThreshold) {
+            scrollTopBtn.style.display = "block";
+            scrollTopBtn.style.opacity = "1";
+        } else {
+            scrollTopBtn.style.opacity = "0";
+            setTimeout(() => {
+                if (scrollPosition < scrollThreshold) {
+                    scrollTopBtn.style.display = "none";
+                }
+            }, 300); // Match this with CSS transition duration
+        }
+    }
+    
+    // Add scroll event listener
+    window.addEventListener('scroll', handleScroll);
+    
+    // Add click event for smooth scrolling to top
+    scrollTopBtn.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+    
+    // Hide button initially
+    scrollTopBtn.style.display = "none";
+    </script>
+    
+</body>
+
+</html>

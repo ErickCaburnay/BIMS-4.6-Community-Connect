@@ -1,0 +1,246 @@
+.container {
+    margin-left: 250px;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.main-content {
+    margin-left: 15%; 
+  padding: 30px;
+  width: calc(85% - 60px);
+  height: calc(100vh - 80px); 
+  overflow-y: auto; 
+  top: 50px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+  bottom: 10px;
+}
+
+.content-section {
+    margin-bottom: 30px;
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #cdcdcd;
+}
+
+h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* Form styles */
+form, 
+#announcement-form,
+.news-form {
+    margin-bottom: 20px;
+}
+
+textarea, 
+input[type="text"],
+input[type="date"],
+input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #0c6bb1;
+    border-radius: 4px;
+    background-color: rgba(4, 33, 54, 0.8);
+    color: #cdcdcd;
+    box-sizing: border-box;
+}
+
+textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #1095f7;
+    color: #cdcdcd;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0c6bb1;
+}
+
+button.delete-btn {
+    background-color: #ff4136;
+}
+
+button.delete-btn:hover {
+    background-color: #d63a30;
+}
+
+#announcement-list {
+    margin-top: 20px;
+}
+
+.announcement-item {
+    margin-bottom: 15px;
+    padding: 15px;
+    border-bottom: 1px solid #0c6bb1;
+    background-color: rgba(4, 33, 54, 0.8);
+    color: #cdcdcd;
+}
+
+#imagePreview {
+    max-width: 300px;
+    height: auto;
+    margin: 10px 0;
+    display: block;
+}
+
+.news-list {
+    margin-top: 30px;
+    background-color: rgba(4, 33, 54, 0.8);
+    padding: 15px;
+    border-radius: 4px;
+}
+
+#newsContainer {
+    margin-top: 15px;
+}
+
+.news-item {
+    margin-bottom: 15px;
+    padding: 15px;
+    border-bottom: 1px solid #0c6bb1;
+    color: #cdcdcd;
+}
+
+.news-item img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 5px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+footer {
+    text-align: center;
+    color: #cdcdcd;
+    background-color: transparent;
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin-left: 0;
+        padding: 10px;
+    }
+    
+    .main-content {
+        margin-top: 50px;
+    }
+    
+    .content-section {
+        padding: 15px;
+    }
+}
+
+/* ####### TURN OVER CSS ####### */
+
+.admin-turnover-section {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #07385c;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.admin-turnover-section h3 {
+    color: #cdcdcd;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+#turnover-form h4 {
+    color: #cdcdcd;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+#turnover-form label {
+    display: block;
+    font-weight: 500;
+    color: #cdcdcd;
+    margin-bottom: 5px;
+}
+
+#turnover-form input[type="text"],
+#turnover-form input[type="email"],
+#turnover-form input[type="password"] {
+    width: 50%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    
+    background-color: #cdcdcd;
+}
+
+#turnover-form .button-container {
+    display: flex;
+    justify-content: center;
+}
+
+#turnover-form button {
+    width: 20%;
+    padding: 10px;
+    background-color: #062c47;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#turnover-form button:hover {
+    background-color: #094f7e;
+}

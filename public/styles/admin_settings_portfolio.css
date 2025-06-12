@@ -1,0 +1,246 @@
+/* ################## PORTFOLIO #################### */
+.portfolio-container {
+    background-color: transparent;
+    border-radius: 8px;
+    padding: 20px 0;
+    height: auto;
+}
+
+.portfolio-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.portfolio-layout {
+    display: grid;
+    grid-template-columns: 40% 60%; 
+    gap: 20px;
+    height: auto;
+}
+
+.form-section {
+    background-color: #042136;
+    border-right: 1px solid #2196f3;
+    padding: 20px;
+}
+
+.portfolio-form h3 {
+    color: #cdcdcd;
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.portfolio-form-label {
+    display: block;
+    color: #cdcdcd;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.form-input,
+.form-textarea {
+    padding: 8px 10px;
+    background-color: #ffffff;
+    border: 1px solid #2196f3;
+    border-radius: 4px;
+    color: #333;
+    font-size: 14px;
+}
+
+.form-textarea {
+    min-height: 80px;
+    max-height: 120px; 
+    resize: vertical;
+}
+
+.image-preview {
+    height: 120px;
+    border: 2px dashed #2196f3;
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    color: #666;
+    font-size: 12px;
+}
+
+/* Preview Section - Made more compact */
+.preview-section {
+    background-color: #042136;
+    border-radius: 8px;
+    padding: 15px;
+    height: fit-content;
+}
+
+.preview-header {
+    margin-bottom: 15px;
+}
+
+.preview-header h3 {
+    color: #cdcdcd;
+    font-size: 16px;
+}
+
+.preview-content {
+    background-color: #ffffff;
+    border-radius: 8px;
+    /* padding: 15px; */
+    min-height: 200px;
+    /* max-height: 300px; */
+    color: #333;
+    /* white-space: pre-wrap; */
+}
+
+.preview-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #666;
+    font-style: italic;
+    font-size: 14px;
+}
+
+.button-container {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    justify-content: space-around;
+}
+
+.btn-save,
+.btn-submit {
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-save:hover,
+.btn-submit:hover {
+    background-color: #1868a9;
+}
+
+.btn-clear {
+    background-color: transparent;
+    color: #cdcdcd;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-clear:hover {
+    background-color: #0c5285;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .portfolio-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .preview-section {
+        margin-top: 20px;
+    }
+    
+    .preview-content {
+        min-height: 150px;
+    }
+}
+
+/* ########### PREVIEW SECTION ##############  */
+.preview-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.preview-body img {
+    max-width: 200px;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.preview-body h3 {
+    font-size: 1.8rem;
+    margin: 10px 0;
+    color: #222;
+}
+
+.preview-body p.title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 5px 0;
+    color: #555;
+}
+
+.preview-body p.slogan {
+    font-size: 1rem;
+    font-style: italic;
+    margin: 5px 0;
+    color: #777;
+}
+
+.preview-body blockquote {
+    font-size: 1.1rem;
+    margin: 15px 0;
+    padding: 10px;
+    color: #333;
+    font-style: italic;
+    border-left: 3px solid #0073e6;
+    background-color: #f1f8ff;
+}
+
+.preview-body p.description {
+    font-size: 1rem;
+    color: #444;
+    margin: 10px 0;
+    line-height: 1.5;
+}
+
+/* Button Container Styles */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.button-container button {
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #fff;
+    background-color: #0073e6;
+    transition: background-color 0.3s;
+}
+
+.button-container button:hover {
+    background-color: #005bb5;
+}
+
+.button-container .btn-clear {
+    background-color: #ff4d4d;
+}
+
+.button-container .btn-clear:hover {
+    background-color: #cc0000;
+}

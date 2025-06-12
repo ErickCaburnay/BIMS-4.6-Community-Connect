@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barangay Clearance Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="number"],
+        input[type="date"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #previewWindow {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+        .preview-content {
+            background-color: #fff;
+            width: 80%;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+        }
+        .close-btn {
+            float: right;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        .clearance-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .clearance-body {
+            margin-bottom: 20px;
+        }
+        .signature-line {
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+            margin-top: 50px;
+        }
+        .signature-line__line {
+            flex-grow: 1;
+            border-bottom: 1px solid #000;
+            margin-right: 10px;
+        }
+        .clearance-footer {
+            margin-top: 50px;
+            display: flex;
+            justify-content: space-between;
+        }
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #previewWindow, #previewWindow * {
+                visibility: visible;
+            }
+            #previewWindow {
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+            .close-btn {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Enter Clearance Details</h1>
+        <form id="clearanceForm">
+            <div class="form-group">
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" required>
+            </div>
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age" required>
+            </div>
+            <div class="form-group">
+                <label for="barangay">Barangay:</label>
+                <input type="text" id="barangay" required>
+            </div>
+            <div class="form-group">
+                <label for="municipality">Municipality:</label>
+                <input type="text" id="municipality" required>
+            </div>
+            <div class="form-group">
+                <label for="province">Province:</label>
+                <input type="text" id="province" required>
+            </div>
+            <div class="form-group">
+                <label for="issueDate">Issue Date:</label>
+                <input type="date" id="issueDate" required>
+            </div>
+            <button type="button" onclick="showPreview()">Preview Clearance</button>
+        </form>
+    </div>
+
+    <div id="previewWindow">
+        <div class="preview-content">
+            <span class="close-btn" onclick="closePreview()">&times;</span>
+            <div class="clearance-header">
+                <h2>Republic of the Philippines</h2>
+                <h3>Province of <span id="printProvince"></span></h3>
+                <h3>Municipality of <span id="printMunicipality"></span></h3>
+                <h2>Barangay <span id="printBarangay"></span></h2>
+                <h1>BARANGAY CLEARANCE</h1>
+            </div>
+            <div class="clearance-body">
+                <p>TO WHOM IT MAY CONCERN:</p>
+                <p>This is to certify that <span id="printName"></span>, <span id="printAge"></span> years old, and a resident of Barangay <span id="printBarangay2"></span>, <span id="printMunicipality2"></span>, <span id="printProvince2"></span> is known to be of good moral character and law-abiding citizen in the community.</p>
+                <p>To certify further, that he/she has no derogatory and/or criminal records filed in this barangay.</p>
+                <p>ISSUED this <span id="printDay"></span> day of <span id="printMonth"></span>, <span id="printYear"></span> at Barangay <span id="printBarangay3"></span>, <span id="printMunicipality3"></span>, <span id="printProvince3"></span> upon request of the interested party for whatever legal purposes it may serve.</p>
+            </div>
+            <div class="signature-line">
+                <div class="signature-line__line"></div>
+                <div>Barangay Captain</div>
+            </div>
+            <div class="clearance-footer">
+                <div>
+                    <p>O.R. No.: __________</p>
+                    <p>Date Issued: <span id="printIssueDate"></span></p>
+                </div>
+                <div>
+                    <p>Doc. Stamp: Paid</p>
+                </div>
+            </div>
+            <button onclick="window.print()">Print Clearance</button>
+        </div>
+    </div>
+
+    <script>
+        function showPreview() {
+            // Populate the preview
+            document.getElementById('printName').textContent = document.getElementById('name').value;
+            document.getElementById('printAge').textContent = document.getElementById('age').value;
+            document.getElementById('printBarangay').textContent = document.getElementById('barangay').value;
+            document.getElementById('printBarangay2').textContent = document.getElementById('barangay').value;
+            document.getElementById('printBarangay3').textContent = document.getElementById('barangay').value;
+            document.getElementById('printMunicipality').textContent = document.getElementById('municipality').value;
+            document.getElementById('printMunicipality2').textContent = document.getElementById('municipality').value;
+            document.getElementById('printMunicipality3').textContent = document.getElementById('municipality').value;
+            document.getElementById('printProvince').textContent = document.getElementById('province').value;
+            document.getElementById('printProvince2').textContent = document.getElementById('province').value;
+            document.getElementById('printProvince3').textContent = document.getElementById('province').value;
+
+            const issueDate = new Date(document.getElementById('issueDate').value);
+            document.getElementById('printDay').textContent = issueDate.getDate();
+            document.getElementById('printMonth').textContent = issueDate.toLocaleString('default', { month: 'long' });
+            document.getElementById('printYear').textContent = issueDate.getFullYear();
+            document.getElementById('printIssueDate').textContent = issueDate.toLocaleDateString();
+
+            // Show the preview window
+            document.getElementById('previewWindow').style.display = 'block';
+        }
+
+        function closePreview() {
+            document.getElementById('previewWindow').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

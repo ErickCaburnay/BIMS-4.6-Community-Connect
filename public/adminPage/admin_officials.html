@@ -1,0 +1,561 @@
+<!-- ##################################### OFFICIALS.HTML #####################################3 -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community-Connect - Barangay Officials</title>
+    <link rel="stylesheet" href="../styles/mainstyle.css"> <!--"/"-->
+    <link rel="stylesheet" href="../styles/admin_officials.css">
+    <link rel="stylesheet" href="../styles/loader.css">
+    <link rel="stylesheet" href="../styles/admin_notification.css">
+    <link rel="stylesheet" href="../styles/admin_logs.css">
+
+    <style>
+
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+    <div id="loader" style="display: none;">
+        <div class="loader"></div>
+    </div>
+
+    <div class="emergency-container">
+        <div class="toggle-menu-container">
+            <h1>Community-Connect</h1>
+        </div>
+        <div class="emergency-right">
+            <div class="current-date">
+                <p id="current-date"></p>
+            </div>
+        </div>
+        <div class="header-icons">
+            <h1></h1>
+            <div class="icons">
+                <div class="notification-wrapper">
+                    <div class="notification-icon" id="notificationIcon"> 
+                        <img src="../resources/icons/bell (2).png" alt="Notifications" />
+                        <span class="notification-count" id="notificationCount">0</span>
+                    </div>
+                    <div class="notification-dropdown" id="notificationDropdown">
+                        <ul id="notificationList"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="icons">
+                <img src="../resources/icons/question.png" alt="Help Circle" />
+            </div>
+            <div class="icons">
+                <button class="toggle-menu" onclick="toggleDropdown()">
+                    <img src="../resources/icons/account.png" alt="User" />
+                </button>
+            </div>
+
+            <div class="icons">
+                <p><span id="current-user"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="dropdown-menu" id="dropdownMenu">
+        <div class="dropdown-item" onclick="editProfile()">Edit Admin Profile</div>
+        <div class="dropdown-item" onclick="changePassword()">Change Password</div>
+        <div class="dropdown-item" onclick="logout()">Logout</div>
+    </div>
+
+    <div class="sidebar">
+        <div class="logo-above-sidebar">
+            <img src="../resources/logo.png" alt="Logo" class="logo" width="150" height="150">
+            <h1>San Antonio De Padua I</h1>
+        </div>
+        <div class="tab" id="dashboard-tab">
+            <a href="admin_dashboard.html"><img src="../resources/icons/dashboard_icon2.png" alt="Dashboard">Dashboard</a> <!--"/"-->
+        </div>
+        <div class="tab" id="officials-tab" class="restricted" data-role="Top Level Admin">
+            <a href="admin_officials.html"><img src="../resources/icons/gov.png" alt="officials">Brgy Officials</a>
+        </div>
+        <div class="tab" id="residents-tab">
+            <a href="admin_resident_records.html"><img src="../resources/icons/users.png" alt="Records">Residents
+                Records</a>
+        </div>
+        <div class="tab" id="household-tab">
+            <a href="admin_household_records.html"><img src="../resources/icons/household.png" alt="Records">Household</a>
+        </div> 
+        <div class="tab" id="bbi-tab">
+            <a href="admin_bbi.html"><img src="../resources/icons/bldg.png" alt="bbi">BBI</a>
+        </div>
+        <div class="tab" id="reports-tab">
+            <a href="admin_reports.html"><img src="../resources/icons/reports.png" alt="reports">Reports</a>
+        </div>
+        <div class="tab" id="requests-tab">
+            <a href="admin_requests.html"><img src="../resources/icons/document.png" alt="Requests">Requests
+                <!-- <span id="notificationIndicator"></span> -->
+            </a>
+        </div>
+        <div class="tab" id="complaints-tab">
+            <a href="admin_complaints.html"><img src="../resources/icons/complaint.png" alt="complaints">Complaints
+                <!-- <div class="notification-icon">
+                    <span class="notification-count" id="notificationCount">0</span>
+                </div> -->
+            </a>
+        </div>
+        <div class="tab" id="logs-tab">
+            <a href="admin_logs.html"><img src="../resources/icons/logs_icon.png" alt="logs">Logs</a>
+          </div>
+        <!-- <div class="tab" id="document-forms-tab">
+            <a href="admin_document_forms.html"><img src="/resources/forms_icon.svg" alt="forms">Document Forms</a>
+        </div> -->
+        <div class="tab" id="settings-tab">
+            <a href="admin_settings.html"><img src="../resources/icons/settings.png" alt="settings">Settings</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <h1>Barangay Officials</h1>
+        <!-- <div class="search-container"></div> -->
+        <div class="add-btn-container">
+            <button class="add-official-button" id="add-official-btn" onclick="showAddOfficialPopup()">Add
+                Official</button>
+        </div>
+        <table id="officialsTable">
+                <thead>
+                    <tr>
+                        <th>Profile Picture</th>
+                        <th>Full Name</th>
+                        <th>Position</th>
+                        <th>Term Start</th>
+                        <th>Term End</th>
+                        <th>Chairmanship</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+
+            
+        </div>
+    </div>
+
+    <!--==============================ADD OFFICIAL POPUP WINDOW===============================-->
+
+    <div id="overlay" class="overlay"></div>
+    <div class="popup-container" id="popupContainer">
+        <div class="blurred-background"></div>
+        <button class="close-button" id="closeButton">&times;</button>
+        <div class="container">
+            <h2>Newly Elected Official</h2>
+            <h6>Congratulations! Please fill in the necessary details.</h6>
+            <form id="personal-info-form">
+                <div class="input-group">
+                    <label for="profile-picture" class="input-label">Profile Picture:</label>
+                    <div id="profile-preview-container" style="margin-top: 10px; display: none;">
+                        <img id="profile-preview" src="" alt="Profile Preview" style="max-width: 100px; max-height: 100px; border-radius: 5px; border: 1px solid #ddd;">
+                    </div>
+                    <input type="file" accept="image/*" name="profile-picture" id="profile-picture">
+                    
+                </div>
+                <!-- <input type="text" name="docid" id="docid" placeholder="Document ID"> -->
+                
+                    <div class="input-group">
+                        <label for="fname" class="input-label">First Name:</label>
+                        <input type="text" name="fname" id="fname" placeholder="First Name" required>
+
+                        <label for="mname" class="input-label">Middle Name:</label>
+                        <input type="text" name="mname" id="mname" placeholder="Middle Name">
+                    </div>                
+                    <div class="input-group">
+                        <label for="lname" class="input-label">Last Name:</label>
+                        <input type="text" name="lname" id="lname" placeholder="Last Name" required>
+
+                        <label for="suffix" class="input-label">Suffix:</label>
+                        <input type="text" name="suffix" id="suffix" placeholder="Suffix">
+                    </div>
+
+                <div class="input-group" >
+                    <!-- <label for="address1" class="input-label" hidden>House No.:</label> -->
+                    <input type="text" name="blklot" id="blklot" placeholder="Block Lot Street Phase" hidden>
+                    <!-- <label for="address2" class="input-label" hidden>Street:</label> -->
+                    <input type="text" name="street" id="street" placeholder="Street" hidden>
+                </div>
+
+                <div class="input-group">
+                    <label for="term-start" class="input-label">Term Start:</label>
+                    <input type="date" name="term-start" id="term-start" required>
+                    <label for="term-end" class="input-label">Term End:</label>
+                    <input type="date" name="term-end" id="term-end" required>
+                    <label for="status" class="input-label">Status:</label>
+                    <select name="status" id="status" required>
+                        <option value="" disabled selected>Status</option>
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <!-- <label for="gender" class="input-label">Gender:</label> -->
+                    <select name="gender" id="gender" hidden>
+                        <option value="" disabled selected>Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                    <!-- <label for="marital-status" class="input-label">Marital Status:</label> -->
+                    <select name="marital-status" id="marital-status" hidden>
+                        <option value="" disabled selected>Select Marital Status</option>
+                        <option value="Single">Single</option>
+                        <option value="Married">Married</option>
+                        <option value="Divorced">Divorced</option>
+                        <option value="Widowed">Widowed</option>
+                    </select>                    
+                </div>
+                
+                <div class="input-group">
+                    <label for="position" class="input-label">Position:</label>
+                    <select name="position" id="position" required>
+                        <option value="" disabled selected>Select a role</option>
+                        <option value="PUNONG BARANGAY">Punong Barangay</option>
+                        <option value="TREASURER">Treasurer</option>
+                        <option value="SECRETARY">Secretary</option>
+                        <option value="KONSEHAL">Konsehal</option>
+                        <option value="SK CHAIRMAN">SK Chairman</option>
+                    </select>
+                    <label for="chair" class="input-label">Chairmanship:</label>
+                    <select name="chair" id="chair" required>
+                        <option value="" disabled selected>Select a chair</option>
+                        <option value="Comittee on Agriculture">Comittee on Agriculture</option>
+                        <option value="Comittee on Peace and Order">Comittee on Peace and Order</option>
+                        <option value="Comittee on Social Services">Comittee on Social Services</option>
+                        <option value="Comittee on Health and Sanitation">Comittee on Health and Sanitation</option>
+                        <option value="Comittee on Education and Culture">Comittee on Education and Culture</option>
+                        <option value="Comittee on Youth and Sports Development">Comittee on Youth and Sports Development</option>
+                        <option value="Comittee on Infrastructure and Public Works">Comittee on Infrastructure and Public Works</option>                        
+                        <option value="Comittee on Environment and Natural Resources">Comittee on Environment and Natural Resources</option>
+                        <option value="Comittee on Livelihood and Cooperative Development">Comittee on Livelihood and Cooperative Development</option>
+                        
+                    </select>
+                    
+                </div>
+                
+                <button type="submit" id="submit-btn" class="inactive-submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+
+
+    <!-- ##################################### UPDATE OFFICIAL #####################################3 -->
+
+    <div id="updateOverlay" class="overlay"></div>
+    <div class="popup-container" id="updatePopupContainer">
+        <div class="blurred-background"></div>
+        <button class="close-button" id="updateCloseButton">&times;</button>
+        <div class="container">
+            <h2>Barangay Official Data Update</h2>
+            <form id="update-info-form">
+                <div class="input-group">
+                    <label for="update-profile-picture" class="input-label">Profile Picture:</label>
+                    <input type="file" accept="image/*" name="update-profile-picture" id="update-profile-picture">
+                    <div id="preview-container" style="margin-top: 10px;">
+                        <img id="image-preview" src="" alt="Image Preview" style="max-width: 100px; max-height: 100px; display: none; border: 1px solid #ccc; border-radius: 5px;">
+                    </div>
+                </div>
+                <div class="input-group-grid">
+                    <div class="input-group">
+                        <label for="fname" class="input-label">First Name:</label>
+                        <input type="text" name="fname" id="update-fname" placeholder="Juan" required>
+
+                        <label for="update-mname" class="input-label">Middle Name:</label>
+                        <input type="text" name="update-mname" id="update-mname" placeholder="Ponce">
+                    </div>
+                    <div class="input-group">
+                        <label for="update-lname" class="input-label">Last Name:</label>
+                        <input type="text" name="update-lname" id="update-lname" placeholder="Dela Cruz" required>
+
+                        <label for="update-suffix" class="input-label">Suffix:</label>
+                        <input type="text" name="update-suffix" id="update-suffix" placeholder="Suffix">
+                    </div>
+                </div>
+
+                <div class="input-group" >
+                    <!-- <label for="update-address1" class="input-label" >House No.:</label> -->
+                    <input type="text" name="update-address1" id="update-address1" placeholder="Block Lot"  hidden>
+                    <!-- <label for="update-address2" class="input-label" >Street:</label> -->
+                    <input type="text" name="update-address2" id="update-address2" placeholder="Street" hidden>
+                </div>
+
+                <div class="input-group">
+                    <label for="update-term-start" class="input-label">Term Start:</label>
+                    <input type="date" name="update-term-start" id="update-term-start" required>
+                    <label for="update-term-end" class="input-label">Term End:</label>
+                    <input type="date" name="update-term-end" id="update-term-end" required>
+                </div>
+
+                <div class="input-group" hidden>
+                    <!-- <label for="update-citizenship" class="input-label">Citizenship:</label> -->
+                    <input type="text" name="update-citizenship" id="update-citizenship" placeholder="Filipino"  hidden>
+
+                    <!-- <label for="update-age" class="input-label">Age:</label> -->
+                    <input type="number" name="update-age" id="update-age" placeholder="Age"  hidden>
+
+                    <!-- <label for="update-gender" class="input-label">Gender:</label> -->
+                    <select name="update-gender" id="update-gender"  hidden>
+                        <option value="" disabled selected>Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+
+                <div class="input-group">                    
+                    <label for="update-position" class="input-label">Position:</label>
+                    <select name="update-position" id="update-position" disabled required>
+                        <option value="" disabled selected>Select a role</option>
+                        <option value="" disabled selected>Select a role</option>
+                        <option value="PUNONG BARANGAY">Punong Barangay</option>
+                        <option value="TREASURER">Treasurer</option>
+                        <option value="SECRETARY">Secretary</option>
+                        <option value="KONSEHAL">Konsehal</option>
+                        <option value="SK CHAIRMAN">SK Chairman</option>
+                    </select>
+                    <label for="update-chair" class="input-label">Chairmanship:</label>
+                    <select name="update-chair" id="update-chair" required>
+                        <option value="Comittee on Agriculturer">Comittee on Agriculturer</option>
+                        <option value="Comittee on Peace and Order">Comittee on Peace and Order</option>
+                        <option value="Comittee on Social Services">Comittee on Social Services</option>
+                        <option value="Comittee on Health and Sanitation">Comittee on Health and Sanitation</option>
+                        <option value="Comittee on Education and Culture">Comittee on Education and Culture</option>
+                        <option value="Comittee on Youth and Sports Development">Comittee on Youth and Sports Development</option>
+                        <option value="Comittee on Infrastructure and Public Works">Comittee on Infrastructure and Public Works</option>                        
+                        <option value="Comittee on Environment and Natural Resources">Comittee on Environment and Natural Resources</option>
+                        <option value="Comittee on Livelihood and Cooperative Development">Comittee on Livelihood and Cooperative Development</option>
+                    </select>
+                </div>
+                <div class="input-group">                    
+                    <label for="update-status" class="input-label">Status:</label>
+                    <select name="update-status" id="update-status" required>
+                        <option value="" disabled selected>Status</option>
+                        <option value="Active">Active</option>
+                        <option value="Inactive">Inactive</option>
+                    </select>                
+                
+                    <label for="update-phone" class="input-label">Contact No.:</label>
+                    <input type="tel" name="update-phone" id="update-phone" placeholder="09123456789" required>
+                </div>
+                <button type="submit" id="upd-submit-btn" class="inactive-submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- POPUP WINDOW FOR SUCCESSFULL DATA SUBMISSION -->
+    <div class="subOverlay" id="subOverlay"></div>
+    <div class="displayPopup" id="subPopup">
+        <h2>Data submitted</h2>
+        <div id="subPopupContent"></div>
+        <button id="okSubmission">OK</button>
+    </div>
+
+    <!-- POPUP WINDOW IF THERE IS AN EXISTING POSITIONS IN THE DATABASE -->
+    <div class="subOverlay" id="subOverlay2"></div>
+    <div class="subPopup2" id="subPopup2">
+        <h2>Error: Position Already Exists</h2>
+        <div id="duplicatePopup">
+            <p>There is already a registered official for this position. Please check and try again.</p>
+        </div>
+        <button id="okDuplicate">OK</button>
+    </div>
+
+    <!-- POPUP WINDOW FOR DISPLAY ROW DATA -->
+    <div class="subOverlay" id="subOverlay"></div>
+    <div class="displayPopup" id="displayPopup">
+        <h2>Official's Data</h2>
+        <div id="displayPopupContent"></div>
+        <button id="okCloseDisplay">OK</button>
+    </div>    
+
+<!-- POPUP WINDOW FOR UPDATE RESIDENT RECORD -->
+<div id="documentDetailspopup" class="document-details-popup" style="display:none;">
+    <div class="document-details-content">
+        <span id="closePopup" class="close">&times;</span>
+        <h2>Resident's Update Request</h2>
+        <div id="detailsPopupContent">
+            <!-- Resident details will be loaded here dynamically -->
+            <p><strong>Full Name:</strong> <span id="residentName"></span></p>
+            <p><strong>Email:</strong> <span id="residentEmail"></span></p>
+            <p><strong>Requested Changes:</strong></p>
+            <ul id="changeRequestList"></ul>
+        </div>
+        <!-- <button id="approveBtn">Approve</button>
+        <button id="rejectBtn">Reject</button> -->
+    </div>
+</div>
+
+<!-- Popup Modal for Archiving Official -->
+    <div id="archivePopup" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeArchivePopup">&times;</span>
+            <h2>Archive Official</h2>
+            
+            <form id="archiveForm">
+                <input type="hidden" id="officialId" name="officialId">
+                <div class="form-group">
+                    <label for="archiveStatus">Status:</label>
+                    <select id="archiveStatus" name="archiveStatus" required>
+                        <option value="">Select Status</option>
+                        <option value="COMPLETED">Completed</option>
+                        <option value="RESIGNED">Resigned</option>
+                        <option value="TERMINATED">Terminated</option>
+                        <option value="VACANT">Vacant</option>
+                        <option value="RETIRED">Retired</option>
+                        <option value="SUSPENDED">Suspended</option>
+                        <option value="INTERIM">Interim</option>
+                        <option value="INACTIVE">Inactive</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="remarks">Remarks:</label>
+                    <textarea id="remarks" name="remarks" ></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Archive Official</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="loader-container" style="display: none;">
+        <div class="loader"></div>
+    </div>
+</div>
+
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
+
+
+    <script type="module" src="../js/script.js"></script>
+    <script type="module" src="../js/firebaseConfig.js"></script>
+    <script type="module" src="../js/admin_auth.js"></script>
+    <!-- <script type="module" src="../js/admin_side_notification.js"></script> -->
+    <script type="module" src="../js/admin_officials.js"></script>
+    <script type="module" src="../js/admin_request_notif.js"></script>
+    <script type="module" src="../js/admin_logs.js"></script>
+    <script type="module" src="../js/logOut.js"></script>
+    
+
+
+
+    <script type="module">
+        import { db } from '../js/firebaseConfig.js';
+        import { initializeNotifications } from '../js/admin_request_notif.js';
+        initializeNotifications(db);
+    </script>
+
+    <script>    
+        function toggleDropdown() {
+            const dropdown = document.getElementById("dropdownMenu");
+            console.log("Toggle clicked");
+            console.log("Dropdown element:", dropdown);
+            console.log("Current classList:", dropdown ? dropdown.classList : "Element not found");
+            
+            if (dropdown) {
+                dropdown.classList.toggle("show");
+                console.log("New classList:", dropdown.classList);
+            } else {
+                console.error("Dropdown menu element not found");
+            }
+        }
+               
+        function toggleDropdown() {
+            const dropdown = document.getElementById("dropdownMenu");
+            console.log("Toggle clicked");
+            console.log("Dropdown element:", dropdown);
+            console.log("Current classList:", dropdown ? dropdown.classList : "Element not found");
+            
+            if (dropdown) {
+                dropdown.classList.toggle("show");
+                console.log("New classList:", dropdown.classList);
+            } else {
+                console.error("Dropdown menu element not found");
+            }
+        }
+        
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+            if (!event.target.closest('.toggle-menu')) {
+                var dropdown = document.getElementById("dropdownMenu");
+                if (dropdown.classList.contains('show')) {
+                    dropdown.classList.remove('show');
+                }
+            }
+        }
+
+        window.addEventListener('load', function() {
+        console.log('Window loaded - Debug info:');
+        const icon = document.getElementById('notificationIcon');
+        const dropdown = document.getElementById('notificationDropdown');
+        
+        console.log('Notification icon:', icon);
+        console.log('Notification dropdown:', dropdown);
+        
+        if (icon) {
+            icon.addEventListener('click', function() {
+                console.log('Icon clicked (from debug script)');
+            });
+        }
+    });
+        
+        function handleLogout() {
+            logout();
+            toggleDropdown();
+        }
+        </script>
+
+    <script type="module">
+        import { checkAuth } from './js/authadmin.js';
+        checkAuth();
+
+        const notificationIndicator = document.getElementById('notificationIndicator');
+
+        function updateNotificationIndicator(count) {
+            if (count > 0) {
+                notificationIndicator.textContent = count;
+                notificationIndicator.style.display = 'inline';
+            } else {
+                notificationIndicator.style.display = 'none';
+            }
+        }
+
+        document.querySelector('.notification-icon').classList.add('show');
+        document.querySelector('.notification-icon').classList.remove('show');
+
+        function closePopup() {
+            console.log("close button is clicked!");
+            const popup = document.getElementById('documentDetailspopup');
+            popup.style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("DOMContentLoaded event fired");
+
+            const closeButton = document.getElementById('documentDetailspopup');
+            if (closeButton) {
+                closeButton.addEventListener('click', closePopup);
+            }
+        });
+
+        document.getElementById('closePopup').addEventListener('click', closePopup);   
+    </script>
+
+<script type="module">
+    import { initializeNotifications } from '../js/admin_notification.js';
+    window.addEventListener('load', initializeNotifications);
+</script>
+
+</body>
+
+</html>
+
+

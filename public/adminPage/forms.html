@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barangay Clearance Form</title>
+    <!-- <link rel="stylesheet" href="/styles/mainstyle.css"> -->
+    <link rel="stylesheet" href="/styles/forms.css">
+
+    <!-- Add Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    <!-- Your CSS would go here -->
+</head>
+<body>
+    <div class="emergency-container">
+        <div class="toggle-menu-container">
+            <h1>Community - Connect: A Web-Based Platform for Barangay San Antonio De Padua I Information Management
+                System</h1>
+        </div>
+        <div class="emergency-right">
+            <div class="current-date">
+                <p id="current-date"></p>
+            </div>
+            <button class="toggle-menu" onclick="toggleDropdown()">
+                <img src="/resources/acct.png" alt="Menu Icon" width="30" height="30">
+            </button>
+            <p><span id="current-user">Month Day, Year</span></p>
+        </div>
+    </div>
+    
+    <div class="dropdown-menu" id="dropdownMenu">
+        <div class="dropdown-item" onclick="editProfile()">Edit Admin Profile</div>
+        <div class="dropdown-item" onclick="changePassword()">Change Password</div>
+        <div class="dropdown-item" onclick="logout()">Logout</div>
+    </div>
+    
+    <div class="sidebar">        
+        <div class="logo-above-sidebar">
+            <img src="/resources/logo.png" alt="Logo" class="logo" width="150" height="150">
+            <h1>San Antonio De Padua I</h1>
+        </div>
+        <div class="tab" id="dashboard-tab"><a href="dashboard.html">Dashboard</a></div>
+        <div class="tab" id="officials-tab" class="restricted" data-role="Top Level Admin"><a href="officials.html">Brgy Officials and Staff</a></div>
+        <div class="tab" id="residents-tab"><a href="residentsrecords.html">Residents Records</a></div>                     
+        <div class="tab" id="bbi-tab"><a href="bbi.html">Barangay-Based Institution</a></div> 
+        <div class="tab" id="reports-tab"><a href="reports.html">Reports</a></div>
+        <div class="tab" id="requests-tab"><a href="requests.html">Requests<span
+            id="notificationIndicator"></span></a></div>        
+            <div class="tab" id="complaints-tab">
+                <a href="complaints.html">
+                    Complaints
+                    <div class="notification-icon">
+                        <!-- <img src="/resources/bell.png" alt="Notification"> -->
+                        <span class="notification-count" id="notificationCount">0</span>
+                    </div>
+                </a>
+            </div>    
+        <div class="tab" id="document-forms-tab"><a href="documentForms.html">Document Forms</a></div>
+        <div class="tab" id="settings-tab"><a href="settings.html">Settings</a></div>  
+    </div>
+
+    <div class="form-container">
+        <h1>Enter Clearance Details</h1>
+        <form id="clearanceForm">
+            <div class="form-group">
+                <label for="uniqueId">Unique ID:</label>
+                <input type="text" id="uniqueId" placeholder="e.g. SADPI-000001">
+                <button type="button" onclick="fetchUserData()">Fetch Data</button>
+                <button type="button" id="clearField">Clear</button>
+            </div>
+            <div class="form-group">
+                <label for="name">Full Name:</label>
+                <input type="text" id="name">
+            </div>
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age">
+            </div>
+            <div class="form-group">
+                <label for="blklot">Block/Lot:</label>
+                <input type="text" id="blklot">
+            </div>
+            <div class="form-group">
+                <label for="street">Street:</label>
+                <input type="text" id="street">
+            </div>            
+            <div class="form-group">
+                <label for="issueDate">Issue Date:</label>
+                <input type="date" id="issueDate" required>
+            </div>
+            <button type="button" onclick="showPreview()">Preview Clearance</button>
+            <button type="button" id="clearForm">Clear Form</button>
+        </form>
+    </div>
+
+    <div id="previewWindow">
+        <div class="preview-content">
+            <span class="close-btn" onclick="closePreview()">&times;</span>
+            <div class="clearance-container">
+                <img src="/resources/logo.png" alt="Background" class="watermark">
+                <div class="clearance-background"></div>
+                <div class="clearance-frame">
+                    <div class="clearance-header">
+                        <div class="clearance-logo">
+                            <img src="/resources/logo.png" class="logo">
+                        </div>
+                        <h2>Republic of the Philippines</h2>
+                        <h3>Province of <span id="printProvince"></span></h3>
+                        <h3>Municipality of <span id="printMunicipality"></span></h3>
+                        <h2>Barangay <span id="printBarangay"></span></h2>
+                        <h1>BARANGAY CLEARANCE</h1>
+                    </div>
+                    
+                    <div class="clearance-body">
+                        <h2>TO WHOM IT MAY CONCERN:</h2>
+                        <p class="indent">This is to certify that <span id="printName"></span>, <span id="printAge"></span> years old, residing at LOT <span id="printBlklot"></span> <span id="printStreet"></span>, San Antonio De Padua I, is known to be of good moral character and a law-abiding citizen in the community.</p>
+                        <p class="indent">To certify further, that he/she has no derogatory and/or criminal records filed in this barangay.</p>
+                        <p class="indent">ISSUED this <span id="printDay"></span> day of <span id="printMonth"></span>, <span id="printYear"></span> at Barangay San Antonio De Padua I, Dasmariñas, Cavite upon request of the interested party for whatever legal purposes it may serve.</p>
+                      </div>
+                      <div class="signature-line">
+                        <div class="signature-line__line"></div>
+                        <span class="brgyCaptain">Barangay Captain</span>
+                      </div>
+                      <div class="clearance-footer">
+                        <p>O.R. No.: <span id="printORNo"></span></p>
+                        <p>Date Issued: <span id="printIssueDate"></span></p>
+                        <p>Doc. Stamp: Paid</p>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <button class="print-btn" onclick="printClearance()">Print Clearance</button>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
+
+
+    <script type="module" src="/js/script.js"></script>
+    <script type="module" src="/js/forms.js"></script>
+    <script type="module" src="/js/complaints.js"></script>
+    <script type="module" src="/js/firebaseConfig.js"></script>
+    <script type="module" src="/js/logOut.js"></script>
+
+
+
+    <script type="module">
+        import { checkAuth, checkAndUpdateAdminPrivileges } from '/js/authAdmin.js';
+        checkAuth();
+    
+    document.addEventListener('DOMContentLoaded', (event) => {
+        checkAuth();
+        checkAndUpdateAdminPrivileges(auth.currentUser).then(role => {
+            if (role !== 'admin' && window.location.pathname.includes('residentsrecords.html')) {
+                // Redirect non-admin users away from admin-only pages
+                window.location.href = 'complaints.html';
+            }
+            // Add more role-based logic here
+        });
+    });
+
+    //=======================TOGGLE DROPDOWN========================//
+    function toggleDropdown() {
+            var dropdownMenu = document.getElementById("dropdownMenu");
+            dropdownMenu.classList.toggle("show");
+        }
+
+        function hideDropdown() {
+            var dropdownMenu = document.getElementById("dropdownMenu");
+            dropdownMenu.classList.remove("show");
+        }
+
+        window.addEventListener('click', function (event) {
+            if (!event.target.closest('.toggle-menu')) {
+                hideDropdown();
+            }
+        });
+
+        window.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') {
+                hideDropdown();
+            }
+        });
+
+        window.addEventListener('wheel', function (event) {
+            hideDropdown();
+        });
+
+        document.querySelector('.toggle-menu').addEventListener('click', toggleDropdown);
+
+        function updateNotificationCount(count) {
+            const notificationCount = document.getElementById('notificationCount');
+            notificationCount.textContent = count;
+            notificationCount.style.display = count > 0 ? 'block' : 'none';
+        }
+
+        const notificationIndicator = document.getElementById('notificationIndicator');
+
+        function updateNotificationIndicator(count) {
+            if (count > 0) {
+                notificationIndicator.textContent = count;
+                notificationIndicator.style.display = 'inline';
+            } else {
+                notificationIndicator.style.display = 'none';
+            }
+        }
+
+        document.querySelector('.notification-icon').classList.add('show');
+        document.querySelector('.notification-icon').classList.remove('show');
+
+        function updateDate() {
+            const currentDate = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+            document.getElementById('current-date').textContent = currentDate.toLocaleDateString('en-US', options);
+            const userContainer = document.getElementById('current-user');
+            userContainer.textContent = "Welcome, " + currentUser + " | " + currentDate.toLocaleDateString('en-US', options);
+        }
+
+        window.onload = function () {
+            updateDate();
+        };
+    </script>
+
+    <script>
+        
+        
+        
+    </script>
+</body>
+</html>

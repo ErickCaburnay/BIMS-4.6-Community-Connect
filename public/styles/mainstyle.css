@@ -1,0 +1,353 @@
+html, body {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    /* font-family: system-ui, -apple-system, sans-serif; */
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    /* background-image: url('/resources/bhall.png'); */
+    /* background: linear-gradient(to top, #031a2a, #07385c, #356282, #4385b5, #6ac1ff); */
+    background-color: #031525;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    backdrop-filter: blur(5px);
+}
+
+.container {    
+    height: 100vh;
+}
+
+input, textarea {
+    caret-color: #cdcdcd;
+}
+
+.emergency-container {
+    display: flex;
+    position: sticky;
+    top: 0;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to right, #042136, #07385c, #094d7f, #0c6bb1, #1095f7);
+    color: #313131;
+    width: 100%;
+    z-index: 100;
+    gap: 30px;
+    border-bottom: 1px solid #095387;
+}
+
+.emergency-right {    
+    display: flex;
+    align-items: center;
+    width: 30%; 
+}
+
+.current-date #current-date {
+    float: rz;
+    font-size: 14px;
+}
+
+.current-date p {
+    font-size: 14px;
+    color: #cdcdcd;
+    margin: 0;
+    float: right;
+}
+
+.header-icons {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 20px;
+    margin-right: 50px;
+}
+
+.header-icons .icons {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 5px;
+}
+
+.header-icons .icons::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: transparent;
+    border-radius: 50%;
+    
+    transition: background-color 0.3s;
+    z-index: -1; 
+}
+
+.header-icons .icons:hover::after {
+    background-color: #0965a7;
+}
+
+.header-icons .icons img,
+.header-icons .icons button img {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    align-self: center;
+    justify-self: center;
+}
+
+
+.header-icons .toggle-menu {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.header-icons #current-user {
+    margin-left: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+    color: #cdcdcd;
+}
+
+.toggle-menu {    
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 15%;
+    height: 15%;
+}
+
+.toggle-menu img {
+    vertical-align: middle;
+}
+
+p {
+    margin: 0;
+    /* display: flex; */
+}
+
+.toggle-menu-container {
+    /* flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-right: 10px;*/
+    width: 30%;
+    margin: 0 20px;
+}
+
+h1 {
+    font-size: 20px;
+    color: #FFF;
+}
+
+.toggle-menu-container p {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+}
+
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 50px;
+    top: 70px;
+    background-color: #042136;
+    min-width: 160px;
+    border-radius: 10px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1000;    
+}
+
+.dropdown-menu.show {
+    display: block;
+}
+
+.dropdown-item {
+    padding: 12px 16px;
+    text-decoration: none;
+    color: #cdcdcd;
+    display: block;
+    cursor: pointer;
+    text-align: center;
+}
+
+.dropdown-item:hover {
+    background-color: #095387;
+    border-radius: 10px;
+}
+
+.logo-above-sidebar {
+    text-align: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.logo-above-sidebar img {
+    width: 150px;
+    height: 150px;
+}
+
+@media screen and (max-width: 768px) {
+    .logo-above-sidebar img {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+/*########### SIDEBAR ###########*/
+
+.logo-above-sidebar p {
+    font-size: 20px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.sidebar {
+    position: fixed;
+    top: 50px; 
+    left: 0;
+    width: 15%;
+    /* height: calc(100vh - 10px);  */
+    height: 100%;
+    overflow-y: hidden; 
+    background: rgba(4, 33, 54, 0.8);
+    box-sizing: border-box;
+}
+
+.sidebar h1 {
+    font-size: 29px;
+    color: #cdcdcd;
+}
+
+.sidebar .tab {
+    cursor: pointer;
+}
+
+.sidebar .tab a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: inherit;
+}
+
+.sidebar .tab {
+    cursor: pointer;
+    margin: 5px;
+    padding: 5px;
+    /* background-color: #ddd; */
+    color: #b0b0b0;
+    border-radius: 5px;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.tab a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: inherit;
+    margin-top: 5px;
+    font-size: 15px;
+    color: #cdcdcd;
+}
+
+.tab img {
+    max-width: 20px;
+    height: auto;
+    margin-right: 10px;
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 5px;
+}
+
+.tab.active {
+    background-color: #818381;
+    color: #fff;
+}
+
+.tab:hover {
+    background-color: #095387;
+    color: #FFF;
+}
+
+.tab-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tab-content.active {
+    display: block;
+    /* padding: 20px; */
+    border: 2px solid transparent;
+    border-radius: 10px;
+}
+
+.tab-content.active h2 {
+    margin-left: 50px;
+    font-size: 30px;
+    width: auto;
+}
+
+.tab-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tab-content.active h2 {
+    margin-left: 50px;
+    font-size: 30px;
+    width: auto;
+}
+
+
+@media (max-width: 320px) {
+    /* Styles for Smartphones (small phones) */
+    
+}
+
+@media (min-width: 321px) and (max-width: 480px) {
+    /* Styles for Medium Smartphones */
+    
+}
+
+@media (min-width: 481px) and (max-width: 767px) {
+    /* Styles for Large Smartphones */
+    
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    /* Styles for Tablets */
+   
+}
+
+@media (min-width: 1025px) and (max-width: 1440px) {
+    /* Styles for Laptops */
+    
+}
+
+@media (min-width: 1441px) {
+    /* Styles for Desktops */
+    
+}
+
+/*######################### NOTIF #############################*/
+
+
+
+
+
+
+
+

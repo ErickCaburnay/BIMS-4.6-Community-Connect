@@ -1,0 +1,146 @@
+/* ########### ADMIN_SETTINGS.CSS ########## */
+.main-content {
+    margin-left: 15%; 
+    padding: 0px 30px;
+    width: calc(85% - 60px);
+    height: calc(100vh - 10px); 
+    overflow-y: auto; 
+    top: 50px; 
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); */
+    background-color: #042136;
+    z-index: 1;
+    bottom: 10px;
+}
+
+.main-content h1 {
+    font-size: 2.5em;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 10px;
+    text-align: center;
+  }
+
+.announcement-container h2,
+.news-container h2,
+.portfolio-container h2,
+.user-management-container h2,
+.archives-container h2,
+.turnover-container h2 {
+    font-size: 20px;
+    margin-top: 0px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #cdcdcd;
+}
+
+.tab-container {
+    background-color: transparent;
+    border-radius: 8px;
+    width: 100%;
+    /* height: calc(100vh - 120px); */
+    /* overflow-x: hidden; */
+}
+
+.tabs {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #07385c;
+    border-bottom: 2px solid #e0e0e0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    justify-content: center;
+    gap: 10px;
+}
+
+.settings .tab-selection {
+    padding: 10px 20px; 
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 1rem; 
+    font-weight: 700;
+    color: #cdcdcd;
+    transition: all 0.3s ease;
+    white-space: nowrap; 
+    border-radius: 5px 5px 0 0;
+}
+
+@media (max-width: 768px) {
+    .settings .tab-selection {
+        font-size: 0.9rem;
+        padding: 8px 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .settings .tab-selection {
+        font-size: 0.8rem;
+        padding: 5px 10px;
+    }
+}
+
+.tab-selection:hover {
+    background-color: #094d7f;
+    color: #cdcdcd;
+}
+
+.tab-selection.active {
+    color: #2196f3;
+    background-color: #fff;
+    border-bottom: 2px solid #2196f3;
+    margin-bottom: -2px;
+}
+
+.tab-content {
+    display: none;
+    /* padding: 25px; */
+    background-color: transparent;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+        padding: 15px;
+        padding-top: 70px;
+    }
+
+    .tabs {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .tab-selection {
+        padding: 12px 20px;
+        font-size: 13px;
+    }
+
+    .tab-content {
+        padding: 15px;
+    }
+}
+
+.slogan h3 {
+    margin: 0;
+    color: #e60012;
+    font-size: 30px;
+}
+
+.slogan h3:last-child {
+    color: #00a0e9;
+}

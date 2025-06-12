@@ -1,0 +1,213 @@
+/* logs.css */
+#logs-container {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-left: 270px;
+    margin-right: 30px;
+    width: calc(100% - 300px);
+}
+
+/* Filter controls styling */
+.filter-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.filter-controls label {
+    color: #cdcdcd;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.filter-controls select {
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #0c6bb1;
+    background-color: rgba(16, 149, 247, 0.2);
+    color: #cdcdcd;
+    cursor: pointer;
+    min-width: 120px;
+}
+
+.filter-controls select:hover {
+    background-color: transparent;
+}
+
+/* Action Filter specific styles */
+#actionFilterContainer {
+    width: 250px;
+    position: relative;
+}
+
+.action-search-input {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #0c6bb1;
+    background-color: rgba(16, 149, 247, 0.2);
+    color: black;
+}
+
+.action-search-input:hover {
+    background-color: rgba(12, 107, 167, 0.4);
+}
+
+.action-suggestions {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: white;
+    border: 1px solid #0c6bb1;
+    border-radius: 4px;
+    margin-top: 4px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.suggestion-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    color: black;
+}
+
+.suggestion-item:hover {
+    background-color: rgba(12, 107, 167, 0.2);
+}
+
+.entries-info {
+    color: #cdcdcd;
+    font-weight: bold;
+}
+
+/* Table styling */
+#logsTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+#logsTable th, 
+#logsTable td {
+    padding: 15px;
+    color: #cdcdcd;
+    text-align: left;
+    border-bottom: 1px solid #0c6bb1;
+}
+
+#logsTable th {
+    background-color: #1095f7;
+    color: #cdcdcd;
+    font-weight: bold;
+}
+
+#logsTable tr:hover {
+    background-color: rgba(12, 107, 167, 0.2);
+}
+
+/* Pagination controls */
+.pagination-controls {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.page-btn {
+    padding: 8px 15px;
+    background-color: #1095f7;
+    color: #cdcdcd;
+    border: 1px solid #0c6bb1;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.page-btn:hover:not(:disabled) {
+    background-color: #0c6bb1;
+}
+
+.page-btn:disabled {
+    background-color: rgba(16, 149, 247, 0.2);
+    cursor: not-allowed;
+    border-color: #cdcdcd;
+}
+
+.page-numbers {
+    display: flex;
+    gap: 5px;
+}
+
+.page-number {
+    padding: 8px 12px;
+    background-color: rgba(16, 149, 247, 0.2);
+    border: 1px solid #0c6bb1;
+    border-radius: 4px;
+    cursor: pointer;
+    color: black;
+}
+
+.page-number:hover {
+    background-color: rgba(12, 107, 167, 0.4);
+}
+
+.page-number.active {
+    background-color: #1095f7;
+    color: #cdcdcd;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #logs-container {
+        margin-left: 220px;
+        width: calc(100% - 240px);
+    }
+
+    .filter-controls {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .filter-group {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+    }
+
+    #actionFilterContainer {
+        width: 100%;
+    }
+
+    .entries-info {
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 576px) {
+    #logs-container {
+        margin-left: 10px;
+        margin-right: 10px;
+        width: calc(100% - 20px);
+    }
+
+    #logsTable th, 
+    #logsTable td {
+        padding: 10px;
+        font-size: 14px;
+    }
+}

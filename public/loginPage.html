@@ -1,0 +1,281 @@
+<!-- ############# LOGINPAGE.HTML ############### -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://www.google.com https://recaptcha.google.com https://www.gstatic.com">
+    <title>Barangay Information Management System</title>
+    <link rel="stylesheet" href="styles/mainstyle.css">
+    <link rel="stylesheet" href="styles/loginPage.css">
+    <link rel="stylesheet" href="styles/loader.css">
+
+    <style>
+#recaptcha-wrapper {
+    visibility: hidden;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    background: transparent;
+}
+
+#otp {
+    font-family: monospace;
+    letter-spacing: 4px;
+    font-size: 1.2em;
+    text-align: center;
+}
+
+.otp-error-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.otp-error-box {
+    background-color: white;
+    padding: 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+}
+
+.otp-error-box h2 {
+    color: #dc2626;
+    margin: 0 0 16px 0;
+    font-size: 1.1rem;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
+.otp-error-box button {
+    background-color: #dc2626;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+}
+
+.otp-error-box button:hover {
+    background-color: #b91c1c;
+}
+
+#otp-error-message {
+    background-color: #fee2e2;
+    border: 1px solid #dc2626;
+    color: #dc2626;
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin: 8px 0;
+    font-size: 0.9rem;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.shake {
+    animation: shake 0.2s ease-in-out 0s 2;
+}
+    </style>
+</head>
+
+<body>
+
+    <div class="emergency-container">
+        <div class="toggle-menu-container">
+            <h1>Community-Connect</h1>
+        </div>
+        <div class="emergency-right">
+            <div class="current-date">
+                <p id="current-date"></p>
+            </div>
+        </div>
+        <div class="header-icons">
+            <a href="index.html">
+                <div class="icons">
+                    <img src="resources/icons/home_icon.png" alt="" />
+                </div>
+
+            </a>
+            <a href="about.html">
+                <div class="icons">
+                    <img src="resources/icons/about_icon.png" alt="" />
+                </div>
+
+            </a>
+            <a href="contact.html">
+                <div class="icons">
+                    <img src="resources/icons/phone_icon.png" alt="" />
+                </div>
+
+            </a>
+            <a href="loginPage.html">
+                <div class="icons">
+                    <img src="resources/icons/login_icon.png" alt="" />
+                </div>
+
+            </a>
+
+            <div class="icons">
+                <p><span id="current-user"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="blur-container">
+
+        <div class="main-container">
+            <div class="logo-container">
+                <img src="resources/logo.png" alt="Logo" class="logo">
+                <p class="logo-text">San Antonio De Padua I</p>
+            </div>
+
+            <form class="login-container" id="login-form">
+                <div id="error-message" style="display: none; color: red;"></div>
+                <p class="title">Login</p> <!-- <h2>Login as Resident</h2> -->
+
+                <div class="input-box">
+                    <input type="email" name="email" id="email" required>
+                    <label>Email</label>
+                </div>
+                <div class="input-box">
+                    <input type="password" name="password" id="password" required>
+                    <label>Password</label>
+                    <span class="eye-icon" id="toggle-password">
+                        <!-- Eye icon (visible by default) -->
+                        <img id="eye" src="icons/eye_slash_icon_white.jpg" alt="Show password" />
+                        <!-- Eye slash icon (hidden by default) -->
+                        <img id="eye-slash" src="icons/eye_icon_white.jpg" alt="Hide password" style="display: none;" />
+                    </span>
+                </div>
+
+                <button type="submit" class="log-in" id="log-in">Log In</button>
+                <p class="register">Don't have an account?</p>
+                <a href="register.html">Register</a>
+                <a href="#" class="fpass">Forgot Password?</a>
+            </form>
+
+            <!-- Step 2: OTP Method Selection (Initially Hidden) -->
+            <div class="otp-outer-container">
+                <div class="otp-method-container" id="otp-method-container" style="display: none;">
+                    <p class="title">Verify Your Identity</p>
+                    <p>Choose how you want to receive your verification code:</p>
+                    <div class="otp-buttons">
+                        <button type="button" class="otp-button" id="email-otp">Email OTP</button>
+                        <button type="button" class="otp-button" id="phone-otp">Phone OTP</button>
+                    </div>
+                    <div class="phone-input" id="phone-input" style="display: none;">
+                        <div class="input-box phone-input">
+                            <input type="tel" id="phone" name="phone" required pattern="^\+?[0-9]*" inputmode="numeric">
+                            <label>Phone Number (+639123456789)</label>
+                        </div>
+                        <button type="button" class="otp-button" id="send-phone-otp">Send OTP</button>
+                    </div>
+                </div>
+            </div>
+        <!-- Step 3: OTP Verification Form (Initially Hidden) -->
+        <form class="otp-container" id="otp-form" style="display: none;">
+            <div id="otp-error-message" style="display: none; color: red;"></div>
+            <p class="title">Enter OTP Code</p>
+            <div class="input-box">
+                <input type="text" name="otp" id="otp" maxlength="6" required />
+                <label>Enter OTP</label>
+            </div>
+            <button type="submit" class="verify-otp" id="verify-otp">
+                Verify OTP
+            </button>
+        </form>
+
+        <!-- Hidden reCAPTCHA container -->
+        <div id="recaptcha-wrapper"></div>
+
+        <!-- <div id="popup" class="popup"></div> -->
+        <div id="error-message" style="display: none; color: red; margin: 10px 0; padding: 10px; background-color: #ffe6e6; border-radius: 4px;"></div>
+        
+        <!-- OTP ERROR POPUP -->
+        <div class="otp-error-overlay" id="otpErrorOverlay">
+            <div class="otp-error-box">
+              <h2>Incorrect OTP code entered!</h2>
+              <button onclick="closeOtpErrorPopup()">Close</button>
+            </div>
+          </div>
+
+
+            <div id="loader-container" style="display: none;">
+                <div class="loader"></div>
+            </div>
+
+
+        </div>
+    </div>
+
+    
+
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
+    <script type="module" src="js/otpLogin.js"></script>
+
+    <script>
+        const togglePassword = document.getElementById('toggle-password');
+        const passwordInput = document.getElementById('password');
+        const eyeIcon = document.getElementById('eye');
+        const eyeSlashIcon = document.getElementById('eye-slash');
+
+        togglePassword.addEventListener('click', () => {
+            // Toggle the password visibility
+            const isPasswordVisible = passwordInput.type === 'password';
+            passwordInput.type = isPasswordVisible ? 'text' : 'password';
+
+            // Toggle the icons
+            eyeIcon.style.display = isPasswordVisible ? 'none' : 'inline';
+            eyeSlashIcon.style.display = isPasswordVisible ? 'inline' : 'none';
+        });
+
+        function updateDate() {
+            const currentDate = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric' };
+            document.getElementById('current-date').textContent = currentDate.toLocaleDateString('en-US', options);
+        }
+
+        window.onload = function () {
+            updateDate();
+        };
+
+        document.getElementById('phone').addEventListener('input', function (e) {
+    // Replace any character that is not a digit or "+" (only at the start)
+    e.target.value = e.target.value.replace(/(?!^)\+|[^\d+]/g, '');
+});
+
+
+
+    </script>
+
+    </body>
+
+</html>

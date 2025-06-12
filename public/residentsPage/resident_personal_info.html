@@ -1,0 +1,534 @@
+<!-- //########## RESIDENT_PERSONAL_INFO.HTML ########## -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barangay Information Management System</title>
+    <link rel="stylesheet" href="../styles/mainstyle.css">
+    <link rel="stylesheet" href="../styles/resident_personal_info.css">
+    <link rel="stylesheet" href="../styles/resident_notification.css">
+    <link rel="stylesheet" href="../styles/loader.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.2/css/pikaday.min.css">
+
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div class="emergency-container">
+        <div class="toggle-menu-container">
+            <h1>Community-Connect</h1>
+        </div>
+        <div class="emergency-right">
+            <div class="current-date">
+                <p id="current-date"></p>
+            </div>
+        </div>
+        <div class="header-icons">
+            <h1></h1>
+            <div class="icons">
+                <div class="notification-wrapper">
+                    <div class="notification-icon" id="notificationIcon">
+                        <img src="../resources/icons/bell (2).png" alt="Bell" />
+                        <span class="notification-count" id="notificationCount"></span>
+                    </div>
+                    <div class="notification-dropdown" id="notificationDropdown">
+                        <ul id="notificationList"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="icons">
+                <img src="../resources/icons/question.png" alt="Help Circle" />
+            </div>
+            <div class="icons">
+                <button class="toggle-menu" onclick="toggleDropdown()">
+                    <img src="../resources/icons/account.png" alt="User" />
+                </button>
+            </div>
+
+            <div class="icons">
+                <p><span id="current-user"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="dropdown-menu" id="dropdownMenu">
+        <!--<div class="dropdown-item" onclick="editProfile()">Edit Admin Profile</div>-->
+        <div class="dropdown-item" onclick="changePassword()">Change Password</div>
+        <div class="dropdown-item" onclick="logout()">Logout</div>
+    </div>
+
+    <div class="sidebar">        
+        <div class="logo-above-sidebar">
+            <img src="../resources/logo.png" alt="Logo" class="logo" width="150" height="150">
+            <h1>San Antonio De Padua I</h1>
+        </div>
+        <div class="tab" id="visitorspage-tab">
+            <a href="resident_personal_info.html"><img src="../icons/id_icon.png" alt="personal info">My Personal Info</a>
+        </div>
+
+        <div class="tab" id="documentrequest-tab">
+            <a href="resident_document_request.html"><img src="../icons/document2_icon.png" alt="doc request">Document Request</a>
+        </div>
+
+        <!-- <div class="tab" id="trackrequest-tab">
+            <a href="/residentsPage/resident_track_request.html"><img src="/resources/track_icon.svg" alt="track request">Track My Request</a>
+        </div>        -->
+
+        <div class="tab" id="complaint-tab">
+            <a href="resident_complaint.html"><img src="../icons/report_icon.png" alt="complaint">
+                File a Complaint                
+            </a>
+        </div> 
+        <!-- <div class="tab" onclick="openTab('')">modules</div> -->
+    </div>  
+
+
+    <div class="main-content">
+        <div class="profile-container">
+            <!-- <div class="container"> -->
+                <div class="fullname-container">
+                    <span class="display-fullname" id="display-fullName" ></span>
+                </div>
+                <div class="content-wrapper">
+                    <div class="left-column">
+                        <div class="profile">
+                            <img id="profile-image" src="../resources/bean.png" alt="Profile Image">
+                            <label for="file-input" class="camera-icon">📷</label>
+                            <!-- Hidden file input -->
+                            <input type="file" accept="image/*" id="file-input">                        </div>
+                        <div class="unique-id">
+                            <label for="display-uniqueId">ID:</label>
+                            <span id="unique-id"></span>
+                        </div>
+                    </div>
+                    <div class="right-column">
+                        <div class="qr-code">
+                            <img src="../resources/qr.png" alt="QR Code">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="personal-info">
+
+                    <div class="display-group">                        
+                        <label for="display-blklot">Blk/Lot:</label>
+                        <span id="display-blklot" class="styled-input"></span>   
+                        <label for="display-street">Street:</label>
+                        <span id="display-street" class="styled-input"></span>                         
+                    </div>
+                    
+                    <div class="display-group">                        
+                        <label for="display-birthdate">Birthdate:</label>
+                        <span id="display-birthdate" class="styled-input"></span>
+                        <label for="display-birthplace">Birthplace:</label>
+                        <span id="display-birthplace" class="styled-input"></span>                                                                     
+                        <label for="display-age">Age:</label>
+                        <span id="display-age" class="styled-input"></span>                        
+                    </div>
+
+                    <div class="display-group">
+                        <label for="display-citizenship">Citizenship:</label>
+                        <span id="display-citizenship" class="styled-input" ></span>
+                        <label for="display-email">Email:</label>
+                        <span id="display-email" class="styled-input"></span>
+                        <label for="display-phone">Contact No.:</label>
+                        <span id="display-phone" class="styled-input"></span>                        
+                    </div>
+                    
+                    <div class="display-group">                        
+                        <label for="display-gender">Gender:</label>
+                        <span id="display-gender" class="styled-input"></span>
+                        <label for="display-voter">Voter Status:</label>
+                        <span id="display-voter" class="styled-input"></span>                        
+                        <label for="display-marital-status">Marital Status:</label>
+                        <span id="display-marital-status" class="styled-input"></span>                        
+                    </div>                    
+                    
+                    <div class="display-group">    
+                        <label for="display-educational-status">Educational Attainment:</label>
+                        <span id="display-educational-status" class="styled-input"></span>  
+                        <label for="display-employment-status">Work Status:</label>
+                        <span id="display-employment-status" class="styled-input"></span>                    
+                        <label for="display-occupation">Occupation:</label>
+                        <span id="display-occupation" class="styled-input"></span>
+                    </div>
+
+                    <div class="display-group">
+                        <label for="display-pwd">PWD:</label>
+                        <span id="display-pwd" class="styled-input"></span>
+                        <label for="display-kdbm">TUPAD:</label>
+                        <span id="display-kdbm" class="styled-input"></span>
+                        <label for="display-fourPs">4Ps:</label>
+                        <span id="display-fourPs" class="styled-input"></span>
+                        <label for="display-soloParent">Solo-Parent:</label>
+                        <span id="display-soloParent" class="styled-input"></span>
+                    </div>
+                </div>                
+                <div class="button-container">
+                    <button type="button" id="update-btn" class="inactive-submit">Update</button>
+                </div>
+            <!-- </div> -->
+        </div>
+    </div>
+
+    <!--##################################### UPDATE POPUP ###################################################-->
+    
+    <div class="overlay" id="overlay">
+        <div class="popup" id="updatePopup">
+            <div class="blurred-background"></div>
+            <h3 class="form-title">Resident Personal Information</h3>
+            <h6 class="form-subtitle">Please tell us about yourself</h6>
+            <h6 class="legend">* required fields</h6>
+            <div class="popup-container">
+                <button class="close-btn" id="closePopup">&times;</button>
+                
+                <form id="update-info-form">
+                    <!-- <input type="text" name="docid" id="upd-docid" placeholder="Document ID"> -->
+                
+                    <div class="label-group">    
+                        <label for="fname">First Name:</label>
+                        <label for="mname">Middle Name:</label>
+                        <label for="lname">Last Name:</label>
+                    </div>
+                    <div class="input-group">                    
+                        <input type="text" name="fname" id="upd-fname" placeholder="First Name" required>
+                        <input type="text" name="mname" id="upd-mname" placeholder="Middle Name">
+                        <input type="text" name="lname" id="upd-lname" placeholder="Last Name" required>
+                    </div>
+    
+                    <div class="label-group">                        
+                        <label for="suffix">Suffix:</label>
+                        <label for="blklot">Blk/Lot:</label>
+                        <label for="suffix">Street:</label>
+                    </div>
+                    <div class="input-group">                    
+                        <input type="text" name="suffix" id="upd-suffix" placeholder="Suffix">
+                        <input type="text" name="blklot" id="upd-blklot" placeholder="Block Lot" required>
+                        <input type="text" name="street" id="upd-street" placeholder="Street">
+                    </div>
+    
+                    <div class="label-group">    
+                        <label for="citizenship">Citizenship:</label>
+                        <label for="birthdate">Birthdate:</label>
+                        <label for="birthplace">Birthplace:</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" name="citizenship" id="upd-citizenship" placeholder="Citizenship" required>
+                        <!-- <input type="number" name="age" id="age" placeholder="Age" required> -->
+                        <input type="date" name="birthdate" id="upd-birthdate" placeholder="Birthdate" required>
+                        <input type="text" name="birthplace" id="upd-birthplace" placeholder="birthplace">
+                    </div>
+
+                    <div class="label-group">    
+                        <label for="email">Email:</label>
+                        <label for="occupation">Occupation:</label>
+                        <label for="phone">Contact No.:</label>
+                    </div> 
+                    <div class="input-group">
+                        <input type="email" name="email" id="upd-email" placeholder="Email" required>
+                        <input type="text" name="occupation" id="upd-occupation" placeholder="occupation">
+                        <input type="number" name="phone" id="upd-phone" placeholder="Contact Number" required>
+                    </div>
+
+                    <div class="label-group-five">    
+                        <label for="gender">Gender:</label>
+                        <label for="voter">Voter Status:</label>
+                        <label for="marital-status">Marital Status:</label>
+                        <label for="employment-status">Employent Status:</label>
+                        <label for="education-status">Educational Attainment:</label>
+                    </div> 
+
+                    <div class="input-group-five">
+                        <select name="gender" id="upd-gender" required>
+                            <option value="" disabled selected style="font-size: 10px;">Gender</option>
+                            <option value="MALE">MALE</option>
+                            <option value="FEMALE">FEMALE</option>
+                        </select>
+                        <select name="voter" id="upd-voter" required>
+                            <option value="" disabled selected>Are you an eligible voter</option>
+                            <option value="VOTER">VOTER</option>
+                            <option value="NON-VOTER">NON-VOTER</option>
+                        </select>
+                        <select name="marital-status" id="upd-marital-status" required>
+                            <option value="" disabled selected>Select Marital Status</option>
+                            <option value="SINGLE">SINGLE</option>
+                            <option value="MARRIED">MARRIED</option>
+                            <option value="DIVORCED">DIVORCED</option>
+                            <option value="WIDOWED">WIDOWED</option>
+                        </select>                    
+                        <select name="employment-status" id="upd-employment-status">
+                            <option value="" disabled selected>Select Employment Status</option>
+                            <option value="EMPLOYED">EMPLOYED</option>
+                            <option value="UNEMPLOYED">UNEMPLOYED</option>
+                            <option value="SELF-EMPLOYED">SELF-EMPLOYED</option>
+                            <option value="STUDENT">STUDENT</option>
+                        </select>
+                        <select name="educational-status" id="upd-educational-status" required>
+                            <option value="" disabled selected>Highest education attained</option>
+                            <option value="NO_FORMAL_EDUCATION">No Formal Education</option>
+                            <option value="ELEMENTARY">Elementary</option>
+                            <option value="HIGH_SCHOOL">High School</option>
+                            <option value="VOCATIONAL_TECHNICAL">Vocational/Technical Course</option>
+                            <option value="COLLEGE">College</option>
+                            <option value="POSTGRADUATE">Postgraduate (Master's or PhD)</option>
+                            <option value="DOCTORATE">Doctorate</option>
+                        </select>  
+                    </div>
+                    
+                    <div class="label-group-four">    
+                        <label for="kdbm">TUPAD:</label>
+                        <label for="pwd">PWD:</label>
+                        <label for="fourPs">4Ps:</label>
+                        <label for="SoloParent">Solo-Parent:</label>
+                    </div> 
+                    
+                    <div class="input-group-four">
+                        <select name="kdbm" id="upd-kdbm">
+                            <option value="" disabled selected>-----</option>                        
+                            <option value="YES">Yes</option>
+                            <option value="NO">No</option>
+                        </select>
+                        
+                        <select name="pwd" id="upd-pwd">
+                            <option value="" disabled selected>-----</option>
+                            <option value="YES">Yes</option>
+                            <option value="NO">No</option>
+                        </select>
+                        
+                        <select name="fourPs" id="upd-fourPs">
+                            <option value="" disabled selected>-----</option>
+                            <option value="YES">Yes</option>
+                            <option value="NO">No</option>
+                        </select>
+                        
+                        <select name="soloParent" id="upd-soloParent">
+                            <option value="" disabled selected>-----</option>
+                            <option value="YES">Yes</option>
+                            <option value="NO">No</option>
+                        </select>
+                    </div>
+                
+                </form>
+
+                <div class="declaration-container">
+                    <input type="checkbox" id="declaration-checkbox">
+                    <label for="declaration-checkbox">
+                      <p>I hereby declare that the information provided above is true, complete, 
+                      and accurate to the best of my knowledge. I understand that providing 
+                      false, misleading, or incomplete information may result in legal 
+                      consequences, including, but not limited to, fines, penalties, or 
+                      prosecution under applicable laws. I acknowledge that any falsified 
+                      information can lead to the revocation of benefits or services provided 
+                      and that I may be held legally liable for any fraudulent statements 
+                      made in this document.</p>
+                    </label>
+                  </div>
+                
+            </div>
+            <div class="upd-window-btn">
+                <button type="submit" id="submit-update-btn">Submit</button>
+                <button type="button" id="cancel-update-btn">Cancel</button>
+            </div>
+        </div>
+    </div>
+    
+
+    <div id="userNotificationPopup" style="display: none;">
+        <div id="userNotificationPopupContent"></div>
+        <button id="closeUserNotificationPopup">Close</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.2/pikaday.min.js"></script>
+    <script src="/js/datepicker.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
+
+<!-- <script type="module" src="/js/script.js"></script> -->
+<script type="module" src="../js/resident_personal_info.js"></script>
+<script type="module" src="../js/resident_notification.js"></script>
+<!-- <script type="module" src="../js/logOut.js"></script> -->
+
+
+<!-- <script type="module" src="/js/restrict_enable_button.js"></script> -->
+
+<script>
+    function updateDate() {
+      console.log("updateDate function called from inline script"); 
+      const currentDate = new Date();
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+      document.getElementById('current-date').textContent = currentDate.toLocaleDateString('en-US', options);
+      const userContainer = document.getElementById('current-user');
+      if (userContainer) {
+          userContainer.textContent = "Welcome, " + currentUser + " | " + currentDate.toLocaleDateString('en-US', options);
+      } else {
+          console.log("current-user element not found");
+      }
+  }
+  window.addEventListener("load", updateDate);
+
+        function handleLogout() {
+            logout();
+            toggleDropdown();
+        }
+</script>
+
+<!-- <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+    import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBDp03_t7kWck8XTT9iqv3SIX8UqFp_C6w",
+        authDomain: "bims-9aaa7.firebaseapp.com",
+        projectId: "bims-9aaa7",
+        storageBucket: "bims-9aaa7.appspot.com",
+        messagingSenderId: "323333588672",
+        appId: "1:323333588672:web:cfb7ea2dff4d9eb2004f25",
+        measurementId: "G-RQJBMNMFQ8"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    async function handleUpdateButton(event) {
+  event.preventDefault(); // Prevent the default form submission
+
+  const uniqueId = 'user-unique-id'; // Replace with actual unique ID
+  const countdownRef = doc(db, 'Update_Countdown', uniqueId);
+
+  try {
+    const countdownDoc = await getDoc(countdownRef);
+    const currentTime = new Date();
+
+    if (countdownDoc.exists()) {
+      const lastUpdateTime = countdownDoc.data().lastUpdate.toDate();
+      const timeDifference = currentTime - lastUpdateTime;
+      const sixMonthsInMs = 6 * 30 * 24 * 60 * 60 * 1000; // Approximate 6 months in milliseconds
+
+      if (timeDifference < sixMonthsInMs) {
+        const remainingTime = sixMonthsInMs - timeDifference;
+        const remainingDays = Math.ceil(remainingTime / (24 * 60 * 60 * 1000));
+        alert(`You can only update every 6 months. Please try again in ${remainingDays} days.`);
+        return;
+      }
+    }
+
+    // If we've reached this point, it's okay to show the popup
+    showPopup();
+
+  } catch (error) {
+    console.error('Error:', error);
+    alert('An error occurred. Please try again later.');
+  }
+}
+
+function showPopup() {
+  console.log('Showing update popup...');
+  document.getElementById('overlay').style.display = 'flex';
+  document.getElementById('updatePopup').style.display = 'block';
+}
+
+function closePopup() {
+  console.log('Closing update popup...');
+  document.getElementById('overlay').style.display = 'none';
+  document.getElementById('updatePopup').style.display = 'none';
+}
+
+async function submitUpdate(event) {
+  event.preventDefault(); // Prevent form from submitting normally
+
+  const uniqueId = 'user-unique-id'; // Replace with actual unique ID
+  const countdownRef = doc(db, 'Update_Countdown', uniqueId);
+
+  try {
+    // Perform the update action here
+    console.log('Performing update...');
+
+    // Update the timestamp in Firebase
+    await setDoc(countdownRef, { lastUpdate: serverTimestamp() });
+
+    // Disable the button
+    const updateBtn = document.getElementById('update-btn');
+    updateBtn.disabled = true;
+    updateBtn.classList.remove('inactive-submit');
+    updateBtn.classList.add('disabled-submit');
+
+    // Close popup and show success message
+    closePopup();
+    alert('Update successful. You can update again in 6 months.');
+  } catch (error) {
+    console.error('Error:', error);
+    alert('An error occurred while updating. Please try again later.');
+  }
+}
+
+// Add event listener to the update button
+document.getElementById('update-btn').addEventListener('click', handleUpdateButton);
+
+// Add event listener to the form inside the popup
+document.getElementById('update-info-form').addEventListener('submit', submitUpdate);
+
+// Add event listener to the close button in the popup
+document.getElementById('closePopup').addEventListener('click', closePopup);
+
+// Add event listener to the overlay for closing when clicked outside the popup
+document.getElementById('overlay').addEventListener('click', function(event) {
+  if (event.target === this) {
+    closePopup();
+  }
+});
+
+// Function to check and update button state on page load
+async function checkButtonState() {
+  const uniqueId = 'user-unique-id'; // Replace with actual unique ID
+  const countdownRef = doc(db, 'Update_Countdown', uniqueId);
+
+  try {
+    const countdownDoc = await getDoc(countdownRef);
+    const updateBtn = document.getElementById('update-btn');
+
+    if (countdownDoc.exists()) {
+      const lastUpdateTime = countdownDoc.data().lastUpdate.toDate();
+      const currentTime = new Date();
+      const timeDifference = currentTime - lastUpdateTime;
+      const sixMonthsInMs = 6 * 30 * 24 * 60 * 60 * 1000;
+
+      if (timeDifference < sixMonthsInMs) {
+        updateBtn.disabled = true;
+        updateBtn.classList.remove('inactive-submit');
+        updateBtn.classList.add('disabled-submit');
+      } else {
+        updateBtn.disabled = false;
+        updateBtn.classList.remove('disabled-submit');
+        updateBtn.classList.add('inactive-submit');
+      }
+    } else {
+      // No record in Update_Countdown, button should be enabled
+      updateBtn.disabled = false;
+      updateBtn.classList.remove('disabled-submit');
+      updateBtn.classList.add('inactive-submit');
+    }
+  } catch (error) {
+    console.error('Error checking button state:', error);
+  }
+}
+
+// Call checkButtonState when the page loads
+window.addEventListener('load', checkButtonState);
+
+// Close popup when page loads (in case it was left open)
+window.addEventListener('load', closePopup);
+        
+</script> -->
+
+</body>
+
+</html>

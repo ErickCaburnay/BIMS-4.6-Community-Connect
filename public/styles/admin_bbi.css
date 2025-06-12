@@ -1,0 +1,955 @@
+/* Medium Smartphones */
+@media (min-width: 321px) and (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+  /* Add other styles for medium phones here */
+}
+
+/* Large Smartphones */
+@media (min-width: 481px) and (max-width: 767px) {
+  body {
+    font-size: 16px;
+  }
+  /* Add other styles for large phones here */
+}
+
+/* Tablets */
+@media (min-width: 768px) and (max-width: 1024px) {
+  body {
+    font-size: 18px;
+  }
+  /* Add other styles for tablets here */
+}
+
+/* Laptops */
+@media (min-width: 1025px) and (max-width: 1440px) {
+  body {
+    font-size: 20px;
+  }
+  /* Add other styles for laptops here */
+}
+
+/* Desktops */
+@media (min-width: 1441px) {
+  body {
+    font-size: 22px;
+  }
+  /* Add other styles for desktops here */
+}
+
+.main-content h1 {
+  font-size: 2.5em;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+.main-content h2 {
+  color: white;
+}
+
+.main-content {
+  margin-left: 15%;
+  padding: 30px;
+  width: calc(85% - 60px);
+  height: calc(100vh - 80px);
+  overflow-y: auto;
+  top: 50px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  background-color: #042136;
+  z-index: 1;
+  bottom: 10px;
+}
+.tabs-container {
+  background-color: #08416b;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.tab-head {
+  display: flex;
+  list-style: none;
+  background-color: #094d7f;
+  padding: 0;
+  margin: 0;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.tab-head li {
+  flex: 1;
+  min-width: fit-content;
+}
+
+.tab-link {
+  display: block;
+  padding: 15px 20px;
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+.tab-link:hover {
+  background-color: #094f7e;
+}
+
+.tab-link.active {
+  background-color: #0056b3;
+}
+
+.tab-body {
+  display: none;
+  padding: 20px;
+}
+
+.tab-body.active {
+  display: block;
+}
+
+.post-activity-btn {
+  background-color: #45a049;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 10px 0;
+}
+
+.post-activity-btn:hover {
+  background-color: #45a049;
+}
+
+/* Form Styles */
+.form-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="time"],
+select,
+textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.close-btn {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Record Display */
+.activities-list {
+  margin-top: 20px;
+}
+
+.activity-item {
+  background-color: #f8fafc;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border-left: 4px solid #1e40af;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+/*=============================================BHC sched POPUP===================================================*/
+
+.bhc-schedule-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.bhc-popup-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #f2f3f4;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  max-width: 90%;
+  z-index: 1001;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.bhc-popup-content h2 {
+  color: #000;
+}
+
+.bhc-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.bhc-close-btn {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  cursor: pointer;
+  font-size: 24px;
+  color: #666;
+}
+
+.bhc-close-btn:hover {
+  color: #000;
+}
+
+/* Button Styles */
+.bhc-add-resident-button,
+.bhc-addnew-resident-button,
+.bhc-edit-btn,
+.bhc-delete-btn,
+.bhc-search-button,
+.bhc-clear-button,
+.bhc-fetch-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.bhc-add-resident-button {
+  background-color: #4caf50;
+  color: white;
+}
+
+.bhc-addnew-resident-button {
+  background-color: #4caf50;
+  color: white;
+}
+
+.bhc-search-button,
+.bhc-clear-button,
+.bhc-fetch-button {
+  background-color: #4caf50;
+  color: white;
+}
+
+.bhc-add-resident-button:hover {
+  background-color: #45a049;
+}
+
+.bhc-edit-btn {
+  background-color: #2196f3;
+  color: white;
+  margin-right: 5px;
+}
+
+.bhc-edit-btn:hover {
+  background-color: #1976d2;
+}
+
+.bhc-delete-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.bhc-delete-btn:hover {
+  background-color: #d32f2f;
+}
+
+.bhc-search-container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.bhc-search-input {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  flex-grow: 1;
+  max-width: 300px;
+}
+
+/* Table Styles */
+#bhc-healthRecordsTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #f2f3f4;
+}
+
+#bhc-healthRecordsTable th,
+#bhc-healthRecordsTable td {
+  padding: 12px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+#bhc-healthRecordsTable th {
+  background-color: #042136;
+  font-weight: bold;
+  color: #f2f3f4;
+}
+
+#bhc-healthRecordsTable tr:hover {
+  background-color: #f9f9f9;
+}
+
+.bhc-search-results {
+  border: 1px solid #ccc;
+  max-height: 150px;
+  overflow-y: auto;
+  position: absolute;
+  background-color: white;
+  width: 100%;
+  z-index: 100;
+  display: none;
+}
+
+.bhc-search-result-item {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.bhc-search-result-item:hover {
+  background-color: #f0f0f0;
+}
+
+.bhc-input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+/*=============================================BPOC Tanod POPUP===================================================*/
+
+h2 {
+  font-size: 30px;
+  color: black;
+}
+
+.brgy-tanod h2 {
+  font-size: 25px;
+  text-align: center;
+  color: #f2f3f4;
+}
+
+#tanod-list {
+  height: 200px;
+  overflow-y: auto;
+  background-color: #f2f3f4; /* Light background for tables */
+}
+
+#tanod-list tr {
+  width: 101.2%;
+}
+
+#tanod-list th,
+#tanod-list td {
+  padding: 12px; /* Increased padding for consistency */
+  font-size: 14px;
+}
+
+#tanod-list th {
+  background-color: #042136; /* Dark header for consistency */
+  color: #f2f3f4; /* Light text for header */
+}
+
+#schedTable th {
+  background-color: #042136; /* Dark header for consistency */
+  color: #f2f3f4; /* Light text for header */
+}
+
+#tanod-list tbody {
+  height: 150px;
+  overflow-y: auto;
+}
+
+.patrol-schedule {
+  margin-top: 20px;
+}
+
+#tanod-list,
+#schedTable {
+  position: relative;
+  z-index: 2;
+}
+
+#tanod-list td:last-child,
+#schedTable td:last-child {
+  position: relative;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
+.add-sched-button,
+.add-tanod-button,
+.search-button,
+.clear-button,
+.action-btn {
+  margin-right: auto;
+  padding: 8px 16px; /* Adjusted padding */
+  width: 40%;
+  background-color: #4caf50; /* Consistent button color */
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px; /* Increased font size */
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.add-sched-button:hover,
+.add-tanod-button:hover,
+.search-button:hover,
+.clear-button:hover,
+.action-btn:hover {
+  background-color: #45a049; /* Hover state for buttons */
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  width: 50%;
+  gap: 10px;
+}
+
+.search-input {
+  border-radius: 10px;
+}
+
+.edit-button {
+  background-color: #2196f3; /* Blue edit button */
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.edit-button:hover {
+  background-color: #1976d2; /* Hover state */
+}
+
+.edit-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #f2f3f4; /* Background for tables */
+  margin: 20px auto;
+  font-size: 16px;
+  table-layout: fixed;
+}
+
+thead,
+tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+thead {
+  background-color: #f2f2f2;
+  color: #555;
+  text-transform: uppercase;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+tbody {
+  display: block;
+  height: 400px; /* Consistent height */
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+th,
+td {
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+tr:hover {
+  background-color: #f9f9f9; /* Hover state for rows */
+}
+
+/*###### ADD TANOD POPUP ######*/
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Dim background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3;
+}
+
+.popup-content {
+  background-color: #f2f3f4;
+  border-radius: 8px;
+  position: relative;
+  padding: 20px;
+  max-width: 400px; /* Adjust size for the "Add Tanod" popup */
+  width: 90%;
+  max-height: 70%; /* Prevent excessively long popups from overflowing */
+  overflow-y: auto; /* Enable scrolling for long content */
+}
+
+.tanod-input {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tanod-input input {
+  width: 100%;
+  max-width: 300px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.popup .close-button {
+  position: absolute;
+  top: 10px;
+  right: 0px;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.action-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.save-button {
+  background-color: #4caf50; /* Consistent save button color */
+  color: white;
+}
+
+.save-button:hover {
+  background-color: #45a049; /* Hover state */
+}
+
+.cancel-button {
+  background-color: #f44336; /* Consistent cancel button color */
+  color: white;
+}
+
+.cancel-button:hover {
+  background-color: #d32f2f; /* Hover state */
+}
+
+.delete-button {
+  background-color: #f44336; /* Blue edit button */
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.delete-button:hover {
+  background-color: #d32f2f; /* Hover state */
+}
+
+.popup .action-button:hover {
+  color: white;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.popup .close-button:hover {
+  background-color: transparent;
+  color: #ff0000;
+}
+
+.popup .close-button:focus {
+  outline: none;
+}
+
+.popup .close-button:active {
+  color: #cc0000;
+}
+
+.popup-content input {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.popup-content button {
+  padding: 8px 16px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+#tanod-list {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#tanod-list th,
+#tanod-list td,
+#schedTable th {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+#tanod-list th {
+  background-color: #042136; /* Dark header */
+  color: #f2f3f4; /* Light text for header */
+}
+
+/* ###### CREATE SCHED POPUP ###### */
+
+#area option {
+  width: 100%; /* Full width */
+  padding: 10px; /* Inner spacing */
+  border: 1px solid #ccc; /* Border color */
+  border-radius: 4px; /* Rounded corners */
+  color: #000;
+}
+
+.schedule-input {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.schedule-input input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.tanod-table-container {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+}
+
+#tanodTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#tanodTable th,
+#tanodTable td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+#tanodTable th {
+  background-color: #042136; /* Dark header */
+  color: #f2f3f4; /* Light text for header */
+}
+
+/*=============================================BDRRMC===================================================*/
+
+/* General Tab Styling */
+.bdrrmc-inner-tab {
+  display: none;
+  padding: 15px;
+  background: #f2f3f4;
+  border-radius: 8px;
+}
+
+.bdrrmc-inner-tab.active {
+  display: block;
+}
+
+/* Inner Tab Links Styling */
+.bdrrmc-tab-links {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.inner-tab-link.active {
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.bdrrmc-tab-links button {
+  background-color: #e1d9d1;
+  padding: 8px 16px; /* Adjusted padding */
+  width: 20%;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 14px; /* Increased font size */
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+/* BDRRMC Controls */
+.bdrrmc-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Adds space between the button and the search box */
+}
+
+/* Button Styling */
+.popup-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+  background-color: #4caf50;
+  color: white;
+  /* Ensure the button doesn't stretch */
+}
+
+/* Search Box Styling */
+.search-container {
+  display: inline-flex; /* Align button and search box inline */
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px; /* Add spacing to avoid the search appearing too close to the button */
+}
+
+#bdrrmc-incidents-search {
+  width: 100%; /* Ensure the search input takes the full width of the container */
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* BDRRMC Popup Styles */
+.bdrrmc-popup {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.bdrrmc-popup-content {
+  position: relative;
+  background-color: #fff;
+  margin: 5% auto;
+  padding: 20px;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.bdrrmc-close-btn {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+}
+
+.bdrrmc-close-btn:hover {
+  color: #000;
+}
+
+/* Form Styles */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.bdrrmc-submit-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.bdrrmc-submit-btn:hover {
+  background-color: #0056b3;
+}
+
+/* Table Styles */
+#bdrrmc-incidents-table,
+#bdrrmc-evacuation-table,
+#bdrrmc-relief-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+#bdrrmc-incidents-table th,
+#bdrrmc-evacuation-table th,
+#bdrrmc-relief-table th {
+  background-color: #042136;
+  padding: 12px;
+  text-align: left;
+  color: white;
+  border-bottom: 2px solid #dee2e6;
+}
+
+#bdrrmc-incidents-table td,
+#bdrrmc-evacuation-table td,
+#bdrrmc-relief-table td {
+  padding: 12px;
+  border-bottom: 1px solid #dee2e6;
+}
+
+/* Button Styles */
+
+.bdrrmc-popup-content h2 {
+  color: #000;
+}
+
+.action-buttons button {
+  padding: 8px 16px;
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.action-buttons .delete-btn {
+  padding: 8px 16px;
+  background-color: #cc0000;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.search-container #bdrrmc-incidents-search {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  flex-grow: 1;
+  max-width: 500px;
+}
+
+.search-container #bdrrmc-evacuation-search {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  flex-grow: 1;
+  max-width: 500px;
+}
+
+.search-container #bdrrmc-relief-search {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  flex-grow: 1;
+  max-width: 500px;
+}
+
+.filter-container {
+  display: inline-flex; /* Align button and search box inline */
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px; /* Add spacing to avoid the search appearing too close to the button */
+  padding: 8px;
+  border-radius: 4px;
+  flex-grow: 1;
+  width: 25%;
+}

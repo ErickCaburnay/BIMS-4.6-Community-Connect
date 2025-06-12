@@ -1,0 +1,778 @@
+<!-- ##################################### ADMIN_DASHBOARD.HTML #####################################3 -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community-Connect - Dashboard</title>
+    <link rel="stylesheet" href="../styles/mainstyle.css"> <!-- ".." -->
+    <link rel="stylesheet" href="../styles/admin_dashboard_chart.css">
+    <link rel="stylesheet" href="../styles/loader.css">
+    <link rel="stylesheet" href="../styles/admin_notification.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
+
+    <style>
+/* Add these styles to your CSS file */
+.social-services-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.social-services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.chart-container {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 15px;
+    height: 300px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .social-services-grid {
+        grid-template-columns: 1fr;
+    }
+}
+    </style>
+
+</head>
+
+<body>
+    <div class="emergency-container">
+        <div class="toggle-menu-container">
+            <h1>Community-Connect</h1>
+        </div>
+        <div class="emergency-right">
+            <div class="current-date">
+                <p id="current-date"></p>
+            </div>
+        </div>
+        <div class="header-icons">
+            <h1></h1>
+            <div class="icons">
+                <div class="notification-wrapper">
+                    <div class="notification-icon" id="notificationIcon">
+                        <img src="../resources/icons/bell (2).png" alt="Bell" />
+                        <span class="notification-count" id="notificationCount"></span>
+                    </div>
+                    <div class="notification-dropdown" id="notificationDropdown">
+                        <ul id="notificationList"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="icons">
+                <img src="../resources/icons/question.png" alt="Help Circle" />
+            </div>
+            <div class="icons">
+                <button class="toggle-menu" onclick="toggleDropdown()">
+                    <img src="../resources/icons/account.png" alt="User" />
+                </button>
+            </div>
+
+            <div class="icons">
+                <p><span id="current-user"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="dropdown-menu" id="dropdownMenu">
+        <div class="dropdown-item" onclick="editProfile()">Edit Admin Profile</div>
+        <div class="dropdown-item" onclick="changePassword()">Change Password</div>
+        <div class="dropdown-item" onclick="logout()">Logout</div>
+    </div>
+
+    <div class="sidebar">
+        <div class="logo-above-sidebar">
+            <img src="../resources/logo.png" alt="Logo" class="logo" width="150" height="150"> <!--"/"-->
+            <h1>San Antonio De Padua I</h1>
+        </div>
+        <div class="tab" id="dashboard-tab">
+            <a href="admin_dashboard.html"><img src="../resources/icons/dashboard_icon2.png"
+                    alt="Dashboard">Dashboard</a> 
+        </div>
+        <div class="tab" id="officials-tab" class="restricted" data-role="Top Level Admin">
+            <a href="admin_officials.html"><img src="../resources/icons/gov.png" alt="officials">Brgy Officials</a>
+        </div>
+        <div class="tab" id="residents-tab">
+            <a href="admin_resident_records.html"><img src="../resources/icons/users.png" alt="Records">Residents
+                Records</a>
+        </div>
+        <div class="tab" id="household-tab">
+            <a href="admin_household_records.html"><img src="../resources/icons/household.png"
+                    alt="Records">Household</a>
+        </div>
+        <div class="tab" id="bbi-tab">
+            <a href="admin_bbi.html"><img src="../resources/icons/bldg.png" alt="bbi">BBI</a>
+        </div>
+        <div class="tab" id="reports-tab">
+            <a href="admin_reports.html"><img src="../resources/icons/reports.png" alt="reports">Reports</a>
+        </div>
+        <div class="tab" id="requests-tab">
+            <a href="admin_requests.html"><img src="../resources/icons/document.png" alt="Requests">Requests
+            </a>
+        </div>
+        <div class="tab" id="complaints-tab">
+            <a href="admin_complaints.html"><img src="../resources/icons/complaint.png" alt="complaints">Complaints
+
+            </a>
+        </div>
+        <div class="tab" id="logs-tab">
+            <a href="admin_logs.html"><img src="../resources/icons/logs_icon.png" alt="logs">Logs</a>
+        </div>
+
+        <div class="tab" id="settings-tab">
+            <a href="admin_settings.html"><img src="../resources/icons/settings.png" alt="settings">Settings</a>
+        </div>
+    </div>
+
+    <div class="dashboard">
+        <h1>Barangay Dashboard - Analytics</h1>
+
+        <section class="demographics">
+            <h2>Demographics</h2>
+            <div class="grid">
+                <!-- POPULATION AND GENDER -->
+                <div class="card population-gender-card">
+                    <img src="../resources/population.png" class="population-icon" alt="">
+                    <h3>Population Overview</h3>
+                    <div class="population-container">
+                        <div class="total-population">
+                            <span id="totalPopulation" class="population-number">Loading...</span>
+                            <span class="population-label">Total Residents</span>
+                        </div>
+                        <div class="gender-distribution">
+                            <div class="gender-chart-container">
+                                <canvas id="genderChart"></canvas>
+                            </div>
+                            <div class="gender-legend">
+                                <div class="legend-item">
+                                    <span class="legend-color male"></span>
+                                    <span class="legend-label">Male</span>
+                                    <span id="malePercentage" class="legend-percentage"></span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color female"></span>
+                                    <span class="legend-label">Female</span>
+                                    <span id="femalePercentage" class="legend-percentage"></span>
+                                </div>
+                                <!-- <div class="legend-item">
+                                    <span class="legend-color undefined"></span>
+                                    <span class="legend-label">Unverified</span>
+                                    <span id="undefinedPercentage" class="legend-percentage"></span>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AGE DISTRIBUTION -->
+                <div class="card age-distribution-card">
+                    <img src="../resources/senior.png" class="age-icon" alt="">
+                    <h3>Age Overview</h3>
+                    <div class="age-distribution-container">
+                        <div class="total-age-group">
+                            <span id="totalAgeGroup" class="age-number">Loading...</span>
+                            <span class="age-label">Total Users</span>
+                        </div>
+                        <div class="age-group-distribution">
+                            <div class="age-chart-container">
+                                <canvas id="ageDistributionChart"></canvas>
+                            </div>
+                            <div class="age-legend">
+                                <div class="legend-item">
+                                    <span class="legend-color minors"></span>
+                                    <span class="legend-label">Minors</span>
+                                    <span id="minorsPercentage" class="legend-percentage"></span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color legal-age"></span>
+                                    <span class="legend-label">Legal Age</span>
+                                    <span id="legalAgePercentage" class="legend-percentage"></span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color seniors"></span>
+                                    <span class="legend-label">Seniors</span>
+                                    <span id="seniorsPercentage" class="legend-percentage"></span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color undefined"></span>
+                                    <span class="legend-label">Undefined</span>
+                                    <span id="undefinedAgePercentage" class="legend-percentage"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EDUCATION LEVEL -->
+                <div class="card education-card">
+                    <img src="../resources/educ-icon.png" class="education-icon" alt="">
+                    <h3>Educational Attainment</h3>
+                    <div class="education-container">
+                        <div class="total-education">
+                            <span id="totalEducation" class="education-number">Loading...</span>
+                            <span class="education-label">Total Records</span>
+                        </div>
+                        <div class="education-distribution">
+                            <div class="education-chart-container">
+                                <canvas id="educationChart"></canvas>
+                            </div>
+                            <div class="education-legend">
+                                <div class="legend-item">
+                                    <span class="legend-color elementary-complete"></span>
+                                    <span class="legend-label">Elementary</span>
+                                    <span id="elementary-percentage" class="legend-percentage">0.0%</span>
+                                </div>
+
+                                <div class="legend-item">
+                                    <span class="legend-color high-school-complete"></span>
+                                    <span class="legend-label">Highschool</span>
+                                    <span id="high-school-percentage" class="legend-percentage">0.0%</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color college-complete"></span>
+                                    <span class="legend-label">College</span>
+                                    <span id="college-percentage" class="legend-percentage">0.0%</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color vocational-technical"></span>
+                                    <span class="legend-label">Vocational</span>
+                                    <span id="vocational-technical-percentage" class="legend-percentage">0.0%</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color postgraduate"></span>
+                                    <span class="legend-label">Postgrad</span>
+                                    <span id="postgraduate-percentage" class="legend-percentage">0.0%</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color doctorate"></span>
+                                    <span class="legend-label">Doctorate</span>
+                                    <span id="doctorate-percentage" class="legend-percentage">0.0%</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color no-formal-education"></span>
+                                    <span class="legend-label">No Education</span>
+                                    <span id="no-formal-education-percentage" class="legend-percentage">0.0%</span>
+                                </div>
+                                <!-- <div class="legend-item">
+                                    <span class="legend-color undefined"></span>
+                                    <span class="legend-label">Undefined</span>
+                                    <span id="undefined-percentage" class="legend-percentage">0.0%</span>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VOTERS CHART -->
+                <div class="card voters-card">
+                    <img src="../resources/fingerprint.png" class="voters-icon" alt="">
+                    <h3>Voter Overview</h3>
+                    <div class="voters-container">
+                        <div class="total-voters">
+                            <span id="totalVoters" class="voters-number">Loading...</span>
+                            <span class="voters-label">Total Eligible Voters</span>
+                        </div>
+                        <div class="voter-distribution">
+                            <div class="voter-chart-container">
+                                <canvas id="votersChart"></canvas>
+                            </div>
+                            <div class="voter-legend">
+                                <div class="legend-item">
+                                    <span class="legend-color voters"></span>
+                                    <span class="legend-label">Eligible</span>
+                                    <span id="votersPercentage" class="legend-percentage"></span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color non-voters"></span>
+                                    <span class="legend-label">Ineligible</span>
+                                    <span id="nonVotersPercentage" class="legend-percentage"></span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color undefined"></span>
+                                    <span class="legend-label">Minors</span>
+                                    <span id="undefinedVotersPercentage" class="legend-percentage"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- HOUSEHOLD DISTRIBUTION CHART -->
+                <div class="card household-card">
+                    <img src="../resources/household.png" class="household-icon" alt="">
+                    <h3>Household Distribution</h3>
+                    <div class="household-container">
+                        <div class="total-households">
+                            <span id="totalHouseholds" class="household-number">Loading...</span>
+                            <span class="household-label">Total Households</span>
+                        </div>
+                        <div class="household-distribution">
+                            <div class="household-chart-container">
+                                <canvas id="householdChart"></canvas>
+                            </div>
+                            <div class="household-legend">
+                                <div class="legend-section members">
+                                    <div class="legend-item">
+                                        <span class="legend-color small-household"></span>
+                                        <span class="legend-label">1-3 👪</span>
+                                        <span id="small-percentage" class="legend-percentage">0.0%</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-color medium-household"></span>
+                                        <span class="legend-label">4-6 👪</span>
+                                        <span id="medium-percentage" class="legend-percentage">0.0%</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-color large-household"></span>
+                                        <span class="legend-label">7-9 👪</span>
+                                        <span id="large-percentage" class="legend-percentage">0.0%</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-color xl-household"></span>
+                                        <span class="legend-label">10+ 👪</span>
+                                        <span id="xl-percentage" class="legend-percentage">0.0%</span>
+                                    </div>
+
+                                    <div class="legend-item">
+                                        <span class="legend-color owned"></span>
+                                        <span class="legend-label">Owned</span>
+                                        <span id="owned-percentage" class="legend-percentage">0.0%</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-color rent"></span>
+                                        <span class="legend-label">Rent</span>
+                                        <span id="rent-percentage" class="legend-percentage">0.0%</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-color pledge"></span>
+                                        <span class="legend-label">Pledged Occupancy</span>
+                                        <span id="pledge-percentage" class="legend-percentage">0.0%</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-color mortgage"></span>
+                                        <span class="legend-label">Mortgage</span>
+                                        <span id="mortgage-percentage" class="legend-percentage">0.0%</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-color informal"></span>
+                                        <span class="legend-label">Informal</span>
+                                        <span id="informal-percentage" class="legend-percentage">0.0%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ###################################################################################################### -->
+
+        <section class="analytics">
+            <h2></h2>
+
+            <div class="grid">
+
+                <!-- DOCUMENT OVERVIEW -->
+                <div class="card documents-card">
+                    <img src="../resources/doc-icon.png" class="documents-icon" alt="">
+                    <h3>Document Overview</h3>
+                    <div class="doc-filter-container">
+                        <select id="documentTimeFilter">
+                            <option value="all">All Time</option>
+                            <option value="today">Today</option>
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                            <option value="year">This Year</option>
+                        </select>
+                        <select id="documentTypeSelect">
+                            <option value="all">All Documents</option>
+                            <option value="clearance">Clearance</option>
+                            <option value="certificate">Certificate</option>
+                            <option value="indigency">Indigency</option>
+                        </select>
+                    </div>
+                    <div class="documents-container">
+                        <div class="document-status">
+                            <h4>Document Status</h4>
+                            <div class="status-chart-container">
+                                <canvas id="documentStatusChart"></canvas>
+                            </div>
+                            <div class="status-legend">
+                                <div class="legend-item">
+                                    <span class="legend-color pending"></span>
+                                    <span class="legend-label">Pending</span>
+                                    <span id="documentPendingPercentage" class="legend-percentage">0%</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color rejected"></span>
+                                    <!-- Changed from cancelled to rejected -->
+                                    <span class="legend-label">Rejected</span>
+                                    <span id="documentRejectedPercentage" class="legend-percentage">0%</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color approved"></span>
+                                    <!-- Changed from printed to approved -->
+                                    <span class="legend-label">Approved</span>
+                                    <span id="documentApprovedPercentage" class="legend-percentage">0%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="total-count">
+                        <span class="document-label">Total Count</span>
+                        <span id="documentCount" class="document-count">Loading...</span>
+                    </div>
+                </div>
+
+                <!-- DOC PURPOSE OVERVIEW -->
+                <div class="card document-purposes-container">
+                    <img src="../resources/doc_icon.png" class="documents-icon" alt="Document Icon">
+                    <h3>Document Purposes</h3>
+
+                    <select id="purposeTimeFilter" class="time-filter-dropdown">
+                        <option value="today">Today</option>
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                        <option value="year">This Year</option>
+                    </select>
+
+                    <div class="tabs">
+                        <button class="tab-button active" data-tab="indigency">Brgy Indigency</button>
+                        <button class="tab-button" data-tab="certificate">Brgy Certificate</button>
+                        <button class="tab-button" data-tab="clearance">Brgy Clearance</button>
+                    </div>
+
+                    <div class="tab-content">
+                        <div id="indigency" class="tab-pane active">
+                            <h5>Brgy Indigency Purposes</h5>
+                            <ul class="purpose-list">
+                                <li><span class="purpose-name">MEDICAL ASSISTANCE</span><span class="purpose-percentage"
+                                        id="indigency-medical-assistance"></span></li>
+                                <li><span class="purpose-name">EDUCATIONAL ASSISTANCE</span><span
+                                        class="purpose-percentage" id="indigency-educational-assistance"></span></li>
+                                <li><span class="purpose-name">BURIAL ASSISTANCE</span><span class="purpose-percentage"
+                                        id="indigency-burial-assistance"></span></li>
+                                <li><span class="purpose-name">SOCIAL SERVICES BENEFITS</span><span
+                                        class="purpose-percentage" id="indigency-social-services-benefits"></span></li>
+                                <li><span class="purpose-name">LEGAL AID APPLICATION</span><span
+                                        class="purpose-percentage" id="indigency-legal-aid-application"></span></li>
+                            </ul>
+                        </div>
+
+                        <div id="certificate" class="tab-pane">
+                            <h5>Brgy Certificate Purposes</h5>
+                            <ul class="purpose-list">
+                                <li><span class="purpose-name">PROOF OF RESIDENCY</span><span class="purpose-percentage"
+                                        id="certificate-proof-of-residency"></span></li>
+                                <li><span class="purpose-name">GOOD MORAL</span><span class="purpose-percentage"
+                                        id="certificate-good-moral-certificate"></span></li>
+                                <li><span class="purpose-name">NO PENDING CASE</span><span class="purpose-percentage"
+                                        id="certificate-no-pending-case-certificate"></span></li>
+                                <li><span class="purpose-name">PROPERTY VERIFICATION</span><span
+                                        class="purpose-percentage" id="certificate-property-verification"></span></li>
+                                <li><span class="purpose-name">LEGAL DOCUMENT</span><span class="purpose-percentage"
+                                        id="certificate-legal-document"></span></li>
+                            </ul>
+                        </div>
+
+                        <div id="clearance" class="tab-pane">
+                            <h5>Brgy Clearance Purposes</h5>
+                            <ul class="purpose-list">
+                                <li><span class="purpose-name">EMPLOYMENT</span><span class="purpose-percentage"
+                                        id="clearance-employment"></span></li>
+                                <li><span class="purpose-name">BANK ACCOUNT OPENING</span><span
+                                        class="purpose-percentage" id="clearance-bank-account-opening"></span></li>
+                                <li><span class="purpose-name">POLICE CLEARANCE</span><span class="purpose-percentage"
+                                        id="clearance-police-clearance"></span></li>
+                                <li><span class="purpose-name">SCHOOL REQUIREMENTS</span><span
+                                        class="purpose-percentage" id="clearance-school-requirements"></span></li>
+                                <li><span class="purpose-name">LOAN APPLICATION</span><span class="purpose-percentage"
+                                        id="clearance-loan-application"></span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- COMPLAINTS CHART -->
+                <div class="card">
+                    <img src="../resources/complaint-icon.png" class="complaints-icon" alt="Complaints Icon">
+                    <h3>Complaints Overview</h3>
+
+                    <!-- Filters -->
+                    <div class="filter-container">
+                        <select id="complaintsTimeFilter">
+                            <option value="">Select Time Frame</option>
+                            <option value="today">Today</option>
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                            <option value="year">This Year</option>
+                        </select>
+                        <select id="complaintTypeSelect">
+                            <option value="all">All Types</option>
+                            <option value="Public-Safety">Public Safety</option>
+                            <option value="Health-Sanitation">Health and Sanitation</option>
+                            <option value="Noise-Disturbance">Noise Disturbance</option>
+                            <option value="Community-and-Social-Issues">Community and Social Issues</option>
+                        </select>
+                    </div>
+
+                    <!-- Complaints Status -->
+                    <div class="complaints-container">
+                        <div class="complaint-status">
+                            <h4>Complaint Status</h4>
+                            <div class="complaints-chart-container">
+                                <canvas id="complaintsStatusChart"></canvas>
+                            </div>
+                            <div class="status-legend">
+                                <div class="legend-item">
+                                    <span class="legend-color pending"></span>
+                                    <span class="legend-label">Pending</span>
+                                    <span id="complaintPendingPercentage" class="legend-percentage">0%</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color cancelled"></span>
+                                    <span class="legend-label">Cancelled</span>
+                                    <span id="complaintCancelledPercentage" class="legend-percentage">0%</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color closed"></span>
+                                    <span class="legend-label">Closed</span>
+                                    <span id="complaintClosedPercentage" class="legend-percentage">0%</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color resolved"></span>
+                                    <span class="legend-label">Resolved</span>
+                                    <span id="complaintResolvedPercentage" class="legend-percentage">0%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Average Resolution Time -->
+                        <div class="average-resolution">
+                            <h4>Average Resolution Time</h4>
+                            <div class="resolution-container">
+                                <div class="resolution-metric">
+                                    <span id="avgResolutionTime">Loading...</span>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SOCIAL SERVICES -->
+                <div class="card">
+                    <img src="../resources/social-welfare.png" class="social-welfare-icon" alt="Complaints Icon">
+                    <h3>Social Services</h3>
+
+                    <div class="space-container">
+                        <!-- <select id="complaintsTimeFilter">
+                            <option value="">Select Time Frame</option>
+                            <option value="today">Today</option>
+                            <option value="week">This Week</option>
+                            <option value="month">This Month</option>
+                            <option value="year">This Year</option>
+                        </select>
+                        <select id="complaintTypeSelect">
+                            <option value="all">All Types</option>
+                            <option value="Public-Safety">Public Safety</option>
+                            <option value="Health-Sanitation">Health and Sanitation</option>
+                            <option value="Noise-Disturbance">Noise Disturbance</option>
+                            <option value="Community-and-Social-Issues">Community and Social Issues</option>
+                        </select> -->
+                    </div>
+
+                    <div class="social-services-container">
+                        <div class="social-services-status">
+                            <h4>Social Status</h4>
+                            <div class="social-services-chart-container">
+                                <canvas id="socialServicesChart"></canvas>
+                            </div>
+                            
+                            <div class="status-legend">
+                                <div class="legend-item">
+                                    <span class="legend-color kdbm"></span>
+                                    <span class="legend-label">TUPAD</span>
+                                    <span id="kdbmPercentage" class="legend-percentage">0%</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color pwd"></span>
+                                    <span class="legend-label">PWD</span>
+                                    <span id="pwdPercentage" class="legend-percentage">0%</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color fourPs"></span>
+                                    <span class="legend-label">4Ps</span>
+                                    <span id="fourPsPercentage" class="legend-percentage">0%</span>
+                                </div>
+                                <div class="legend-item">
+                                    <span class="legend-color soloParent"></span>
+                                    <span class="legend-label">Solo Parent</span>
+                                    <span id="soloParentPercentage" class="legend-percentage">0%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+
+    <!-- POPUP WINDOW FOR UPDATE RESIDENT RECORD -->
+    <div id="documentDetailspopup" class="document-details-popup" style="display:none;">
+        <div class="document-details-content">
+            <span id="closePopup" class="close">&times;</span>
+            <h2>Resident's Update Request</h2>
+            <div id="detailsPopupContent">
+                <!-- Resident details will be loaded here dynamically -->
+                <p><strong>Full Name:</strong> <span id="residentName"></span></p>
+                <p><strong>Email:</strong> <span id="residentEmail"></span></p>
+                <p><strong>Requested Changes:</strong></p>
+                <ul id="changeRequestList"></ul>
+            </div>
+            <!-- <button id="approveBtn">Approve</button>
+        <button id="rejectBtn">Reject</button> -->
+        </div>
+    </div>
+
+
+    <div id="loader-container" style="display: none;">
+        <div class="loader"></div>
+    </div>
+
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <!-- <script type="module" src="../js/admin_complaints.js"></script> -->
+    <script type="module" src="../js/admin_request_notif.js"></script>
+    <script type="module" src="../js/admin_demographic_chart.js"></script> <!-- "/" -->
+    <!-- <script type="module" src="../js/adm_dshbrd_analytics.js"></script> -->s
+    
+    <!-- <script type="module" src="../js/admin_requests_clearance.js"></script>
+    <script type="module" src="../js/admin_requests_certificate.js"></script>
+    <script type="module" src="../js/admin_requests_indigency.js"></script> -->
+    <script type="module" src="../js/admin_dashboard.js"></script>
+    <script type="module" src="../js/admin_auth.js"></script>
+    <script type="module" src="../js/script.js"></script>
+    <script type="module" src="../js/sessionManager.js"></script>
+    
+    <script type="module" src="../js/admin_logs.js"></script>
+    <script type="module" src="../js/logOut.js"></script>
+
+    <script src="../js/qrcode.min.js"></script>
+
+    <script type="module">
+        import { db } from '../js/firebaseConfig.js';
+        import { initializeNotifications } from '../js/admin_request_notif.js';
+        initializeNotifications(db);
+    </script>
+
+    <script>    
+        function toggleDropdown() {
+            const dropdown = document.getElementById("dropdownMenu");
+            console.log("Toggle clicked");
+            console.log("Dropdown element:", dropdown);
+            console.log("Current classList:", dropdown ? dropdown.classList : "Element not found");
+            
+            if (dropdown) {
+                dropdown.classList.toggle("show");
+                console.log("New classList:", dropdown.classList);
+            } else {
+                console.error("Dropdown menu element not found");
+            }
+        }
+        
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+            if (!event.target.closest('.toggle-menu')) {
+                var dropdown = document.getElementById("dropdownMenu");
+                if (dropdown.classList.contains('show')) {
+                    dropdown.classList.remove('show');
+                }
+            }
+        }
+
+        window.addEventListener('load', function() {
+        console.log('Window loaded - Debug info:');
+        const icon = document.getElementById('notificationIcon');
+        const dropdown = document.getElementById('notificationDropdown');
+        
+        console.log('Notification icon:', icon);
+        console.log('Notification dropdown:', dropdown);
+        
+        if (icon) {
+            icon.addEventListener('click', function() {
+                console.log('Icon clicked (from debug script)');
+            });
+        }
+    });
+        function handleLogout() {
+            logout();
+            toggleDropdown();
+        }
+    </script>
+
+    <script type="module">
+        import { checkAuth } from './js/authadmin.js';
+        checkAuth();
+
+        const notificationIndicator = document.getElementById('notificationIndicator');
+
+        function updateNotificationIndicator(count) {
+            if (count > 0) {
+                notificationIndicator.textContent = count;
+                notificationIndicator.style.display = 'inline';
+            } else {
+                notificationIndicator.style.display = 'none';
+            }
+        }
+
+        // document.querySelector('.notification-icon').classList.add('show');
+        // document.querySelector('.notification-icon').classList.remove('show');
+
+        function updateDate() {
+            const currentDate = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+            document.getElementById('current-date').textContent = currentDate.toLocaleDateString('en-US', options);
+            const userContainer = document.getElementById('current-user');
+            userContainer.textContent = "Welcome, " + currentUser + " | " + currentDate.toLocaleDateString('en-US', options);
+        }
+
+        window.onload = function () {
+            updateDate();
+        };
+
+        function closePopup() {
+            console.log("close button is clicked!");
+            const popup = document.getElementById('documentDetailspopup');
+            popup.style.display = 'none';
+        }
+
+        
+
+        document.getElementById('closePopup').addEventListener('click', closePopup);
+    </script>
+
+</body>
+</html>

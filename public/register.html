@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barangay Information Management System</title>
+    <link rel="stylesheet" href="styles/mainstyle.css">
+    <link rel="stylesheet" href="styles/register.css"> 
+    <link rel="stylesheet" href="styles/newlogin.css">
+    <!-- <link rel="stylesheet" href="/styles/togglePassword.css">   -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.2/css/pikaday.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
+
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div class="emergency-container">
+        <div class="toggle-menu-container">            
+            <h1>Community-Connect</h1>
+        </div>
+        <div class="emergency-right">
+            <div class="current-date">
+                <p id="current-date"></p>
+            </div>
+        </div>
+        <div class="header-icons">
+            <a href="index.html">
+                <div class="icons">                
+                    <img src="resources/icons/home_icon.png" alt="" />                      
+                </div>
+                
+            </a>
+            <a href="about.html">
+                <div class="icons">                
+                    <img src="resources/icons/about_icon.png" alt="" />                      
+                </div>
+                
+            </a>
+            <a href="contact.html">
+                <div class="icons">                
+                    <img src="resources/icons/phone_icon.png" alt="" />                      
+                </div>
+                
+            </a>
+            <a href="loginPage.html">
+                <div class="icons">                
+                    <img src="resources/icons/login_icon.png" alt="" />                      
+                </div>
+                
+            </a>
+
+            <div class="icons">
+                <p><span id="current-user"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <div class="logo-container">
+            <img src="resources/logo.png" alt="Logo" class="logo">
+            <p class="logo-text">San Antonio De Padua I</p>
+            <p class="logo-text">Barangay Information Management System</p>
+        </div>
+        
+        <div class="reg-container">
+            <h2 class="title">Resident Registration</h2>
+            <form id="personal-info-form">
+
+                <div class="form-group">
+                    <label for="username">Userame:</label>
+                    <input type="text" name="username" id="username">
+
+                    <label for="password">Password:</label>
+                    <div class="input-wrapper">
+                        <input type="password" name="password" id="password" required>
+                        <span class="eye-icon" id="toggle-password">
+                            <img id="eye" src="icons/eye_slash_icon_white.jpg" alt="Show password" />
+                            <img id="eye-slash" src="icons/eye_icon_white.jpg" alt="Hide password" style="display: none;" />
+                        </span>
+                    </div>                   
+
+                    <label for="fname">Firstname:</label>
+                    <input type="text" name="fname" id="fname">
+
+                    <label for="lname">Lastname:</label>
+                    <input type="text" name="lname" id="lname">
+
+                    <label for="email">Email:</label>
+                    <input type="email" name="email" id="email">
+
+                    <label for="phone">Contact No.:</label>
+                    <input type="tel" name="phone" id="phone" placeholder="09XX XXX XXXX" pattern="[0-9]*" maxlength="11" required>
+
+                    <label for="birthdate">Birthdate:</label>
+                    <input type="date" name="birthdate" id="birthdate" placeholder="DD/MM/YYYY" required>
+                </div> 
+
+                <div class="agreement">
+                    <input type="checkbox" id="agreement" required>
+                    <label for="agreement" class="agreement-text">I agree to the <a href="#" id="agreement-link">Data Integrity and Privacy
+                            Agreement</a></label>
+                </div>
+
+                <button type="submit" id="sign-up" class="inactive-submit" disabled>Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="agreement-popup-container" class="agreement-popup-container">
+        <div class="agreement-popup-content">
+            <span class="close-btn" id="close-btn">&times;</span>
+            <h2>Data Integrity and Privacy Agreement</h2>
+            <p>
+                By accessing or using the Barangay Information Management System (BIMS), you agree to the following
+                terms regarding data integrity and privacy:
+                <br><br>
+                Accuracy of Information: I, as a user of BIMS, confirm that all information provided by me is accurate
+                to the best of my knowledge. I understand that any falsification or misrepresentation of data may result
+                in legal consequences.
+                <br><br>
+                Compliance with Data Privacy Laws: I acknowledge that BIMS operates in compliance with the relevant data
+                privacy laws, including but not limited to the Data Privacy Act of [insert relevant jurisdiction] and
+                any local ordinances or regulations governing data protection.
+                <br><br>
+                Consent to Data Collection and Processing: I consent to the collection and processing of personal
+                information provided by me through BIMS for the purposes outlined by the Barangay authorities. I
+                understand that my personal information will only be used for legitimate purposes related to community
+                management and service provision.
+                <br><br>
+                Security Measures: I understand that reasonable security measures are in place to safeguard the
+                confidentiality and integrity of the data stored in BIMS. However, I acknowledge that no system is
+                entirely immune to security breaches, and I release the Barangay authorities from any liability arising
+                from unauthorized access to my personal information due to unforeseen circumstances.
+                <br><br>
+                Data Access and Sharing: I agree that authorized personnel within the Barangay administration may access
+                and use the information provided by me through BIMS for official purposes only. I understand that my
+                personal information will not be shared with third parties without my consent, except where required by
+                law or for the fulfillment of contractual obligations.
+                <br><br>
+                Data Retention: I acknowledge that the Barangay administration may retain my personal information in
+                accordance with applicable laws and regulations. I understand that I have the right to request the
+                deletion or correction of inaccurate data, subject to verification and legal requirements.
+                <br><br>
+                Indemnification: I agree to indemnify and hold harmless the Barangay authorities, their officers,
+                employees, and agents from any claims, damages, or liabilities arising from my use of BIMS and the
+                information provided by me.
+                <br><br>
+                By checking the box and submitting my information through BIMS, I confirm that I have read, understood,
+                and agree to abide by the terms of this Data Integrity and Privacy Agreement.
+            </p>
+            <button class="close-popup-btn" id="close-popup-btn">Close</button>
+        </div>
+    </div>
+
+    <div class="popup" id="popup">
+        <h2>Details Submitted</h2>
+        <div id="qrcode"></div>
+        <div id="popupContent"></div>
+        <button id="closePopup">Close</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pikaday/1.8.2/pikaday.min.js"></script>
+
+    <!-- <script type="module" src="/js/registerVisitor.js"></script> -->
+    <script type="module" src="js/register.js"></script>
+
+
+<script>
+const togglePassword = document.getElementById('toggle-password');
+const passwordInput = document.getElementById('password');
+const eyeIcon = document.getElementById('eye');
+const eyeSlashIcon = document.getElementById('eye-slash');
+
+togglePassword.addEventListener('click', () => {
+    // Toggle the password visibility
+    const isPasswordVisible = passwordInput.type === 'password';
+    passwordInput.type = isPasswordVisible ? 'text' : 'password';
+
+    // Toggle the icons
+    eyeIcon.style.display = isPasswordVisible ? 'none' : 'inline';
+    eyeSlashIcon.style.display = isPasswordVisible ? 'inline' : 'none';
+});
+
+const phoneInput = document.getElementById('phone');
+    
+    phoneInput.addEventListener('input', function (e) {
+        this.value = this.value.replace(/[^0-9]/g, ''); 
+    });
+
+    const agreementLink = document.getElementById('agreement-link');
+        const popupContainer = document.getElementById('agreement-popup-container');
+        const closeBtn = document.getElementById('close-btn');
+        const closePopupBtn = document.getElementById('close-popup-btn');
+
+        // Show the popup when the agreement link is clicked
+        agreementLink.addEventListener('click', (e) => {
+            e.preventDefault(); 
+            popupContainer.style.display = 'flex';
+        });
+
+        // Hide the popup when the close button or close popup button is clicked
+        closeBtn.addEventListener('click', () => {
+            popupContainer.style.display = 'none'; 
+        });
+
+        closePopupBtn.addEventListener('click', () => {
+            popupContainer.style.display = 'none'; 
+        });
+
+        // Close popup if clicking outside the content area
+        window.addEventListener('click', (e) => {
+            if (e.target === popupContainer) {
+                popupContainer.style.display = 'none'; 
+            }
+        });
+</script>
+</body>
+</html>

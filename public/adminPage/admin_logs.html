@@ -1,0 +1,192 @@
+<!-- ######## ADMIN_SETTINGS.HTML ######### -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barangay Information Management System</title>
+    <link rel="stylesheet" href="../styles/mainstyle.css"> <!--"/"-->
+    <link rel="stylesheet" href="../styles/admin_settings.css">
+    <link rel="stylesheet" href="../styles/loader.css">
+    <link rel="stylesheet" href="../styles/admin_notification.css">
+    <link rel="stylesheet" href="../styles/admin_logs.css">
+
+
+</head>
+
+<body>
+    <div class="emergency-container">
+        <div class="toggle-menu-container">
+            <h1>Community-Connect</h1>
+        </div>
+        <div class="emergency-right">
+            <div class="current-date">
+                <p id="current-date"></p>
+            </div>
+        </div>
+        <div class="header-icons">
+            <h1></h1>
+            <div class="icons">
+                <div class="notification-wrapper">
+                    <div class="notification-icon" id="notificationIcon">
+                      <img src="../resources/icons/bell (2).png" alt="Bell" /> <!--"/"-->
+                      <span class="notification-count" id="notificationCount"></span>
+                    </div>
+                    <div class="notification-dropdown" id="notificationDropdown">
+                      <ul id="notificationList"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="icons">
+                <img src="../resources/icons/question.png" alt="Help Circle" />
+            </div>
+            <div class="icons">
+                <button class="toggle-menu" onclick="toggleDropdown()">
+                    <img src="../resources/icons/account.png" alt="User" />
+                </button>
+            </div>
+
+            <div class="icons">
+                <p><span id="current-user"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="dropdown-menu" id="dropdownMenu">
+        <div class="dropdown-item" onclick="editProfile()">Edit Admin Profile</div>
+        <div class="dropdown-item" onclick="changePassword()">Change Password</div>
+        <div class="dropdown-item" onclick="logout()">Logout</div>
+    </div>
+
+    <div class="sidebar">
+        <div class="logo-above-sidebar">
+            <img src="../resources/logo.png" alt="Logo" class="logo" width="150" height="150"> <!--"/"-->
+            <h1>San Antonio De Padua I</h1>
+        </div>
+        <div class="tab" id="dashboard-tab">
+            <a href="admin_dashboard.html"><img src="../resources/icons/dashboard_icon2.png" alt="Dashboard">Dashboard</a>
+        </div>
+        <div class="tab" id="officials-tab" class="restricted" data-role="Top Level Admin">
+            <a href="admin_officials.html"><img src="../resources/icons/gov.png" alt="officials">Brgy Officials</a>
+        </div>
+        <div class="tab" id="residents-tab">
+            <a href="admin_resident_records.html"><img src="../resources/icons/users.png" alt="Records">Residents
+                Records</a>
+        </div>
+        <div class="tab" id="household-tab">
+            <a href="admin_household_records.html"><img src="../resources/icons/household.png" alt="Records">Household</a>
+        </div> 
+        <div class="tab" id="bbi-tab">
+            <a href="admin_bbi.html"><img src="../resources/icons/bldg.png" alt="bbi">BBI</a>
+        </div>
+        <div class="tab" id="reports-tab">
+            <a href="admin_reports.html"><img src="../resources/icons/reports.png" alt="reports">Reports</a>
+        </div>
+        <div class="tab" id="requests-tab">
+            <a href="admin_requests.html"><img src="../resources/icons/document.png" alt="Requests">Requests
+                <span id="notificationIndicator"></span></a>
+        </div>
+                
+        <div class="tab" id="complaints-tab">
+            <a href="admin_complaints.html"><img src="../resources/icons/complaint.png" alt="complaints">Complaints
+                <div class="notification-icon">
+                    <span class="notification-count" id="notificationCount">0</span>
+                </div>
+            </a>
+        </div>
+        <div class="tab" id="logs-tab">
+            <a href="admin_logs.html"><img src="../resources/icons/logs_icon.png" alt="logs">Logs</a>
+        </div>
+   
+        <div class="tab" id="settings-tab">
+            <a href="admin_settings.html"><img src="../resources/icons/settings.png" alt="settings">Settings</a>
+        </div>
+    </div>
+
+
+    
+    <div id="logs-container">
+        <div class="filter-controls">
+            <div class="filter-group">
+                <label for="roleFilter">Filter by Role:</label>
+                <select id="roleFilter">
+                    <option value="all">All Roles</option>
+                    <option value="Admin">Admin Only</option>
+                    <option value="User">User Only</option>
+                </select>
+                
+                <label for="actionFilter" class="ml-4">Search Action:</label>
+                <div id="actionFilterContainer"></div>
+            </div>
+            
+            <div class="entries-info">
+                Showing <span id="startEntry">1</span> to <span id="endEntry">10</span> of <span id="totalEntries">0</span> entries
+            </div>
+        </div>
+    
+        <table id="logsTable">
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>Action</th>
+                    <th>Role</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+            <tbody id="logsBody">
+            </tbody>
+        </table>
+    
+        <div class="pagination-controls">
+            <button id="prevPage" class="page-btn">Previous</button>
+            <div class="page-numbers" id="pageNumbers">
+                <!-- Page numbers will be inserted here -->
+            </div>
+            <button id="nextPage" class="page-btn">Next</button>
+        </div>
+    </div>
+    
+
+
+<!-- POPUP WINDOW FOR UPDATE RESIDENT RECORD -->
+<div id="documentDetailspopup" class="document-details-popup" style="display:none;">
+    <div class="document-details-content">
+        <span id="closePopup" class="close">&times;</span>
+        <h2>Resident's Update Request</h2>
+        <div id="detailsPopupContent">
+            <!-- Resident details will be loaded here dynamically -->
+            <p><strong>Full Name:</strong> <span id="residentName"></span></p>
+            <p><strong>Email:</strong> <span id="residentEmail"></span></p>
+            <p><strong>Requested Changes:</strong></p>
+            <ul id="changeRequestList"></ul>
+        </div>
+        <!-- <button id="approveBtn">Approve</button>
+        <button id="rejectBtn">Reject</button> -->
+    </div>
+</div>
+    
+    <script type="module" src="../js/script.js"></script> <!--"/"-->
+    <script type="module" src="../js/admin_notification.js"></script>
+    <script type="module" src="../js/firebaseConfig.js"></script>
+    <script type="module" src="../js/logOut.js"></script>
+    <script type="module" src="../js/admin_logs.js"></script>
+
+    <script>
+        function closePopup() {
+    console.log("close button is clicked!");
+    const popup = document.getElementById('documentDetailspopup');
+    popup.style.display = 'none';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    console.log("DOMContentLoaded event fired");
+    
+    const closeButton = document.getElementById('documentDetailspopup');
+    if (closeButton) {
+        closeButton.addEventListener('click', closePopup);
+    }
+});
+
+document.getElementById('closePopup').addEventListener('click', closePopup);
+    </script>

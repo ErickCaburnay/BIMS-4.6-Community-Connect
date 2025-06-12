@@ -1,0 +1,240 @@
+<!-- ##################################### ADMIN_BBI.HTML #####################################3 -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barangay Information Management System</title>
+    <link rel="stylesheet" href="../styles/mainstyle.css"> <!--"/"-->
+    <link rel="stylesheet" href="../styles/bbi_tanod_scheduling.css">
+    <link rel="stylesheet" href="../styles/loader.css">
+    <link rel="stylesheet" href="../styles/admin_notification.css">
+
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div class="emergency-container">
+        <div class="toggle-menu-container">
+            <h1>Community-Connect</h1>
+        </div>
+        <div class="emergency-right">
+            <div class="current-date">
+                <p id="current-date"></p>
+            </div>
+        </div>
+        <div class="header-icons">
+            <h1></h1>
+            <div class="icons">
+                <div class="notification-wrapper">
+                    <div class="notification-icon" id="notificationIcon">
+                      <img src="../resources/icons/bell (2).png" alt="Bell" /> <!--"/"-->
+                      <span class="notification-count" id="notificationCount"></span>
+                    </div>
+                    <div class="notification-dropdown" id="notificationDropdown">
+                      <ul id="notificationList"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="icons">
+                <img src="../resources/icons/question.png" alt="Help Circle" />
+            </div>
+            <div class="icons">
+                <button class="toggle-menu" onclick="toggleDropdown()">
+                    <img src="../resources/icons/account.png" alt="User" />
+                </button>
+            </div>
+
+            <div class="icons">
+                <p><span id="current-user"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="dropdown-menu" id="dropdownMenu">
+        <div class="dropdown-item" onclick="editProfile()">Edit Admin Profile</div>
+        <div class="dropdown-item" onclick="changePassword()">Change Password</div>
+        <div class="dropdown-item" onclick="logout()">Logout</div>
+    </div>
+
+    <div class="sidebar">
+        <div class="logo-above-sidebar">
+            <img src="/resources/logo.png" alt="Logo" class="logo" width="150" height="150">
+            <h1>San Antonio De Padua I</h1>
+        </div>
+        <div class="tab" id="dashboard-tab">
+            <a href="admin_dashboard.html"><img src="../resources/icons/dashboard_icon2.png" alt="Dashboard">Dashboard</a> <!--"/"-->
+        </div>
+        <div class="tab" id="officials-tab" class="restricted" data-role="Top Level Admin">
+            <a href="admin_officials.html"><img src="../resources/icons/gov.png" alt="officials">Brgy Officials</a>
+        </div>
+        <div class="tab" id="residents-tab">
+            <a href="admin_resident_records.html"><img src="../resources/icons/users.png" alt="Records">Residents
+                Records</a>
+        </div>
+        <div class="tab" id="household-tab">
+            <a href="admin_household_records.html"><img src="../resources/icons/household.png" alt="Records">Household</a>
+        </div> 
+        <div class="tab" id="bbi-tab">
+            <a href="admin_bbi.html"><img src="../resources/icons/bldg.png" alt="bbi">BBI</a>
+        </div>
+        <div class="tab" id="reports-tab">
+            <a href="admin_reports.html"><img src="../resources/icons/reports.png" alt="reports">Reports</a>
+        </div>
+        <div class="tab" id="requests-tab">
+            <a href="admin_requests.html"><img src="../resources/icons/document.png" alt="Requests">Requests
+                <span id="notificationIndicator"></span></a>
+        </div>
+        <div class="tab" id="complaints-tab">
+            <a href="admin_complaints.html"><img src="../resources/icons/complaint.png" alt="complaints">Complaints
+                <div class="notification-icon">
+                    <span class="notification-count" id="notificationCount">0</span>
+                </div>
+            </a>
+        </div>
+        <div class="tab" id="settings-tab">
+            <a href="settings.html"><img src="../resources/icons/settings.png" alt="settings">Settings</a>
+        </div>
+    </div>
+
+    <div class="brgy-tanod">
+        <h1>BIMS - Barangay Tanod</h1>
+        <div class="search-container">
+            <button class="add-tanod-button" onclick="">Add Tanod</button>
+            <input type="text" class="search-input" placeholder="Search...">
+            <button class="search-button">Search</button>
+            <button class="clear-button">Clear</button>
+        </div>
+
+        <table id="tanod-list">
+            <thead>
+                <tr>
+                    <th>Full Name</th>                    
+                    <th>Contact No.</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>        
+    </div>
+
+    <div class="patrol-schedule">
+        <h1>BIMS - Barangay Tanod Patrol Scheduling</h1>
+        <div class="search-container">
+            <button class="add-sched-button" onclick="">Create a Schedule</button>
+            <input type="text" class="search-input" placeholder="Search...">
+            <button class="search-button">Search</button>
+            <button class="clear-button">Clear</button>
+        </div>
+
+        <table id="schedTable">
+            <thead>
+                <tr>
+                    <th>Full Name</th>                    
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Time</th>
+                    <th>Area</th>
+                    <th>Contact No.</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>        
+    </div>
+
+    <div id="loader-container" style="display: none;">
+        <div class="loader"></div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
+
+    <script type="module" src="/js/admin_auth.js"></script>
+    <!-- <script type="module" src="/js/script.js"></script> -->
+    <script type="module" src="../js/bbi_tanod_scheduling.js"></script> <!--"/"-->
+    <script type="module" src="../js/sessionManager.js"></script>
+    <script type="module" src="../js/admin_notification.js"></script>
+    <script type="module" src="../js/admin_logs.js"></script>
+
+    <script type="module" src="../js/logOut.js"></script>
+
+    <script src="../js/qrcode.min.js"></script>
+
+    
+
+    <script type="module">
+        //=======================TOGGLE DROPDOWN========================//
+        function toggleDropdown() {
+            var dropdownMenu = document.getElementById("dropdownMenu");
+            dropdownMenu.classList.toggle("show");
+        }
+
+        function hideDropdown() {
+            var dropdownMenu = document.getElementById("dropdownMenu");
+            dropdownMenu.classList.remove("show");
+        }
+
+        window.addEventListener('click', function (event) {
+            if (!event.target.closest('.toggle-menu')) {
+                hideDropdown();
+            }
+        });
+
+        window.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') {
+                hideDropdown();
+            }
+        });
+
+        window.addEventListener('wheel', function (event) {
+            hideDropdown();
+        });
+
+        document.querySelector('.toggle-menu').addEventListener('click', toggleDropdown);
+
+        import { checkAuth } from './js/authadmin.js';
+        checkAuth();
+
+        const notificationIndicator = document.getElementById('notificationIndicator');
+
+        function updateNotificationIndicator(count) {
+            if (count > 0) {
+                notificationIndicator.textContent = count;
+                notificationIndicator.style.display = 'inline';
+            } else {
+                notificationIndicator.style.display = 'none';
+            }
+        }
+
+        document.querySelector('.notification-icon').classList.add('show');
+        document.querySelector('.notification-icon').classList.remove('show');
+
+        function updateDate() {
+            const currentDate = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+            document.getElementById('current-date').textContent = currentDate.toLocaleDateString('en-US', options);
+            const userContainer = document.getElementById('current-user');
+            userContainer.textContent = "Welcome, " + currentUser + " | " + currentDate.toLocaleDateString('en-US', options);
+        }
+
+        window.onload = function () {
+            updateDate();
+        };
+    </script>
+
+    <script type="module">
+        import { fetchAndDisplayTanodNames } from './bbi_tanod_scheduling.js';
+        
+        // Call the function when needed, e.g., on page load or button click
+        window.onload = fetchAndDisplayTanodNames;
+    </script>
+
+    </body>
+    </html>

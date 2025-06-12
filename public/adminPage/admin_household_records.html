@@ -1,0 +1,753 @@
+<!-- ############## HOUSEHOLD.HTML ############## -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community-Connect - Household Records</title>
+    <link rel="stylesheet" href="../styles/mainstyle.css">
+    <link rel="stylesheet" href="../styles/admin_household.css">
+    <link rel="stylesheet" href="../styles/loader.css">
+    <link rel="stylesheet" href="../styles/admin_notification.css">
+    <style>
+        .input-container {
+            position: relative;
+            width: 300px;
+            margin: 20px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .suggestions-container {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-top: none;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 1000;
+        }
+
+        .suggestion-item {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .suggestion-item:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="emergency-container">
+        <div class="toggle-menu-container">
+            <h1>Community-Connect</h1>
+        </div>
+        <div class="emergency-right">
+            <div class="current-date">
+                <p id="current-date"></p>
+            </div>
+        </div>
+        <div class="header-icons">
+            <h1></h1>
+            <div class="icons">
+                <div class="notification-wrapper">
+                    <div class="notification-icon" id="notificationIcon">
+                        <img src="../resources/icons/bell (2).png" alt="Bell" />
+                        <span class="notification-count" id="notificationCount"></span>
+                    </div>
+                    <div class="notification-dropdown" id="notificationDropdown">
+                        <ul id="notificationList"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="icons">
+                <img src="../resources/icons/question.png" alt="Help Circle" />
+            </div>
+            <div class="icons">
+                <button class="toggle-menu" onclick="toggleDropdown()">
+                    <img src="../resources/icons/account.png" alt="User" />
+                </button>
+            </div>
+
+            <div class="icons">
+                <p><span id="current-user"></span></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="dropdown-menu" id="dropdownMenu">
+        <div class="dropdown-item" onclick="editProfile()">Edit Admin Profile</div>
+        <div class="dropdown-item" onclick="changePassword()">Change Password</div>
+        <div class="dropdown-item" onclick="logout()">Logout</div>
+    </div>
+
+    <div class="sidebar">
+        <div class="logo-above-sidebar">
+            <img src="../resources/logo.png" alt="Logo" class="logo" width="150" height="150">
+            <h1>San Antonio De Padua I</h1>
+        </div>
+        <div class="tab" id="dashboard-tab">
+            <a href="admin_dashboard.html"><img src="../resources/icons/dashboard_icon2.png" alt="Dashboard">Dashboard</a>
+        </div>
+        <div class="tab" id="officials-tab" class="restricted" data-role="Top Level Admin">
+            <a href="admin_officials.html"><img src="../resources/icons/gov.png" alt="officials">Brgy Officials</a>
+        </div>
+        <div class="tab" id="residents-tab">
+            <a href="admin_resident_records.html"><img src="../resources/icons/users.png" alt="Records">Residents
+                Records</a>
+        </div>
+        <div class="tab" id="household-tab">
+            <a href="admin_household_records.html"><img src="../resources/icons/household.png" alt="Records">Household</a>
+        </div> 
+        <div class="tab" id="bbi-tab">
+            <a href="admin_bbi.html"><img src="../resources/icons/bldg.png" alt="bbi">BBI</a>
+        </div>
+        <div class="tab" id="reports-tab">
+            <a href="admin_reports.html"><img src="../resources/icons/reports.png" alt="reports">Reports</a>
+        </div>
+        <div class="tab" id="requests-tab">
+            <a href="admin_requests.html"><img src="../resources/icons/document.png" alt="Requests">Requests
+                <!-- <span id="notificationIndicator"></span> -->
+            </a>
+        </div>
+        <div class="tab" id="complaints-tab">
+            <a href="admin_complaints.html"><img src="../resources/icons/complaint.png" alt="complaints">Complaints
+                <!-- <div class="notification-icon">
+                    <span class="notification-count" id="notificationCount">0</span>
+                </div> -->
+            </a>
+        </div>
+        <div class="tab" id="logs-tab">
+            <a href="admin_logs.html"><img src="../resources/icons/logs_icon.png" alt="logs">Logs</a>
+          </div>
+        <!-- <div class="tab" id="document-forms-tab">
+            <a href="admin_document_forms.html"><img src="/resources/forms_icon.svg" alt="forms">Document Forms</a>
+        </div> -->
+        <div class="tab" id="settings-tab">
+            <a href="admin_settings.html"><img src="../resources/icons/settings.png" alt="settings">Settings</a>
+        </div>
+    </div>
+
+    <!-- <div class="container"> -->
+    <div class="main-content">
+        <h1>Barangay Household Records</h1>
+        <div class="search-container">
+            <!-- <button class="add-household-button" onclick="showAddHousehold()">Add Household</button> -->
+            <button class="add-household-button" id="addHouseholdButton">Add Household</button>
+            <input type="text" class="search-input" id="householdSearchInput" placeholder="Search...">
+            <button class="search-button">Search</button>
+            <button class="clear-button">Clear</button>
+        </div>
+
+        <table id="householdTable">
+            <thead>
+                <tr>
+                    <th>Household ID.</th>
+                    <th>Total Members</th>
+                    <th>Head of Family</th>
+                    <th>Address</th>
+                    <th>Male Household Members</th>
+                    <th>Female Household Members</th>
+                    <th>Contact No.</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <div id="showingEntries"></div>
+        <div id="paginationControls" class="pagination"></div>
+        <!-- <div id="paginationControls">
+            <button id="prevButton" class="pagination-button">&lt;&lt;</button>
+            <div id="pageButtons"></div>
+            <span id="ellipsis">......</span>
+            <button id="nextButton" class="pagination-button">&gt;&gt;</button>
+        </div> -->
+    </div>
+
+    <!-- ############################################# POPUP ADD HOUSEHOLD ################################################# -->
+    <div id="overlay" class="overlay"></div>
+    <div class="household-popup-container" id="householdPopupContainer">
+        <div class="blurred-background"></div>
+        <h3 class="form-title">Add Household</h3>
+        <h6 class="form-subtitle">Please fill in the details needed</h6>
+        <button class="household-close-button" id="householdCloseButton">&times;</button>
+
+        <form id="household-info-form">
+            
+                <!-- <div class="label-group">
+                        <label for="householdId" class="input-label">Household No.:</label>
+                    </div> -->
+                <div class="input-group">
+                    <input type="hidden" name="householdId" id="householdId" placeholder="">
+                </div>
+
+                <div class="label-group-two">
+                    <label for="ownership" class="input-label">Ownership Status</label>
+                    <label for="head" class="input-label">Head of the Family:</label>
+                </div>
+
+                <div class="input-group-two select">
+                    <select name="ownership" id="ownership">
+                        <option value="" disabled selected>Select ownership category</option>
+                        <option value="OWNED">Owner</option>
+                        <option value="RENT">Rent</option>
+                        <option value="MORTGAGE">Mortgaged</option>
+                        <option value="PLEDGE">Pledge Occupancy Agreement</option>
+                        <!-- <option value="SHARED">Shared Ownership</option> -->
+                        <option value="INFORMAL">Informal Settlers</option>
+                    </select>
+
+                    <div class="input-wrapper">
+                        <input type="text" name="head" id="head" placeholder="Head of the Family" required>
+                        <button type="button" id="fetchUserData" class="fetch-button">Fetch</button>
+                    </div>
+                </div>                
+
+                <div class="label-group-two">
+                    <label for="address" class="input-label">Address:</label>
+                    <label for="phone" class="input-label">Contact No.:</label>                    
+                </div>
+                <div class="input-group-two">
+                    <input type="text" name="address" id="address" placeholder="" required>
+                    <input type="tel" name="phone" id="phone" placeholder="09123456789">
+                </div>
+
+                <div class="label-group">
+                    <label for="total-male" class="input-label">Total Male:</label>
+                    <label for="total-female" class="input-label">Total Female:</label>
+                    <label for="total-members" class="input-label">Total Members:</label>
+                </div>
+                <div class="input-group">
+                    <input type="number" name="total-male" id="totalMale" placeholder="" required>
+                    <input type="number" name="total-female" id="totalFemale" placeholder="" required>
+                    <input type="number" name="total-members" id="totalMembers" placeholder="" required>
+                </div>
+                            
+                <button type="button" id="addMemberBtn">+ Add Member (new)</button>
+                <button type="button" id="addExistingMemberBtn">+ Add Member (existing)</button>
+
+                <div class="label-group">
+                    <label for="household-members" class="input-label">Household Members:</label>
+                </div>
+                <div id="householdMembersContainer">
+
+                </div>                   
+                
+            <div class="form-footer">
+                <button type="button" id="clear-btn" class="household-clear">Clear</button>
+                <button type="submit" id="submit-btn" class="household-submit">Submit</button>
+            </div>
+        </form>
+    </div>
+    <!-- </div> -->
+
+    <!-- ########## SUGESTIONS CONTAINER ########### -->
+    <!-- <div class="input-container">
+        <input type="text" id="nameInput" class="input-field" placeholder="Enter name">
+        <div id="suggestionsContainer" class="suggestions-container"></div>
+    </div>
+    <div class="input-container">
+        <input type="text" id="addressInput" class="input-field" placeholder="Address" readonly>
+    </div>
+    <div class="input-container">
+        <input type="text" id="phoneInput" class="input-field" placeholder="Phone" readonly>
+    </div> -->
+
+    <!-- ##################################### ADD HOUSEHOLD MEMBER ###################################### -->
+    <div id="addMemberOverlay" class="overlay"></div>
+    <div class="popup-container" id="addMemberPopupContainer">
+        <div class="blurred-background"></div>
+        <button class="close-button" id="addMemberCloseButton">&times;</button>
+        <!-- <div class="container"> -->
+            <h3 class="form-title">Household Member Personal Information</h3>
+            <h6 class="form-subtitle">Please tell us about your member(s)</h6>
+            <form id="member-info-form">
+                
+                <!-- <div class="label-group">    
+                    <label for="fetch-uniqueid">Unique ID:</label>
+                </div> -->
+                <!-- <div class="input-group-solo">
+                    <div class="input-wrapper">
+                        <input type="text" id="fetch-uniqueid" placeholder="Enter Unique ID (e.g., SADPI-000001)">
+                        <button type="button" id="fetch-member-btn" class="fetch-btn">Fetch</button>
+                    </div>
+                </div> -->
+                
+                <div class="label-group">    
+                    <label for="fname">First Name:</label>
+                    <label for="mname">Middle Name:</label>
+                    <label for="lname">Last Name:</label>
+                </div>
+                <div class="input-group">                    
+                    <input type="text" name="fname" id="fname" placeholder="First Name" required>
+                    <input type="text" name="mname" id="mname" placeholder="Middle Name">
+                    <input type="text" name="lname" id="lname" placeholder="Last Name" required>
+                </div>
+
+                <div class="label-group">                        
+                    <label for="suffix">Suffix:</label>
+                    <label for="blklot">Blk/Lot:</label>
+                    <label for="suffix">Street:</label>
+                </div>
+                <div class="input-group">                    
+                    <input type="text" name="suffix" id="suffix" placeholder="Suffix">
+                    <input type="text" name="blklot" id="blklot" placeholder="Block Lot" required>
+                    <input type="text" name="street" id="street" placeholder="Street">
+                </div>
+
+                <div class="label-group">    
+                    <label for="citizenship">Citizenship:</label>
+                    <label for="birthdate">Birthdate:</label>
+                    <label for="birthplace">Birthplace:</label>
+                </div>
+                <div class="input-group">
+                    <input type="text" name="citizenship" id="citizenship" placeholder="Citizenship" required>
+                    <!-- <input type="number" name="age" id="age" placeholder="Age" required> -->
+                    <input type="date" name="birthdate" id="birthdate" placeholder="Birthdate" required>
+                    <input type="text" name="birthplace" id="birthplace" placeholder="birthplace">
+                </div>
+
+                <div class="label-group-select">
+                    <label for="gender">Gender:</label>
+                    <label for="voter">Voter Status:</label>
+                </div>
+                <div class="input-group-select">
+                    <select name="gender" id="gender" required>
+                        <option value="" disabled selected>Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                    <select name="voter" id="voter" required>
+                        <option value="" disabled selected>Are you an eligible voter</option>
+                        <option value="VOTER">Yes</option>
+                        <option value="NON-VOTER">No</option>
+                    </select>
+                </div>
+
+                <div class="label-group-three-select">
+                    <label for="marital-status">Marital Status:</label>
+                    <label for="employment-status">Employment Status:</label>
+                    <label for="education-status">Educational Attainment:</label>
+                </div>
+                <div class="input-group-three-select">
+                    <select name="marital-status" id="marital-status" required>
+                        <option value="" disabled selected>Select Marital Status</option>
+                        <option value="Single">Single</option>
+                        <option value="Married">Married</option>
+                        <option value="Divorced">Divorced</option>
+                        <option value="Widowed">Widowed</option>
+                    </select>
+                    <select name="employment-status" id="employment-status" required>
+                        <option value="" disabled selected>Select Employment Status</option>
+                        <option value="Employed">Employed</option>
+                        <option value="Unemployed">Unemployed</option>
+                        <option value="Self-Employed">Self-Employed</option>
+                        <option value="Student">Student</option>
+                    </select>
+                    <select name="educational-status" id="educational-status" required>
+                        <option value="" disabled selected>Highest education attained</option>
+                        <option value="NO_FORMAL_EDUCATION">No Formal Education</option>
+                        <option value="ELEMENTARY">Elementary</option>
+                        <option value="HIGH_SCHOOL">High School</option>
+                        <option value="VOCATIONAL_TECHNICAL">Vocational/Technical Course</option>
+                        <option value="COLLEGE">College</option>
+                        <option value="POSTGRADUATE">Postgraduate (Master's or PhD)</option>
+                        <option value="DOCTORATE">Doctorate</option>
+                    </select>  
+                </div>
+
+                <div class="label-group-four-select">
+                    <label for="kdbm">TUPAD:</label>
+                    <label for="pwd">PWD:</label>
+                    <label for="fourPs">4Ps:</label>
+                    <label for="soloParent">Solo-Parent:</label>
+                </div>
+
+                <div class="input-group-four-select">
+                    <select name="kdbm" id="upd-kdbm">
+                        <option value="" disabled selected>-----</option>                        
+                        <option value="YES">Yes</option>
+                        <option value="NO">No</option>
+                        <!-- <option value="ACTIVE">ACTIVE</option>
+                        <option value="INACTIVE">INACTIVE</option>
+                        <option value="PENDING_APPLICATION">PENDING APPLICATION</option> -->
+                    </select>
+                    
+                    <select name="pwd" id="upd-pwd">
+                        <option value="" disabled selected>-----</option>
+                        <option value="YES">Yes</option>
+                        <option value="NO">No</option>
+                        <!-- <option value="PHYSICAL">PHYSICAL</option>
+                        <option value="VISUAL">VISUAL</option>
+                        <option value="HEARING">HEARING</option>
+                        <option value="INTELLECTUAL">INTELLECTUAL</option>
+                        <option value="MENTAL">MENTAL</option>
+                        <option value="MULTIPLE_DISABILITIES">MULTIPLE DISABILITIES</option>
+                        <option value="OTHERS">OTHERS</option> -->
+                    </select>  
+                    
+                    <select name="fourPs" id="upd-fourPs">
+                        <option value="" disabled selected>-----</option>
+                        <option value="YES">Yes</option>
+                        <option value="NO">No</option>
+                        <!-- <option value="ACTIVE">ACTIVE</option>
+                        <option value="INACTIVE">INACTIVE</option>
+                        <option value="GRADUATED">GRADUATED</option> -->
+                    </select>
+                
+                    <select name="soloParent" id="upd-soloParent">
+                        <option value="" disabled selected>-----</option>
+                        <option value="YES">Yes</option>
+                        <option value="NO">No</option>
+                        <!-- <option value="COUNSELING">COUNSELING</option>
+                        <option value="LEGAL_ASSISTANCE">LEGAL ASSISTANCE</option>
+                        <option value="HEALTHCARE_SERVICES">HEALTHCARE SERVICES</option>
+                        <option value="EDUCATIONAL_BENEFITS">EDUCATIONAL BENEFITS</option> -->
+                    </select>
+                </div>                              
+                 
+                <div class="label-group">    
+                    <label for="phone">Contact No.:</label>
+                    <label for="email">Email:</label>
+                    <label for="occupation">Occupation:</label>
+                </div>
+                <div class="input-group">
+                    <input type="tel" name="phone" id="phone" placeholder="Phone Number">
+                    <input type="email" name="email" id="email" placeholder="Email">
+                    <input type="text" name="occupation" id="occupation" placeholder="Occupation">
+                </div>
+            
+                <button type="submit" id="addMember-submit-btn" class="inactive-submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- ############################################# POPUP UPDATE HOUSEHOLD ################################################# -->
+    <div id="upd-overlay" class="overlay"></div>
+    <div class="household-popup-container" id="upd-householdPopupContainer">
+        <div class="blurred-background"></div>
+        <h3 class="form-title">Update Household</h3>
+        <h6 class="form-subtitle">Please update the details needed</h6>
+        <button class="household-close-button" id="upd-householdCloseButton">&times;</button>
+    
+        <form id="upd-household-info-form">
+            <div class="left-column">
+                <div class="input-group">
+                    <input type="hidden" name="householdId" id="upd-householdId" placeholder="">
+                </div>
+
+                <div class="label-group">
+                    <label for="upd-ownership" class="input-label">Ownership Status</label>
+                </div>
+                <div class="input-group select">
+                    <select name="ownership" id="upd-ownership">
+                        <option value="" disabled selected>Select ownership category</option>
+                        <option value="OWNED">Owner</option>
+                        <option value="RENT">Rent</option>
+                        <option value="MORTGAGE">Mortgaged</option>
+                        <option value="PLEDGE">Pledge Occupancy Agreement</option>
+                        <option value="SHARED">Shared Ownership</option>
+                        <option value="INFORMAL">Informal Settlers</option>
+                    </select>
+                </div>
+    
+                <div class="label-group">
+                    <label for="upd-head" class="input-label">Head of the Family:</label>
+                </div>
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <input type="text" name="head" id="upd-head" placeholder="Head of the Family" required>
+                        <button type="button" id="upd-fetchUserData" class="fetch-button">Fetch</button>
+                    </div>
+                </div>
+    
+                <div class="label-group">
+                    <label for="upd-totalMembers" class="input-label">Total Members:</label>
+                </div>
+                <div class="input-group">
+                    <input type="number" name="total-members" id="upd-totalMembers" placeholder="" required>
+                </div>                
+    
+                <div class="label-group">
+                    <label for="upd-address" class="input-label">Address:</label>
+                </div>
+                <div class="input-group">
+                    <input type="text" name="address" id="upd-address" placeholder="" required>
+                </div>
+    
+                <div class="label-group">
+                    <label for="upd-totalMale" class="input-label">Total Male:</label>
+                </div>
+                <div class="input-group">
+                    <input type="number" name="total-male" id="upd-totalMale" placeholder="" required>
+                </div>
+    
+                <div class="label-group">
+                    <label for="upd-totalFemale" class="input-label">Total Female:</label>
+                </div>
+                <div class="input-group">
+                    <input type="number" name="total-female" id="upd-totalFemale" placeholder="" required>
+                </div>
+    
+                <div class="label-group">
+                    <label for="upd-phone" class="input-label">Contact No.:</label>
+                </div>
+                <div class="input-group">
+                    <input type="tel" name="phone" id="upd-phone" placeholder="09123456789">
+                </div>
+            </div>
+    
+            <div class="right-column">
+                <div class="label-group">
+                    <label for="upd-household-members" class="input-label">Household Members:</label>
+                </div>
+                <div id="upd-householdMembersContainer">
+                    <div class="input-group member-input-group">
+                        <div class="input-wrapper">
+                            <input type="text" name="householdMembers[]" class="upd-householdMember"
+                                placeholder="Member name">
+                            <button type="button" class="remove-member" style="display:none;">&times;</button>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" id="upd-addMemberBtn">+ Add Member</button>
+            </div>
+    
+            <div class="form-footer">
+                <button type="button" id="upd-clear-btn" class="household-clear">Clear</button>
+                <button type="submit" id="upd-submit-btn" class="household-submit">Update</button>
+            </div>
+        </form>
+    </div>
+
+
+    <div class="household-overlay" id="householdOverlay"></div>
+    <div class="household-popup-container" id="householdDetailsPopup">
+        <div class="blurred-background"></div>
+
+        <span class="close-household">&times;</span>
+        <h2>Household Details</h2>
+        <div class="household-details">
+            <div class="detail-row">
+                <div class="detail-label">Household ID:</div>
+                <div id="popupHouseholdId" class="detail-value"></div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Property Ownership</div>
+                <div id="popupOwnership" class="detail-value"></div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Total Members:</div>
+                <div id="popupTotalMembers" class="detail-value"></div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Head of Household:</div>
+                <div id="popupHead" class="detail-value"></div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Address:</div>
+                <div id="popupAddress" class="detail-value"></div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Total Male:</div>
+                <div id="popupTotalMale" class="detail-value"></div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Total Female:</div>
+                <div id="popupTotalFemale" class="detail-value"></div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Phone:</div>
+                <div id="popupPhone" class="detail-value"></div>
+            </div>
+        </div>
+        <div class="household-members">
+            <h2>Household Members</h2>
+            <div id="popupHouseholdMembers" class="detail-value"></div>
+        </div>
+    </div>
+
+
+    <div class="overlay" id="overlay"></div>
+    <div id="successPopup" class="success-popup">
+        <p>Data submitted successfully!</p>
+        <div class="success-button-container">
+            <button id="okButton">OK</button>
+        </div>
+    </div>
+
+    <!-- POPUP WINDOW FOR UPDATE RESIDENT RECORD -->
+    <div id="documentDetailspopup" class="document-details-popup" style="display:none;">
+        <div class="document-details-content">
+            <span id="closePopup" class="close">&times;</span>
+            <h2>Resident's Update Request</h2>
+            <div id="detailsPopupContent">
+                <!-- Resident details will be loaded here dynamically -->
+                <p><strong>Full Name:</strong> <span id="residentName"></span></p>
+                <p><strong>Email:</strong> <span id="residentEmail"></span></p>
+                <p><strong>Requested Changes:</strong></p>
+                <ul id="changeRequestList"></ul>
+            </div>
+            <!-- <button id="approveBtn">Approve</button>
+            <button id="rejectBtn">Reject</button> -->
+        </div>
+    </div>
+
+    <div id="loader-container" style="display: none;">
+        <div class="loader"></div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js"></script>
+
+    <script type="module" src="../js/authadmin.js"></script> <!--"/"-->
+    <script type="module" src="../js/script.js"></script>
+    <script type="module" src="../js/admin_household.js"></script>
+    <script type="module" src="../js/admin_request_notif.js"></script>
+    <script type="module" src="../js/sessionManager.js"></script>
+    <script type="module" src="../js/admin_notification.js"></script>
+    <script type="module" src="../js/admin_logs.js"></script>
+    <script type="module" src="../js/logOut.js"></script>
+
+    <script type="module">
+        import { db } from '../js/firebaseConfig.js';
+        import { initializeNotifications } from '../js/admin_request_notif.js';
+        initializeNotifications(db);
+    </script>
+
+    <script>    
+        function toggleDropdown() {
+            const dropdown = document.getElementById("dropdownMenu");
+            console.log("Toggle clicked");
+            console.log("Dropdown element:", dropdown);
+            console.log("Current classList:", dropdown ? dropdown.classList : "Element not found");
+            
+            if (dropdown) {
+                dropdown.classList.toggle("show");
+                console.log("New classList:", dropdown.classList);
+            } else {
+                console.error("Dropdown menu element not found");
+            }
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function (event) {
+            if (!event.target.closest('.toggle-menu')) {
+                var dropdown = document.getElementById("dropdownMenu");
+                if (dropdown.classList.contains('show')) {
+                    dropdown.classList.remove('show');
+                }
+            }
+        }
+
+        function handleLogout() {
+            logout();
+            toggleDropdown();
+        }
+    </script>
+    <script type="module">
+        //=======================TOGGLE DROPDOWN========================//        
+
+        function toggleDropdown() {
+            var dropdownMenu = document.getElementById("dropdownMenu");
+            dropdownMenu.classList.toggle("show");
+        }
+
+        function hideDropdown() {
+            var dropdownMenu = document.getElementById("dropdownMenu");
+            dropdownMenu.classList.remove("show");
+        }
+
+        window.addEventListener('click', function (event) {
+            if (!event.target.closest('.toggle-menu')) {
+                hideDropdown();
+            }
+        });
+
+        window.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') {
+                hideDropdown();
+            }
+        });
+
+        window.addEventListener('wheel', function (event) {
+            hideDropdown();
+        });
+
+        // document.getElementById('closeButton').addEventListener('click', function() {
+        //     document.getElementById('popupContainer').style.display = 'none';
+        //     document.getElementById('overlay').style.display = 'none';
+        // });
+
+        // document.getElementById('overlay').addEventListener('click', function() {
+        //     document.getElementById('popupContainer').style.display = 'none';
+        //     document.getElementById('overlay').style.display = 'none';
+        // });
+
+        document.querySelector('.toggle-menu').addEventListener('click', toggleDropdown);
+
+        import { checkAuth } from '../js/authadmin.js';
+        checkAuth();
+
+        const notificationIndicator = document.getElementById('notificationIndicator');
+
+        function updateNotificationIndicator(count) {
+            if (count > 0) {
+                notificationIndicator.textContent = count;
+                notificationIndicator.style.display = 'inline';
+            } else {
+                notificationIndicator.style.display = 'none';
+            }
+        }
+
+        document.querySelector('.notification-icon').classList.add('show');
+        document.querySelector('.notification-icon').classList.remove('show');
+
+        function updateDate() {
+            const currentDate = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' };
+            document.getElementById('current-date').textContent = currentDate.toLocaleDateString('en-US', options);
+            const userContainer = document.getElementById('current-user');
+            userContainer.textContent = "Welcome, " + currentUser + " | " + currentDate.toLocaleDateString('en-US', options);
+        }
+
+        window.onload = function () {
+            updateDate();
+        };
+
+        function closePopup() {
+            console.log("close button is clicked!");
+            const popup = document.getElementById('documentDetailspopup');
+            popup.style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("DOMContentLoaded event fired");
+
+            const closeButton = document.getElementById('documentDetailspopup');
+            if (closeButton) {
+                closeButton.addEventListener('click', closePopup);
+            }
+        });
+
+        document.getElementById('closePopup').addEventListener('click', closePopup);
+    </script>
+</body>
+
+</html>

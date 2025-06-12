@@ -1,0 +1,106 @@
+/* ############## RESIDENT_NOTIFICATION.JS ##############*/
+.notification-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .notification-icon {
+    cursor: pointer;
+  }
+  
+  .notification-count {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+    font-weight: bold;
+    display: none;
+  }
+  
+  .notification-item.read {
+    opacity: 0.7;
+    background-color: #053252;
+  }
+  
+  .notification-item.unread {
+    font-weight: bold;
+    background-color: #0c6bb1;
+  }
+  
+  .notification-dropdown {
+    position: absolute;
+    display: flex;
+    top: 100%;
+    right: 0;
+    background-color: #0c6bb1 !important;
+    color: #cdcdcd;
+    border: 1px solid #cdcdcd;
+    border-radius: 4px;
+    display: none;
+    z-index: 1;
+    min-width: 600px;
+    max-height: 300px;
+    overflow-y: auto;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  }
+  
+  .notification-dropdown.show {
+    display: block;
+  }
+  
+  .notification-dropdown ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .notification-dropdown li {
+    border-bottom: 1px solid #eee;
+    background-color: #053252;
+    padding: 10px;
+  }
+  
+  .notification-dropdown li:hover {
+    background-color: #053252;
+    color: #cdcdcd;
+  }
+  
+  .notification-dropdown li:last-child {
+    margin-bottom: 0;
+    padding-bottom: 10px;
+    border-bottom: none;
+  }
+
+
+
+  notification-item {
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.notification-item:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.notification-item.read {
+    background-color: #f8f9fa;
+}
+
+.notification-item.unread {
+    background-color: #fff;
+}
+
+.check-icon {
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.notification-item.read .check-icon {
+    opacity: 1;
+}
+
+

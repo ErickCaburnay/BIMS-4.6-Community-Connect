@@ -1,0 +1,645 @@
+p {
+    margin: 0;
+}
+
+#printName,
+#printAge,
+#printBlklot,
+#printBlklot2,
+#printStreet,
+#printStreet2,
+#printDay,
+#printMonth,
+#printYear,
+#printIssueDate {
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #0a4671;
+}
+
+#previewClearance,
+#previewCertificate,
+#previewIndigency {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    overflow: auto;
+}
+
+/* .preview-clearance,
+.preview-certificate {
+    background-color: #ff0000;
+    width: 900px;
+    height: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+} */
+
+.watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 150%;
+    opacity: 0.3;
+    object-fit: contain;
+    z-index: 0;
+}
+
+.clearance-container,
+.certificate-container,
+.indigency-container {  
+    width: 8.5in;
+    height: 11in;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    position: relative;
+    overflow: hidden;  
+}
+
+.clearance-container p,
+.certificate-container p,
+.indigency-container p {
+    margin: 0;
+    display: block;
+    font-weight: lighter;
+}
+
+.clearance-background,
+.certificate-background,
+.indigency-background {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background-image: url('/resources/logo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.1;
+    z-index: 0;
+}
+
+.clearance-frame,
+.certificate-frame,
+.indigency-frame {
+    border: 2px solid #000;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.clearance-frame h1,
+.certificate-frame h1 {
+    font-size: 40px;
+    color: #000;
+}
+
+.clearance-frame h2,
+.certificate-frame h2
+.indigency-frame h2 {
+    margin: 0;
+}
+
+.close-btn,
+.close-certificate-btn,
+.close-indigency-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 2;
+    color: #1f1f1f;
+    border-radius: 30px;
+}
+
+.close-btn:hover,
+.close-certificate-btn:hover,
+.close-indigency-btn:hover {
+    background-color: #e6e6e6;
+    color: #6d6d6d;
+}
+
+.clearance-header,
+.certificate-header,
+.indigency-header {
+    text-align: center;
+    margin-bottom: 20px;
+    position: relative;
+    padding-top: 80px;
+}
+
+.clearance-body p.indent,
+.certificate-body p.indent,
+.indigency-body p.indent {
+    text-indent: 2em;
+}
+
+
+.clearance-logo,
+.certificate-logo,
+.indigency-logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.clearance-logo img,
+.certificate-logo img,
+.indigency-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.clearance-body,
+.certificate-body,
+.indigency-body {
+    margin-bottom: 20px;
+    line-height: 1.6;
+    text-align: left;
+    flex-grow: 1;
+}
+
+.clearance-body h2,
+.certificate-body h2,
+.indigency-body h2 {
+    margin-bottom: 15px;
+}
+
+.clearance-body p,
+.certificate-body p,
+.indigency-body p {
+    margin-bottom: 10px;
+    text-align: justify;
+}
+
+.signature-line {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-top: auto;
+}
+
+.signature-line__line {
+    width: 200px;
+    border-bottom: 1px solid #000;
+    margin-bottom: 5px;
+}
+
+.brgyCaptain {
+    margin-right: 30px;
+}
+
+.print-btn-container {
+    display: flex;
+}
+
+.print-btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* 
+@media print {
+    @page {
+        size: letter;
+        margin: 0;
+    }
+
+    body {
+        margin: 0;
+        padding: 0; 
+    }
+
+    body * {
+        visibility: hidden;
+    }
+
+    #previewClearance,
+    #previewClearance * {
+        visibility: visible;
+    }
+
+    #previewClearance {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        page-break-after: avoid;
+    }
+
+    .preview-clearance {
+        width: 100%;
+        height: 100%;
+    }
+
+    .clearance-container {
+        width: 8.5in !important;
+        height: 11in !important;
+        margin: 0 auto !important;
+        padding: 0.25in !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+        position: relative;
+        transform: scale(1.1);
+        transform-origin: top center;
+    }
+
+    .clearance-frame {
+        border: 2px solid #000 !important;
+        height: 100% !important;
+        padding: 0.25in !important;
+        box-sizing: border-box !important;
+    }
+
+    .watermark {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0.1 !important;
+        width: 90% !important;
+        height: auto !important;
+    }
+
+    .clearance-logo {
+        position: absolute;
+        top: 0.25in;
+        left: 0.25in;
+        width: 1.2in !important;
+        height: auto !important;
+    }
+
+    .clearance-header {
+        text-align: center;
+        margin-bottom: 0.25in;
+    }
+
+    .clearance-header h1 {
+        font-size: 28pt;
+        margin-top: 0.25in;
+    }
+
+    .clearance-header h2 {
+        font-size: 18pt;
+        margin: 0;
+    }
+
+    .clearance-body {
+        font-size: 16pt;
+        line-height: 1.4;
+    }
+
+    .clearance-body p.indent {
+        text-indent: 0.5in !important;
+    }
+
+    .signature-line {
+        margin-top: 0.75in !important;
+        text-align: right !important;
+    }
+
+    .signature-line__line {
+        width: 3in !important;
+        border-bottom: 1px solid #000 !important;
+        margin-left: auto !important;
+        margin-bottom: 0.1in !important;
+    }
+
+    .clearance-footer {
+        margin-top: 0.25in !important;
+        font-size: 12pt !important;
+    }
+
+    .close-btn,
+    .print-btn {
+        display: none !important;
+    }
+} */
+
+/* ###### CLEARANCE CONFIRM POPUP ###### */
+
+.popup {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .popup-content {
+    background: rgba(4, 33, 54);
+    width: 300px;
+    height: 15%;
+    padding: 20px;
+    align-self: center;
+    margin: 100px auto;
+    text-align: center;
+    border-radius: 5px;
+  }
+
+  .popup-content h3 {
+    color: #cdcdcd;
+    margin: 10px;
+  }
+
+  .popup-content p {
+    color: #cdcdcd;
+    font-size: 10px;
+    text-align: center;
+    justify-content: center;
+    margin: 20px;
+  }
+  
+  .button-container-clearance {
+    margin-top: 20px;
+    position: relative;
+  }
+  
+  .button-container button {
+    margin: 0 10px;
+    padding: 8px 20px;
+    border: none;    
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+
+  #clearanceCloseButton:hover {
+    background-color: #0056b3;
+    
+  }
+
+  #clearanceCancelButton,
+  #certificateCancelButton,
+  #indigencyCancelButton {
+    background-color: #f44336;
+  }
+  #clearanceCancelButton:hover,
+  #certificateCancelButton:hover,
+  #indigencyCancelButton:hover {
+    background-color: #ac3027;
+  }
+
+  #proceedButton {
+    background-color: #2f9f03;
+  }
+  #proceedButton:hover {
+    background-color: #1d6201;
+  }
+  #confirmationCancelButton {
+    background-color: #f44336;
+  }
+  #confirmationCancelButton:hover {
+    background-color: #ac3027;
+  }
+
+/* ########## PAGINATION ########## */
+
+#pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+button#prevButton,
+button#nextButton,
+button#prevButtonCertificate,
+button#nextButtonCertificate,
+button#prevButtonIndigency,
+button#nextButtonIndigency {
+    padding: 8px 12px;
+    background-color: #042136;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#prevButton:hover,
+#nextButton:hover {
+    background-color: #062c47;
+}
+
+#prevButton:disabled,
+#nextButton:disabled {
+    background-color: #042136;
+    cursor: not-allowed;
+}
+
+#pagination span {
+    font-size: 16px;
+    color: #6d6d6d;
+}
+
+.showing-entries {
+    position: relative;
+    bottom: 10px;
+    right: 10px;
+    font-size: 14px;
+    color: #666;
+}
+
+/* ######### CSS FOR PRINT PREVIEW FROM ADMIN NOTIF ########## */
+
+/* .document-preview-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow: auto;
+    z-index: 9999;
+}
+
+.preview-clearance {
+    background: white;
+    padding: 20px;
+    width: 8.5in;
+    margin: 0 auto;
+}
+
+.clearance-container {
+    width: 100%;
+    height: 11in;
+    padding: 1.5in 1in 1in;
+    position: relative;
+    background: white;
+    margin: 0 auto;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+}
+
+.clearance-logo {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 100px;
+}
+
+.clearance-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.clearance-background {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    height: 90%;
+    background-image: url('/resources/logo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.1;
+    z-index: 0;
+    pointer-events: none;
+}
+
+@media print {
+    .document-preview-popup {
+        position: absolute;
+        padding: 0;
+        margin: 0;
+        background: none;
+    }
+
+    .print-btn-container,
+    .close-btn {
+        display: none !important;
+    }
+
+    .preview-clearance {
+        padding: 0;
+    }
+
+    .clearance-container {
+        border: none;
+    }
+} */
+
+.watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 150%;
+    opacity: 0.3;
+    object-fit: contain;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.clearance-background {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background-image: url('/resources/logo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.1;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.clearance-container {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Ensure content appears above watermark */
+.clearance-logo,
+.clearance-header,
+.clearance-body {
+    position: relative;
+    z-index: 1;
+}
+
+
+
+#previewClearance {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.preview-clearance {
+    position: relative;
+    background-color: white;
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 800px;
+    border-radius: 8px;
+}
+
+.print-btn-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.print-btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.close-btn {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}

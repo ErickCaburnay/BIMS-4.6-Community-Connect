@@ -1,0 +1,339 @@
+/* Medium Smartphones */
+@media (min-width: 321px) and (max-width: 480px) {
+  body {
+    font-size: 14px;
+  }
+  /* Add other styles for medium phones here */
+}
+
+/* Large Smartphones */
+@media (min-width: 481px) and (max-width: 767px) {
+  body {
+    font-size: 16px;
+  }
+  /* Add other styles for large phones here */
+}
+
+/* Tablets */
+@media (min-width: 768px) and (max-width: 1024px) {
+  body {
+    font-size: 18px;
+  }
+  /* Add other styles for tablets here */
+}
+
+/* Laptops */
+@media (min-width: 1025px) and (max-width: 1440px) {
+  body {
+    font-size: 20px;
+  }
+  /* Add other styles for laptops here */
+}
+
+/* Desktops */
+@media (min-width: 1441px) {
+  body {
+    font-size: 22px;
+  }
+  /* Add other styles for desktops here */
+}
+
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.tabs-container {
+  padding: 2rem;
+  width: 100%;
+  max-width: 800px;
+}
+
+.tabs {
+  display: flex;
+}
+
+.tabs > ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 15%;
+}
+
+.tabs > ul li {
+  display: block;
+}
+
+.tabs > ul li a {
+  display: flex;
+  text-decoration: none;
+  background-color: #000;
+  color: #fff;
+  padding: 2rem 2.5rem;
+  font-size: 1.5rem;
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+}
+
+.tabs > ul li a.active {
+  background-color: #fff;
+  color: #000;
+}
+
+.tabs .tab-body {
+  background-color: #094d7f;
+  color: white;
+  padding: 2.5rem;
+  display: none;
+  box-sizing: border-box;
+  width: 85%;
+}
+
+.tabs .tab-body.active {
+  display: block;
+}
+
+@media (min-width: 576px) {
+  .tabs > ul {
+    width: 150px;
+  }
+
+  .tabs > ul li a > span.tab-label {
+    width: 100%;
+    display: block;
+    margin-top: 0.2rem;
+  }
+}
+
+@media (min-width: 768px) {
+  body {
+    font-size: 1.125rem;
+  }
+
+  .tabs-container {
+    padding: 4rem 4rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .tabs {
+    width: 800px;
+  }
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header-container h1 {
+  margin: 0;
+  flex: 1;
+}
+
+.post-activity-btn {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.post-activity-btn:hover {
+  background-color: #45a049;
+}
+
+/* Responsive adjustments for the header container */
+@media (max-width: 768px) {
+  .header-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header-container h1 {
+    margin-bottom: 10px;
+  }
+
+  .post-activity-btn {
+    align-self: flex-end;
+  }
+}
+
+/*=============================================BHC sched POPUP===================================================*/
+.schedule-popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  color: #000;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: 90%;
+  max-width: 500px;
+}
+
+.popup-content {
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 24px;
+  color: #333;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group select,
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.form-group textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+button[type="submit"] {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+}
+
+button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+/*=============================================Tanod POPUP===================================================*/
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+
+.bbi-main-content {
+  padding: 20px;
+}
+
+.bbi-box {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.bbi-title {
+  margin-bottom: 5px;
+  align-items: center;
+  text-align: center;
+}
+
+.bbi-text {
+  margin-bottom: 10px;
+}
+
+.bbi-button {
+  margin-right: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.sched-popup {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.popup-content {
+  position: relative;
+}
+
+.popup-content h2 {
+  text-align: center;
+}
+
+.close-button {
+  position: absolute;
+  top: -40px;
+  right: -10px;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table,
+th,
+td {
+  border: 1px solid #ccc;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: center;
+}
+
+.add-sched-button {
+  cursor: pointer;
+  background-color: #007bff;
+  border-radius: 5px;
+  float: right;
+}
+
+.upd-sched-button {
+  cursor: pointer;
+  background-color: #007bff;
+  border-radius: 5px;
+  float: right;
+}

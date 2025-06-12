@@ -1,0 +1,123 @@
+/*=============================================BDRRMC sched POPUP===================================================*/
+.schedule-popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  width: 90%;
+  max-width: 500px;
+  background: linear-gradient(
+    to bottom right,
+    #042136,
+    #07385c,
+    #094d7f,
+    #0c6bb1,
+    #1095f7
+  );
+}
+
+.popup-content {
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 24px;
+  color: #333;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group select {
+  background-color: transparent;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  color: #000;
+}
+
+.form-group input,
+.form-group textarea {
+  background-color: transparent;
+  width: 100%;
+  padding: 8px;
+  color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.form-group textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+button[type="submit"] {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+}
+
+button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+.popup-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Add some space between form and activities */
+}
+
+.activities-scheduled {
+  margin-top: 20px;
+  padding: 10px;
+
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+#activitiesListContainer {
+  max-height: 200px; /* Set a max height */
+  overflow-y: auto; /* Enable scrolling if content overflows */
+}
+
+.delete-btn {
+  background-color: #e74c3c; /* Red background */
+  color: white; /* White text */
+  border: none; /* No border */
+  border-radius: 4px; /* Rounded corners */
+  padding: 6px 10px; /* Padding for a better click area */
+  cursor: pointer; /* Pointer cursor on hover */
+  margin-left: 10px; /* Space between text and button */
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.delete-btn:hover {
+  background-color: #c0392b; /* Darker red on hover */
+}
+
+.delete-btn:focus {
+  outline: none; /* Remove outline when focused */
+}

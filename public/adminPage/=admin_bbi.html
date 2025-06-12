@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Barangay Information Management System</title>
+    <link rel="stylesheet" href="../styles/mainstyle.css" />
+    <link rel="stylesheet" href="../styles/admin_bbi.css" />
+    <link rel="stylesheet" href="../styles/admin_notification.css" />
+    <link rel="stylesheet" href="../styles/loader.css" />
+    <style></style>
+    <script type="module" src="../js/admin_bbi.js"></script>
+  </head>
+  <body>
+    <div class="emergency-container">
+      <div class="toggle-menu-container">
+        <!-- <h1>Community - Connect: A Web-Based Platform for Barangay San Antonio De Padua I Information Management
+                System</h1> -->
+        <h1>Community-Connect</h1>
+      </div>
+      <div class="emergency-right">
+        <div class="current-date">
+          <p id="current-date"></p>
+        </div>
+      </div>
+      <div class="header-icons">
+        <h1></h1>
+        <div class="icons">
+          <div class="notification-wrapper">
+            <div class="notification-icon" id="notificationIcon">
+              <img src="/resources/icons/bell (2).png" alt="Bell" />
+              <span class="notification-count" id="notificationCount"></span>
+            </div>
+            <div class="notification-dropdown" id="notificationDropdown">
+              <ul id="notificationList"></ul>
+            </div>
+          </div>
+        </div>
+        <div class="icons">
+          <img src="/resources/icons/question.png" alt="Help Circle" />
+        </div>
+        <div class="icons">
+          <button class="toggle-menu" onclick="toggleDropdown()">
+            <img src="/resources/icons/account.png" alt="User" />
+          </button>
+        </div>
+
+        <div class="icons">
+          <p><span id="current-user"></span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="dropdown-menu" id="dropdownMenu">
+      <div class="dropdown-item" onclick="editProfile()">
+        Edit Admin Profile
+      </div>
+      <div class="dropdown-item" onclick="changePassword()">
+        Change Password
+      </div>
+      <div class="dropdown-item" onclick="logout()">Logout</div>
+    </div>
+
+    <div class="sidebar">
+      <div class="logo-above-sidebar">
+        <img
+          src="/resources/logo.png"
+          alt="Logo"
+          class="logo"
+          width="150"
+          height="150"
+        />
+        <h1>San Antonio De Padua I</h1>
+      </div>
+      <div class="tab" id="dashboard-tab">
+        <a href="admin_dashboard.html"
+          ><img
+            src="/resources/icons/dashboard_icon2.png"
+            alt="Dashboard"
+          />Dashboard</a
+        >
+      </div>
+      <div
+        class="tab"
+        id="officials-tab"
+        class="restricted"
+        data-role="Top Level Admin"
+      >
+        <a href="admin_officials.html"
+          ><img src="/resources/icons/gov.png" alt="officials" />Brgy
+          Officials</a
+        >
+      </div>
+      <div class="tab" id="residents-tab">
+        <a href="admin_resident_records.html"
+          ><img src="/resources/icons/users.png" alt="Records" />Residents
+          Records</a
+        >
+      </div>
+      <div class="tab" id="household-tab">
+        <a href="admin_household_records.html"
+          ><img
+            src="/resources/icons/household.png"
+            alt="Records"
+          />Household</a
+        >
+      </div>
+      <div class="tab" id="bbi-tab">
+        <a href="admin_bbi.html"
+          ><img src="/resources/icons/bldg.png" alt="bbi" />BBI</a
+        >
+      </div>
+      <div class="tab" id="reports-tab">
+        <a href="admin_reports.html"
+          ><img src="/resources/icons/reports.png" alt="reports" />Reports</a
+        >
+      </div>
+      <div class="tab" id="requests-tab">
+        <a href="admin_requests.html"
+          ><img src="/resources/icons/document.png" alt="Requests" />Requests
+          <span id="notificationIndicator"></span
+        ></a>
+      </div>
+      <div class="tab" id="complaints-tab">
+        <a href="admin_complaints.html"
+          ><img
+            src="/resources/icons/complaint.png"
+            alt="complaints"
+          />Complaints
+          <div class="notification-icon">
+            <!-- <img src="/resources/bell.png" alt="Notification"> -->
+            <span class="notification-count" id="notificationCount">0</span>
+          </div>
+        </a>
+      </div>
+      <!-- <div class="tab" id="document-forms-tab">
+            <a href="admin_document_forms.html"><img src="/resources/forms_icon.svg" alt="forms">Document Forms</a>
+        </div> -->
+      <div class="tab" id="settings-tab">
+        <a href="admin_settings.html"
+          ><img src="/resources/icons/settings.png" alt="settings" />Settings</a
+        >
+      </div>
+    </div>
+
+    <div class="main-content">
+      <h1>BIMS - Barangay Based Institutions</h1>
+      <div class="tabs-container">
+        <div class="tabs-block">
+          <div id="tabs-section" class="tabs">
+            <ul class="tab-head">
+              <li>
+                <a href="#tab-1" class="tab-link active">
+                  <span class="tab-label">BHC</span>
+                </a>
+              </li>
+              <li>
+                <a href="#tab-2" class="tab-link">
+                  <span class="tab-label">BPOC</span>
+                </a>
+              </li>
+              <li>
+                <a href="#tab-3" class="tab-link">
+                  <span class="tab-label">BDRRMC</span>
+                </a>
+              </li>
+              <!--
+              <li>
+                <a href="#tab-4" class="tab-link">
+                  <span class="tab-label">BSWMC</span>
+                </a>
+              </li>
+             
+              <li>
+                <a href="#tab-5" class="tab-link">
+                  <span class="tab-label">BNC</span>
+                </a>
+              </li>
+              <li>
+                <a href="#tab-6" class="tab-link">
+                  <span class="tab-label">BPFSDC</span>
+                </a>
+              </li>
+              <li>
+                <a href="#tab-7" class="tab-link">
+                  <span class="tab-label">BADAC</span>
+                </a>
+              </li>
+              <li>
+                <a href="#tab-8" class="tab-link">
+                  <span class="tab-label">BCPC</span>
+                </a>
+              </li>
+              -->
+            </ul>
+
+            <!--------------- BHC ------------------->
+            <section id="tab-1" class="tab-body active">
+              <h2>Barangay Health Council - Health Records</h2>
+
+              <!-- Add Record Form Popup -->
+              <div
+                id="bhc-schedulePopup"
+                class="bhc-schedule-popup"
+                style="display: none"
+              >
+                <div class="bhc-popup-content">
+                  <span class="bhc-close-btn">&times;</span>
+                  <h2>Add Health Record</h2>
+
+                  <form id="bhc-healthRecordForm" class="bhc-form-group">
+                    <label for="bhc-user-search">Search Resident:</label>
+                    <input
+                      type="text"
+                      id="bhc-user-search-input"
+                      class="bhc-input"
+                      placeholder="Enter name or DOB"
+                    />
+                    <select id="bhc-user-search" class="bhc-input" required>
+                      <option value="" disabled selected>
+                        Select Resident (name, birthdate)
+                      </option>
+                    </select>
+
+                    <label for="bhc-resident-id">Resident ID:</label>
+                    <input
+                      type="text"
+                      id="bhc-resident-id"
+                      class="bhc-input"
+                      placeholder="Resident ID"
+                      disabled
+                    />
+
+                    <label for="bhc-resident-name">Full Name:</label>
+                    <input
+                      type="text"
+                      id="bhc-resident-name"
+                      class="bhc-input"
+                      placeholder="Resident Full Name"
+                      disabled
+                    />
+
+                    <label for="bhc-resident-email">Email:</label>
+                    <input
+                      type="text"
+                      id="bhc-resident-email"
+                      class="bhc-input"
+                      placeholder="Resident Email"
+                      disabled
+                    />
+
+                    <label for="bhc-resident-phone">Phone:</label>
+                    <input
+                      type="text"
+                      id="bhc-resident-phone"
+                      class="bhc-input"
+                      placeholder="Resident Phone"
+                      disabled
+                    />
+
+                    <label for="bhc-record-date">Date:</label>
+                    <input
+                      type="date"
+                      id="bhc-record-date"
+                      class="bhc-input"
+                      required
+                    />
+
+                    <label for="bhc-record-type">Record Type:</label>
+                    <select id="bhc-record-type" class="bhc-input" required>
+                      <option value="">Select...</option>
+                      <option value="immunization">Immunization</option>
+                      <option value="consultation">Medical Consultation</option>
+                      <option value="health-program">Health Program</option>
+                    </select>
+
+                    <label for="bhc-record-description">Description:</label>
+                    <textarea
+                      id="bhc-record-description"
+                      class="bhc-input"
+                      required
+                    ></textarea>
+
+                    <button
+                      type="submit"
+                      id="bhc-add-record-btn"
+                      class="bhc-add-resident-button"
+                    >
+                      Add Record
+                    </button>
+                    <button
+                      type="submit"
+                      id="bhc-addnew-btn"
+                      class="bhc-addnew-resident-button"
+                    >
+                      New Record
+                    </button>
+                  </form>
+                </div>
+              </div>
+
+              <!-- Search Box and Buttons -->
+              <div class="bhc-search-container">
+                <button id="bhc-add-btn" class="bhc-add-resident-button">
+                  Add Record
+                </button>
+                <input
+                  type="text"
+                  id="bhc-search-box"
+                  placeholder="Search..."
+                  class="bhc-search-input"
+                />
+              </div>
+
+              <table id="bhc-healthRecordsTable">
+                <thead>
+                  <tr>
+                    <th>Resident Name</th>
+                    <th>Date of Birth</th>
+                    <th>Record Type</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody id="bhc-healthRecordsList">
+                  <!-- Health records will be displayed here -->
+                </tbody>
+              </table>
+            </section>
+
+            <!--------------- BPOC ------------------->
+
+            <section id="tab-2" class="tab-body">
+              <h2>Barangay Peace and Order Council</h2>
+              <div class="brgy-tanod">
+                <h2>Tanod Management</h2>
+                <div class="search-container">
+                  <button class="add-tanod-button" onclick="">Add Tanod</button>
+                  <input
+                    type="text"
+                    id="searchTanodInput"
+                    class="tanod-search-input"
+                    placeholder="Search..."
+                  />
+                </div>
+
+                <table id="tanod-list">
+                  <thead>
+                    <tr>
+                      <th>Full Name</th>
+                      <th>Contact No.</th>
+                      <th>Address</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+
+              <div class="patrol-schedule">
+                <div class="search-container">
+                  <button class="add-sched-button" onclick="">
+                    Create a Schedule
+                  </button>
+                  <input
+                    type="text"
+                    class="tanodsched-search-input"
+                    placeholder="Search..."
+                  />
+                </div>
+
+                <table id="schedTable">
+                  <thead>
+                    <tr>
+                      <th>Tanod Name</th>
+                      <th>Start Date</th>
+                      <th>End Date</th>
+                      <th>Time Start & End</th>
+                      <th>Area</th>
+                      <th>Contact No.</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+
+              <div id="loader-container" style="display: none">
+                <div class="loader"></div>
+              </div>
+            </section>
+
+            <!--------------- BDRRMC ------------------->
+
+            <section id="tab-3" class="tab-body">
+              <h2>Barangay Disaster Risk Reduction Management Council</h2>
+              <div class="bdrrmc-inner-tabs">
+                <div class="bdrrmc-tab-links">
+                  <button
+                    class="inner-tab-link"
+                    data-tab="bdrrmc-incidentsSection"
+                  >
+                    Incident Reports
+                  </button>
+                  <button
+                    class="inner-tab-link"
+                    data-tab="bdrrmc-evacuationSection"
+                  >
+                    Evacuation Centers
+                  </button>
+                  <button
+                    class="inner-tab-link"
+                    data-tab="bdrrmc-reliefSection"
+                  >
+                    Relief Goods
+                  </button>
+                </div>
+              </div>
+
+              <!-- Incident Reports Section -->
+              <div id="bdrrmc-incidentsSection" class="tab-content">
+                <h3>Incident Reports</h3>
+                <button id="open-incident-form" class="popup-btn">
+                  Add Incident
+                </button>
+                <div class="search-container">
+                  <input
+                    type="text"
+                    id="bdrrmc-incidents-search"
+                    placeholder="Search by Type or Location..."
+                  />
+                </div>
+
+                <table id="bdrrmc-incidents-table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Type</th>
+                      <th>Location</th>
+                      <th>Affected Families</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+
+              <!-- Evacuation Centers Section -->
+              <div id="bdrrmc-evacuationSection" class="tab-content">
+                <h3>Evacuation Centers</h3>
+                <button id="open-evacuation-form" class="popup-btn">
+                  Add Evacuation Center
+                </button>
+                <div class="search-container">
+                  <input
+                    type="text"
+                    id="bdrrmc-evacuation-search"
+                    placeholder="Search by Name or Location..."
+                  />
+                </div>
+
+                <table id="bdrrmc-evacuation-table">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Location</th>
+                      <th>Capacity</th>
+                      <th>Current Occupants</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+
+              <!-- Relief Goods Section -->
+              <div id="bdrrmc-reliefSection" class="tab-content">
+                <h3>Relief Goods</h3>
+                <button id="open-relief-form" class="popup-btn">
+                  Add Relief Goods
+                </button>
+                <div class="search-container">
+                  <input
+                    type="text"
+                    id="bdrrmc-relief-search"
+                    placeholder="Search by Item Name..."
+                  />
+                </div>
+
+                <table id="bdrrmc-relief-table">
+                  <thead>
+                    <tr>
+                      <th>Item Name</th>
+                      <th>Quantity</th>
+                      <th>Unit</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
+              </div>
+
+              <!-- Incident Report Popup Form -->
+              <div id="bdrrmc-incidentPopup" class="bdrrmc-popup">
+                <div class="bdrrmc-popup-content">
+                  <span class="bdrrmc-close-btn">&times;</span>
+                  <h2>Add Incident Report</h2>
+                  <form id="bdrrmc-incidentForm">
+                    <div class="form-group">
+                      <label for="bdrrmc-incident-date">Date:</label>
+                      <input type="date" id="bdrrmc-incident-date" required />
+                    </div>
+                    <div class="form-group">
+                      <label for="bdrrmc-incident-type">Type:</label>
+                      <select id="bdrrmc-incident-type" required>
+                        <option value="">Select Type</option>
+                        <option value="Flood">Flood</option>
+                        <option value="Fire">Fire</option>
+                        <option value="Earthquake">Earthquake</option>
+                        <option value="Landslide">Landslide</option>
+                        <option value="Other">Other</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="bdrrmc-incident-location">Location:</label>
+                      <input
+                        type="text"
+                        id="bdrrmc-incident-location"
+                        required
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="bdrrmc-affected-families"
+                        >Affected Families:</label
+                      >
+                      <input
+                        type="number"
+                        id="bdrrmc-affected-families"
+                        required
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="bdrrmc-incident-status">Status:</label>
+                      <select id="bdrrmc-incident-status" required>
+                        <option value="">Select Status</option>
+                        <option value="Ongoing">Ongoing</option>
+                        <option value="Resolved">Resolved</option>
+                        <option value="Monitoring">Monitoring</option>
+                      </select>
+                    </div>
+                    <button type="submit" class="bdrrmc-submit-btn">
+                      Submit
+                    </button>
+                  </form>
+                </div>
+              </div>
+
+              <!-- Evacuation Center Popup Form -->
+              <div id="bdrrmc-evacuationPopup" class="bdrrmc-popup">
+                <div class="bdrrmc-popup-content">
+                  <span class="bdrrmc-close-btn">&times;</span>
+                  <h2>Add Evacuation Center</h2>
+                  <form id="bdrrmc-evacuationForm">
+                    <div class="form-group">
+                      <label for="bdrrmc-evac-name">Name:</label>
+                      <input type="text" id="bdrrmc-evac-name" required />
+                    </div>
+                    <div class="form-group">
+                      <label for="bdrrmc-evac-location">Location:</label>
+                      <input type="text" id="bdrrmc-evac-location" required />
+                    </div>
+                    <div class="form-group">
+                      <label for="bdrrmc-evac-capacity">Capacity:</label>
+                      <input type="number" id="bdrrmc-evac-capacity" required />
+                    </div>
+                    <div class="form-group">
+                      <label for="bdrrmc-current-occupants"
+                        >Current Occupants:</label
+                      >
+                      <input
+                        type="number"
+                        id="bdrrmc-current-occupants"
+                        required
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="bdrrmc-evac-status">Status:</label>
+                      <select id="bdrrmc-evac-status" required>
+                        <option value="">Select Status</option>
+                        <option value="Active">Active</option>
+                        <option value="Full">Full</option>
+                        <option value="Closed">Closed</option>
+                      </select>
+                    </div>
+                    <button type="submit" class="bdrrmc-submit-btn">
+                      Submit
+                    </button>
+                  </form>
+                </div>
+              </div>
+
+              <!-- Relief Goods Popup Form -->
+              <div id="bdrrmc-reliefPopup" class="bdrrmc-popup">
+                <div class="bdrrmc-popup-content">
+                  <span class="bdrrmc-close-btn">&times;</span>
+                  <h2>Add Relief Goods</h2>
+                  <form id="bdrrmc-reliefForm">
+                    <div class="form-group">
+                      <label for="bdrrmc-item-name">Item Name:</label>
+                      <input type="text" id="bdrrmc-item-name" required />
+                    </div>
+                    <div class="form-group">
+                      <label for="bdrrmc-quantity">Quantity:</label>
+                      <input type="number" id="bdrrmc-quantity" required />
+                    </div>
+                    <div class="form-group">
+                      <label for="bdrrmc-unit">Unit:</label>
+                      <select id="bdrrmc-unit" required>
+                        <option value="">Select Unit</option>
+                        <option value="Pieces">Pieces</option>
+                        <option value="Boxes">Boxes</option>
+                        <option value="Kilos">Kilos</option>
+                        <option value="Liters">Liters</option>
+                        <option value="Packs">Packs</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label for="bdrrmc-relief-status">Status:</label>
+                      <select id="bdrrmc-relief-status" required>
+                        <option value="">Select Status</option>
+                        <option value="Available">Available</option>
+                        <option value="Distributed">Distributed</option>
+                        <option value="Out of Stock">Out of Stock</option>
+                      </select>
+                    </div>
+                    <button type="submit" class="bdrrmc-submit-btn">
+                      Submit
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </section>
+
+            <!--------------- BSWMC -------------------
+            <section id="tab-4" class="tab-body">
+              <h2>Barangay Solid Waste Management Council</h2>
+              <button id="bswmc-btn" class="post-activity-btn">
+                Activity Scheduling
+              </button>
+            </section>
+
+            <--------------- BNC -------------------
+            <section id="tab-5" class="tab-body">
+              <h2>Barangay Nutrition Council</h2>
+              <button id="bnc-btn" class="post-activity-btn">
+                Activity Scheduling
+              </button>
+            </section>
+
+            <--------------- BPFSDC -------------------
+            <section id="tab-6" class="tab-body">
+              <h2>Barangay Physical Fitness and Sports Development Council</h2>
+              <button id="bpfsdc-btn" class="post-activity-btn">
+                Activity Scheduling
+              </button> 
+            </section>
+           
+
+            <--------------- BADAC -------------------
+            <section id="tab-7" class="tab-body">
+              <h2>Barangay Anti-Drug Abuse Council</h2>
+              <button id="badac-btn" class="post-activity-btn">
+                Activity Scheduling
+              </button>
+            </section>
+
+            <--------------- BCPC -------------------
+            <section id="tab-8" class="tab-body">
+              <h2>Barangay Council for the Protection of Children</h2>
+              <button id="bcpc-btn" class="post-activity-btn">
+                Activity Scheduling
+              </button>
+            </section>
+            -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ###### NOTIFICATION DETAILS ####### -->
+    <div
+      id="documentDetailspopup"
+      class="document-details-popup"
+      style="display: none"
+    >
+      <div class="document-details-content">
+        <span id="closePopup" class="close">&times;</span>
+        <h2>Resident's Update Request</h2>
+        <div id="detailsPopupContent">
+          <!-- Resident details will be loaded here dynamically -->
+          <p><strong>Full Name:</strong> <span id="residentName"></span></p>
+          <p><strong>Email:</strong> <span id="residentEmail"></span></p>
+          <p><strong>Requested Changes:</strong></p>
+          <ul id="changeRequestList"></ul>
+        </div>
+        <!-- <button id="approveBtn">Approve</button>
+        <button id="rejectBtn">Reject</button> -->
+      </div>
+    </div>
+
+    <script type="module" src="../js/script.js"></script>
+    <script type="module" src="../js/admin_notification.js"></script>
+    <script type="module" src="../js/firebaseConfig.js"></script>
+    <script type="module" src="../js/logOut.js"></script>
+
+    <script>
+      function toggleDropdown() {
+        document.getElementById("dropdownMenu").classList.toggle("show");
+      }
+
+      // Close the dropdown if the user clicks outside of it
+      window.onclick = function (event) {
+        if (!event.target.closest(".toggle-menu")) {
+          var dropdown = document.getElementById("dropdownMenu");
+          if (dropdown.classList.contains("show")) {
+            dropdown.classList.remove("show");
+          }
+        }
+      };
+
+      function handleLogout() {
+        logout();
+        toggleDropdown();
+      }
+    </script>
+
+    <script type="module">
+      import { checkAuth } from "/js/authadmin.js";
+      checkAuth();
+
+      const notificationIndicator = document.getElementById(
+        "notificationIndicator"
+      );
+
+      function updateNotificationIndicator(count) {
+        if (count > 0) {
+          notificationIndicator.textContent = count;
+          notificationIndicator.style.display = "inline";
+        } else {
+          notificationIndicator.style.display = "none";
+        }
+      }
+
+      document.querySelector(".notification-icon").classList.add("show");
+      document.querySelector(".notification-icon").classList.remove("show");
+
+      function updateDate() {
+        const currentDate = new Date();
+        const options = {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+        };
+        document.getElementById("current-date").textContent =
+          currentDate.toLocaleDateString("en-US", options);
+        const userContainer = document.getElementById("current-user");
+        userContainer.textContent =
+          "Welcome, " +
+          currentUser +
+          " | " +
+          currentDate.toLocaleDateString("en-US", options);
+      }
+
+      window.onload = function () {
+        updateDate();
+      };
+    </script>
+
+    <script>
+      window.onload = function () {
+        updateDate();
+      };
+    </script>
+  </body>
+</html>

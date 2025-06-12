@@ -1,0 +1,264 @@
+.main-content h1 {
+  font-size: 2.5em;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+.main-content {
+  margin-left: 15%;
+  padding: 30px;
+  width: calc(85% - 60px);
+  height: calc(100vh - 80px);
+  overflow-y: auto;
+  top: 50px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  background-color: #042136;
+}
+
+.reports-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.report-box p {
+  color: #cac9cd;
+  font-size: medium;
+}
+.report-box {
+  background-color: #094d7f;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  position: relative;
+}
+
+.report-box h3 {
+  color: #f2f3f4;
+  font-size: large;
+  font-family: Arial, Helvetica, sans-serif;
+  border-bottom: 5px solid green;
+}
+
+.report-actions {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5em;
+  cursor: pointer;
+}
+
+.action-menu {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 30px;
+  background-color: #2980b9;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.action-menu button {
+  width: 100%; /* Make buttons in the menu span full width */
+  padding: 10px;
+  text-align: left;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.action-btn:hover,
+.action-menu button:hover {
+  background-color: #888; /* Add a hover effect */
+}
+
+.action-menu.show {
+  display: block;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.modal-content {
+  position: relative; /* Keeps modal content centered */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #094d7f;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  max-width: 90%;
+  z-index: 1001;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column; /* Ensures vertical alignment of the fields */
+  color: white;
+}
+
+.close {
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Style for the form inside the modal */
+#reportForm {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Adds space between form fields */
+}
+
+#reportForm label {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+#reportForm input,
+#reportForm textarea,
+#reportForm select {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#reportForm button {
+  padding: 10px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#reportForm button:hover {
+  background-color: #45a049;
+}
+
+/* Optional: Improve modal responsiveness on smaller screens */
+@media (max-width: 600px) {
+  .modal-content {
+    width: 90%; /* Make the modal more narrow on smaller screens */
+    padding: 15px;
+  }
+
+  .close {
+    font-size: 24px; /* Slightly smaller close button on mobile */
+  }
+}
+
+/* Styling for the search filter section */
+.search-filter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #094d7f;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Container for search input */
+.search-container {
+  flex: 2;
+}
+
+.search-input {
+  width: 80%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f2f3f4;
+  color: #333;
+  transition: border-color 0.3s ease;
+}
+
+.search-input:focus {
+  border-color: #2980b9;
+  outline: none;
+}
+
+/* Container for filter select */
+.filter-container {
+  flex: 2;
+  margin-left: 15px;
+}
+
+.filter-select {
+  width: 25%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f2f3f4;
+  color: #333;
+  cursor: pointer;
+}
+
+.filter-select:focus {
+  border-color: #2980b9;
+  outline: none;
+}
+
+/* Container for Add New Report button */
+.add-button-container {
+  flex: 1;
+  margin-left: 15px;
+}
+
+.add-report-btn {
+  padding: 12px 20px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-report-btn:hover {
+  background-color: #45a049;
+}
+
+.add-report-btn:active {
+  background-color: #39843c;
+}

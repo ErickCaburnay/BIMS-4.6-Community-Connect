@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Select Excel File</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    input[type="file"] {
+      margin-bottom: 10px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+</head>
+<body>
+  <h1>Select an Excel File</h1>
+  <input type="file" id="fileInput" accept=".xls,.xlsx" />
+  <button onclick="handleFileUpload()">Upload</button>
+  <p id="uploadStatus"></p>
+  <table id="dataTable">
+    <thead>
+      <tr></tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <script>
+    // Initialize Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyBDp03_t7kWck8XTT9iqv3SIX8UqFp_C6w",
+      authDomain: "bims-9aaa7.firebaseapp.com",
+      databaseURL: "https://bims-9aaa7-default-rtdb.firebaseio.com",
+      projectId: "bims-9aaa7",
+      storageBucket: "bims-9aaa7.appspot.com",
+      messagingSenderId: "323333588672",
+      appId: "1:323333588672:web:cfb7ea2dff4d9eb2004f25",
+      measurementId: "G-RQJBMNMFQ8"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const storage = firebase.storage();
+    const db = firebase.firestore();
+
+    function handleFileUpload() {
+      const fileInput = document.getElementById('fileInput');
+      const file = fileInput.files[0];
+      const uploadStatus = document.getElementById('uploadStatus');
+      if (file) {
+        const storageRef = storage.ref('excel/' + file.name);
+        const uploadTask = storageRef.put(file);
+        uploadTask.on('state_changed', snapshot => {
+          // Handle upload progress if needed
+        }, error => {
+          console.error('Error uploading file:', error);
+          uploadStatus.textContent = 'Error uploading file.';
+        }, () => {
+          uploadTask.snapshot.ref.getDownloadURL().then(downloadURL => {
+            console.log('File download URL:', downloadURL);
+            fetch(downloadURL, { mode: 'no-cors' })
+              .then(response => response.arrayBuffer())
+              .then(data => {
+                const workbook = XLSX.read(data, { type: 'array' });
+                const sheetName = workbook.SheetNames[0];
+                const worksheet = workbook.Sheets[sheetName];
+                const jsonData = XLSX.utils.sheet_to_json(worksheet);
+                console.log('Parsed Excel data:', jsonData);
+                const batch = db.batch();
+                jsonData.forEach(row => {
+                  const docRef = db.collection('excelData').doc();
+                  batch.set(docRef, row);
+                  console.log('Adding row to batch:', row);
+                });
+                batch.commit()
+                  .then(() => {
+                    console.log('Batch write successful');
+                    uploadStatus.textContent = 'File uploaded and data imported successfully!';
+                    displayData(jsonData);
+                  })
+                  .catch(error => {
+                    console.error('Error importing data:', error);
+                    uploadStatus.textContent = 'Error importing data.';
+                  });
+              });
+          });
+        });
+      } else {
+        uploadStatus.textContent = 'No file selected.';
+      }
+    }
+    function displayData(data) {
+      console.log('Excel data:', data);
+      const table = document.getElementById('dataTable');
+      const thead = table.querySelector('thead tr');
+      const tbody = table.querySelector('tbody');
+      // Clear existing table data
+      thead.innerHTML = '';
+      tbody.innerHTML = '';
+      // Generate table headers
+      const headers = Object.keys(data[0]);
+      headers.forEach(header => {
+        const th = document.createElement('th');
+        th.textContent = header;
+        thead.appendChild(th);
+      });
+      // Generate table rows
+      data.forEach(row => {
+        const tr = document.createElement('tr');
+        headers.forEach(header => {
+          const td = document.createElement('td');
+          td.textContent = row[header];
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+      });
+    }
+  </script>
+</body>
+</html>

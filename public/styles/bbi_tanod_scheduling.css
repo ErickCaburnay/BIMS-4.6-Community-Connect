@@ -1,0 +1,391 @@
+/*===================MAIN CONTENT====================*/
+.brgy-tanod, .patrol-schedule {
+    margin-left: 450px;
+    padding: 20px;
+    width: calc(80% - 350px);
+    display: block;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(315deg, #e6f3e6, #c1e1c1, #a3d1a3, #85c185, #6ab26a);
+    border-radius: 5px;
+    z-index: 1;
+    margin-bottom: 20px;
+}
+
+#tanod-list {
+    height: 200px;
+    overflow-y: auto;
+}
+
+#tanod-list th, #tanod-list td {
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
+#tanod-list tbody {
+    height: 150px;
+    overflow-y: auto;
+}
+
+
+.brgy-tanod {
+    margin-top: 100px;
+}
+
+.patrol-schedule {
+    margin-top: 20px;
+}
+
+#tanod-list, #schedTable {
+    position: relative;
+    z-index: 2;
+}
+
+#tanod-list td:last-child, #schedTable td:last-child {
+    position: relative;
+}
+
+h1 {
+    text-align: center;
+    color: #FFF;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+.add-sched-button,
+.add-tanod-button,
+.search-button,
+.clear-button,
+.action-btn {
+    margin-right: auto;
+    padding: 5px;
+    width: 40%;
+    background-color: #2f9f03;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 10px;
+    justify-self: center;    
+    font-size: 12px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.add-sched-button:hover,
+.add-tanod-button:hover,
+.search-button:hover,
+.clear-button:hover,
+.action-btn:hover {
+    background-color: #227203;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-input {
+    border-radius: 10px;
+}
+
+.edit-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.edit-button:hover {
+    background-color: #0056b3;
+}
+
+.edit-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    margin: 20px auto;
+    font-size: 16px;
+    table-layout: fixed;
+}
+
+thead, tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+thead {
+    background-color: #f2f2f2;
+    color: #555;
+    text-transform: uppercase;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+tbody {
+    display: block;
+    height: 300;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+tbody {
+    display: block;
+    height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+th, td {
+    padding: 15px 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    font-size: 14px;
+    justify-content: space-evenly;
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    color: #555;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+.action-btn {
+    width: 100%;
+    padding: 5px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/*###### ADD TANOD POPUP ######*/
+
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    z-index: 3;
+}
+
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+    z-index: 3;
+    max-width: 400px;
+    width: 100%;
+}
+
+.tanod-input {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tanod-input input {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.popup .close-button {
+    position: absolute;
+    top: 10px;
+    right: 0px;
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.action-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.save-button {
+    background-color: #2f9f03;
+    color: white;
+}
+
+.save-button:hover {
+    background-color: #227203;
+}
+
+.cancel-button {
+    background-color: #f44336;
+    color: white;
+}
+
+.cancel-button:hover {
+    background-color: #a32424;
+}
+
+.popup .action-button:hover {
+    color: white;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.popup .close-button:hover {
+    background-color: transparent;
+    color: #ff0000;
+}
+
+.popup .close-button:focus {
+    outline: none;
+}
+
+.popup .close-button:active {
+    color: #cc0000;
+}
+
+.popup-content h2 {
+    margin-top: 0;
+}
+
+.popup-content input {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.popup-content button {
+    padding: 8px 16px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+#tanod-list {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#tanod-list th, #tanod-list td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#tanod-list th {
+    background-color: #f2f2f2;
+}
+
+/* ###### CREATE SCHED POPUP ###### */
+
+.schedule-popup {
+    position: fixed;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120%;
+    height: 80%;
+    background-color: rgb(221, 221, 221);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    z-index: 3;
+}
+
+.popup-content .schedule-popup {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    position: relative;
+    z-index: 3;
+    max-width: 400px;
+    width: 100%;
+}
+
+.schedule-input {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.schedule-input input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.tanod-table-container {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+#tanodTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#tanodTable th, #tanodTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#tanodTable th {
+    background-color: #f2f2f2;
+    position: sticky;
+    top: 0;
+}

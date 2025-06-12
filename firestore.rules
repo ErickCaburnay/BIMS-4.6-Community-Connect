@@ -1,0 +1,193 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+		// // Profile Update rules
+		// match /Profile_Update/{userId}/user_profile_updates/{updateId} {
+		// allow read: if request.auth != null && 
+		// (request.auth.uid == userId || request.auth.token.admin == true);
+		// allow write: if request.auth != null && 
+		// (request.auth.uid == userId || request.auth.token.admin == true);
+		// }
+    
+		// // Notification rules
+		// match /notifications/{userId}/user_notifications/{notificationId} {
+		// allow read: if request.auth != null && request.auth.uid == userId;
+		// allow write: if request.auth != null;
+		// }
+
+    match /user_notifications/{document} {
+    allow read: if request.auth != null;
+      // allow read: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow write: if request.auth != null;
+    }
+    
+    // General read access; write access only if authenticated
+    match /{document=**} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Specific Document Request rules
+    match /Document_Requests/{document=**} {
+      allow read, write: if true;
+    }
+
+    match /brgy_clearance/{document} {
+      allow read, write: if request.auth != null;
+    }
+
+    match /brgy_certificate/{document} {
+      allow read, write: if request.auth != null;
+    }
+
+    match /brgy_indigency/{document} {
+      allow read, write: if request.auth != null;
+    }
+
+    match /Complaints/{complaintId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // Activity Logs with updated rules
+    match /activity_logs/{logId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+    }
+
+    // New archived logs collection
+    match /archived_logs/{logId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+    }
+
+    match /Household/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+
+    match /counters/{counterId} {
+      allow read, write: if true;
+    }
+
+    match /users/{userId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    match /User_Accounts/{userId} {
+      allow read, write: if request.auth != null;
+    }
+
+    match /Admin_Accounts/{username} {
+      allow read, write: if request.auth != null;
+    }
+
+    match /Profile_Update/{document=**} {
+      allow read, write, delete: if request.auth != null;
+    }
+
+		match /notifications/{notificationId} {
+      allow read: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow read: if request.auth != null && resource.data.userId == request.auth.uid;
+    	allow write: if request.auth != null;
+    }    
+    
+    // Allow access to user's own notifications subcollection
+    match /notifications/{userId}/user_notifications/{notificationId} {
+      allow read: if request.auth != null && request.auth.uid == userId;
+      allow write: if request.auth != null;
+    }
+    
+    match /Profile_Update/{docId} {
+      allow read, write: if request.auth != null;
+    }
+
+    match /Barangay_Officials/{document=**} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null;
+      allow write, update, delete: if request.auth != null;
+    }
+
+    match /user/{document=**} {
+      allow read, write, get, list: if request.auth != null;
+      allow update, delete: if request.auth.token.admin == true;
+    }
+
+    match /news/{newsId} {
+      allow read, write: if true; // Adjust as necessary for security
+    }
+
+    match /population/{document} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    match /green-ladies/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+
+    match /pwd/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+
+    match /kdbm/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+
+    match /4ps/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+
+    match /eatery/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+
+    match /store/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+
+    match /court/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+
+    match /hall/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+
+    match /school/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+
+    match /tanod/{document=**} {
+     allow read, write: if true; 
+    }
+
+    match /tanod_schedule/{document=**} {
+      allow read, write: if true; 
+    }
+
+    match /soloparent/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+
+    match /senior/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+
+    match /archived/{document=**} {
+      allow read, write: if request.auth != null;
+    }
+
+    match /reports/{document=**} {
+      allow read, write: if true;
+    }
+    
+    match /BHC/{document=**} {
+      allow read, write: if true;
+    }
+    
+    match /BDRRMC/{document=**} {
+      allow read, write: if true;
+    }
+  }
+}
